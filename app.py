@@ -1,3 +1,4 @@
+# Forçando um novo deploy no Railway
 from flask import Flask, render_template, request, redirect, jsonify
 import mysql.connector
 from datetime import datetime
