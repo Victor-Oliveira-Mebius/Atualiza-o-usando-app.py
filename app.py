@@ -1,29 +1,29 @@
 from flask import Flask, render_template, request, redirect, jsonify
 import mysql.connector
 from datetime import datetime
+import os  # <-- CORREÇÃO 1: Importa a biblioteca 'os'
 
-# A ÚNICA CORREÇÃO NECESSÁRIA ESTÁ AQUI:
-# Adicionamos static_folder='static' para que o Flask encontre suas imagens.
-app = Flask(__name__, template_folder='.', static_folder='static')
+# CORREÇÃO 2: A inicialização do Flask vem primeiro.
+# Diz ao Flask para procurar HTMLs na pasta atual e imagens na pasta 'static'.
+app = Flask(__name__, static_folder='static', template_folder='.')
 
-# Configuração da conexão com o banco de dados (seu código original, está perfeito)
+# Configuração da conexão para ler as variáveis de ambiente do Railway
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '791564791564',
-    'database': 'universo',
-    'port': 3306,
+    'host': os.getenv('MYSQLHOST'),
+    'user': os.getenv('MYSQLUSER'),
+    'password': os.getenv('MYSQLPASSWORD'),
+    'database': os.getenv('MYSQLDATABASE'),
+    'port': int(os.getenv('MYSQLPORT')),
     'charset': 'utf8'
 }
 
 # --- ROTAS DO SITE ---
+# CORREÇÃO 3: Todas as rotas devem ser definidas ANTES da inicialização do servidor.
 
-# A rota principal agora carrega a página index.html
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Novas rotas para cada página do seu site
 @app.route('/quem-somos')
 def quem_somos():
     return render_template('quem-somos.html')
@@ -32,12 +32,10 @@ def quem_somos():
 def solucoes():
     return render_template('soluções.html')
 
-# Rota para o formulário de contato (acessível via /form)
 @app.route('/form')
 def form():
     return render_template('form.html')
 
-# Rota para a página de visualização de clientes (acessível via /clientes)
 @app.route('/clientes')
 def clientes():
     return render_template('Clientes.html')
@@ -47,17 +45,20 @@ def clientes():
 
 @app.route('/api/mensagens', methods=['GET'])
 def listar_mensagens():
+    conn = None
     try:
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor(dictionary=True)
         cur.execute("SELECT * FROM clientes ORDER BY data_hora DESC")
         dados = cur.fetchall()
-        cur.close()
-        conn.close()
         return jsonify(dados)
     except Exception as e:
         print("Erro ao listar mensagens:", e)
         return jsonify({'status': 'erro', 'mensagem': str(e)})
+    finally:
+        if conn and conn.is_connected():
+            cur.close()
+            conn.close()
 
 @app.route('/api/enviar', methods=['POST'])
 def enviar():
@@ -82,8 +83,6 @@ def enviar():
         """, (nome, email, telefone, empresa, sistema, mensagem, data_hora))
 
         conn.commit()
-        cur.close()
-        
         return jsonify({'status': 'sucesso'})
     except Exception as e:
         print("Erro ao inserir:", e)
@@ -92,9 +91,11 @@ def enviar():
         return jsonify({'status': 'erro', 'mensagem': str(e)})
     finally:
         if conn and conn.is_connected():
+            cur.close()
             conn.close()
 
 # --- INICIALIZAÇÃO DO SERVIDOR ---
-
+# CORREÇÃO 4: Este bloco deve ser a ÚLTIMA coisa no arquivo.
 if __name__ == '__main__':
     app.run(debug=True)
+
