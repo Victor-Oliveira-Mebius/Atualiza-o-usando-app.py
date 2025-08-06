@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Sistemas ERP para Mercados | Soluções em Gestão e Automação</title>
+ 
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <!-- SEO -->
+  <meta name="description" content="Descubra os melhores sistemas ERP para mercados. Soluções completas para supermercados, minimercados e mercearias. Aumente sua produtividade com sistemas modernos, fáceis e integrados.">
+  <meta name="keywords" content="sistema para mercados, sistemas ERP para mercado, melhores sistemas para mercados, melhores sistemas ERP para mercado, sistema para supermercado, sistema para minimercado, ERP para mercearia, software para gestão de mercado">
+  <meta name="author" content="Universo Sistemas">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content=" Sistemas ERP para Mercados | Universo Sistemas">
+  <meta property="og:description" content="Soluções completas e inteligentes em sistemas ERP para o seu mercado. Veja por que somos referência em tecnologia para o varejo.">
+  <meta property="og:image" content="https://seudominio.com/imagens/banner-sistema-erp.jpg">
+  <meta property="og:url" content="https://seudominio.com/">
+  <meta property="og:type" content="website">
+
+  <link rel="canonical" href="https://universosistemas.hifen.br/">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+ 
+  <!-- Estilos personalizados -->
+    <style>
+   
+    html {
+      font-size: 16px;
+      font-family: "Roboto", sans-serif;
+    }
+
+    .product-image-left {
+      /* CORREÇÃO: Caminho da imagem de fundo no CSS */
+      background: url("{{ url_for('static', filename='img-sistema/boneco+logo.png') }}") center/cover no-repeat;
+      min-height: 480px;
+      transition: transform 0.3s ease;
+    }
+
+    .product-image-left:hover {
+      transform: scale(1.02);
+    }
+
+    .feature-icon {
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotate(10deg) scale(1.1);
+      color: #3b82f6;
+    }
+
+    .hero-image {
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 1s ease-in-out;
+    }
+
+    .stat-card {
+      transition: all 0.3s ease;
+      padding: 1.5rem;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 18px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    .counter {
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-in-out;
+    }
+
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body> <!-- Adicionei a tag body que estava faltando -->
+  <!-- Header Desktop -->
+  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300" style="background-color: #edfaf9;">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
+      
+      <!-- Logo -->
+      <div class="flex items-center">
+        <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
+        <a href="{{ url_for('index') }}" class="transition transform hover:scale-105 duration-300">
+          <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
+        </a>
+      </div>
+      
+      <!-- Navegação Desktop -->
+      <nav>
+        <div class="flex items-center space-x-6">
+          <!-- CORREÇÃO: Links para as rotas do Flask -->
+          <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
+          <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
+          <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Parceiros</a>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Header Mobile -->
+  <header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
+    <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
+    <a href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/> 
+    </a>
+    <button id="mobileMenuBtn" class="text-3xl focus:outline-none">
+      ☰
+    </button>
+  </header> 
+
+<section id="hero" class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative">
+  <!-- Overlay com sombra escura e opacidade -->
+  <div id="hero-overlay" class="absolute inset-0 bg-black bg-opacity-30 rounded-lg hidden transition duration-500 z-0"></div>
+
+  <!-- Texto principal -->
+  <div id="hero-texto" class="relative z-10 max-w-4xl">
+    <h1 class="text-5xl font-bold mb-5" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Soluções para o Sucesso  
+do seu Negócio
+    </h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Inovação com Eficiência para Empresas e Escritórios Contábeis
+    </p>
+  </div>
+
+  <!-- Botão flutuante fixado no canto inferior direito -->
+  <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
+    <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+    <a href="{{ url_for('solucoes') }}">
+      <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300 animate-bounce-once">
+        Solicitar Demonstração
+      </button>
+    </a>
+  </div>
+</section>
+
+  <!-- Menu Mobile -->
+  <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
+    <!-- CORREÇÃO: Links para as rotas do Flask -->
+    <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
+    <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Parcerias</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Suporte</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Vendedores</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Supermercados</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Lojas</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Restaurantes</a>
+    <a href="#" class="block px-4 py-3 border-b border-gray-200">Mercado</a>
+    <a href="#" class="block px-4 py-3">Orgamec</a>
+  </div>
+
+<main class="container mx-auto px-4 py-12">
+  <section id="solutions" class="mb-20">
+    <div class="flex flex-col lg:flex-row items-center gap-12">
+      <!-- Imagem lateral -->
+      <div class="product-image-left w-full lg:w-1/2 rounded-xl shadow-xl"></div>
+      <!-- Texto e cards -->
+      <div class="w-full lg:w-2/2">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">
+          Sistema Completo para sua Empresa
+        </h2>
+        <p class="text-gray-600 mb-6 font-playfair text-xl">
+          Nossos sistemas de gestão comercial foram desenvolvidos para automatizar e otimizar processos com foco em performance e experiência do cliente.
+        </p>
+        <!-- Grid com os cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- CARD 1 -->
+          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <i class="fas fa-shield-alt text-3xl text-blue-500 mb-4"></i>
+            <h3 class="text-lg font-playfair font-bold mb-2">Segurança de Dados</h3>
+            <p class="text-gray-600">Proteção avançada com backups automáticos e criptografia.</p>
+          </div>
+          <!-- CARD 2 -->
+          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <i class="fas fa-user-friends text-3xl text-blue-500 mb-4"></i>
+            <h3 class="text-lg font-playfair font-bold mb-2">Apoio Personalizado</h3>
+            <p class="text-gray-600">Atendimento próximo e ajustado às necessidades de cada cliente.</p>
+          </div>
+          <!-- CARD 3 -->
+          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <i class="fas fa-laptop-code text-3xl text-blue-500 mb-4"></i>
+            <h3 class="text-lg font-playfair font-bold mb-2">Atualizações Constantes</h3>
+            <p class="text-gray-600">Sistema sempre atualizado com novas funções e melhorias.</p>
+          </div>
+          <!-- CARD 4 -->
+          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <i class="fas fa-rocket text-3xl text-blue-500 mb-4"></i>
+            <h3 class="text-lg font-playfair font-bold mb-2">Performance e Velocidade</h3>
+            <p class="text-gray-600">Navegação rápida com foco em eficiência e produtividade.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+  /* Cartão de estatística com hover elegante */
+  .stat-card {
+    padding: 1.5rem; /* Equivalente a Tailwind p-6 */
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 18px -6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Estilo do contador numérico */
+  .counter {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 2rem; /* Tamanho ajustado para boa leitura */
+  }
+
+  /* Animação de entrada suave de baixo para cima */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-in-out;
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+
+     <section id="stats-section"
+    class="py-10 bg-white px-4 sm:px-6 lg:px-8"
+    style="box-shadow: rgba(195, 186, 253, 0.25) 0px 30px 60px -12px inset,
+           rgba(190, 213, 248, 0.3) 0px 18px 36px -18px inset;">
+  
+  <div class="container mx-auto px-4">
+    <!-- Título da seção -->
+    <div class="text-center mb-10 fade-in-up">
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">
+        NÚMEROS QUE FALAM POR SI
+      </h2>
+      <p class="text-base text-gray-600">
+        Resultados comprovados ao longo dos anos
+      </p>
+    </div>
+
+    <!-- Cards de estatísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Card 1: Clientes Ativos -->
+      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 fade-in-up">
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-users text-blue-600 text-xl"></i>
+        </div>
+        <div class="counter text-blue-600 mb-1" data-target="1200">0</div>
+        <div class="text-blue-600 text-sm font-medium">+</div>
+        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">Clientes Ativos</h3>
+        <p class="text-sm text-gray-600">Empresas que confiam</p>
+      </div>
+
+      <!-- Card 2: Tempo de mercado -->
+      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 fade-in-up">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-calendar-alt text-green-600 text-xl"></i>
+        </div>
+        <div class="counter text-green-600 mb-1" data-target="20">0</div>
+        <div class="text-green-600 text-sm font-medium">+ anos</div>
+        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">No Mercado</h3>
+        <p class="text-sm text-gray-600">Experiência sólida</p>
+      </div>
+
+      <!-- Card 3: Estabilidade -->
+      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-purple-50 to-violet-50 fade-in-up">
+        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+        </div>
+        <div class="counter text-purple-600 mb-1" data-target="99.9">0</div>
+        <div class="text-purple-600 text-sm font-medium">%</div>
+        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">Estabilidade</h3>
+        <p class="text-sm text-gray-600">Uptime garantido</p>
+      </div>
+
+      <!-- Card 4: Suporte -->
+      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-orange-50 to-red-50 fade-in-up">
+        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-headset text-orange-600 text-xl"></i>
+        </div>
+        <div class="counter text-orange-600 mb-1" data-target="16">0</div>
+        <div class="text-orange-600 text-sm font-medium">7/7</div>
+        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">Suporte</h3>
+        <p class="text-sm text-gray-600">Atendimento ágil</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<style>
+  .segment-card {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  }
+
+  .feature-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+  }
+</style>
+
+<section class="py-6 bg-gray-50">
+  <div class="container mx-auto flex flex-col lg:flex-row items-center gap-6 px-4 sm:px-6 lg:px-8">
+    <div class="w-full lg:w-1/2 flex justify-center lg:justify-start px-4">
+      <!-- CORREÇÃO: Imagem com url_for -->
+      <img src="{{ url_for('static', filename='img-sistema/imagem-super.jpg') }}" alt="Imagem pdv caixa copras" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md" />
+    </div>
+
+    <div class="w-full lg:w-1/2">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+        Segmentos que atendemos
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+          <!-- CORREÇÃO: Imagem com url_for -->
+          <img src="{{ url_for('static', filename='img-sistema/market_16684068.png') }}" alt="Supermercado" class="mx-auto h-20 mb-3">
+          <h3 class="text-base font-semibold text-gray-800 mb-2">
+            SUPERMERCADOS
+          </h3>
+          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+          <a href="{{ url_for('solucoes') }}">
+            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
+              SAIBA MAIS
+            </button>
+          </a>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+          <!-- CORREÇÃO: Imagem com url_for -->
+          <img src="{{ url_for('static', filename='img-sistema/grocery_15170859.png') }}" alt="Mercado" class="mx-auto h-20 mb-3">
+          <h3 class="text-base font-semibold text-gray-800 mb-2">
+            MERCADO
+          </h3>
+          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+          <a href="{{ url_for('solucoes') }}">
+            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
+              SAIBA MAIS
+            </button>
+          </a>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+          <!-- CORREÇÃO: Imagem com url_for -->
+          <img src="{{ url_for('static', filename='img-sistema/mannequin_15265532.png') }}" alt="Lojas" class="mx-auto h-20 mb-3">
+          <h3 class="text-base font-semibold text-gray-800 mb-2">
+            LOJAS
+          </h3>
+          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+          <a href="{{ url_for('solucoes') }}">
+            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
+              SAIBA MAIS
+            </button>
+          </a>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+          <!-- CORREÇÃO: Imagem com url_for -->
+          <img src="{{ url_for('static', filename='img-sistema/restaurant_497823.png') }}" alt="Restaurante" class="mx-auto h-20 mb-3">
+          <h3 class="text-base font-semibold text-gray-800 mb-2">
+            RESTAURANTES
+          </h3>
+          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+          <a href="{{ url_for('solucoes') }}">
+            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
+              SAIBA MAIS
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="mb-20">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-2">
+      Sobre a Nossa Empresa
+    </h2>
+    <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-12">
+    <div class="w-full lg:w-1/2 px-4 sm:px-6">
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">
+        Expertise em Sistemas Comerciais
+      </h3>
+      <p class="text-gray-600 mb-6 leading-relaxed">
+        Há mais de 18 anos, somos referência em soluções tecnológicas para o comércio de mercadorias,
+        ajudando empresas a automatizar processos, reduzir custos e aumentar resultados.
+
+        Com atendimento ágil, suporte especializado e foco em inovação, estamos prontos para levar sua
+        empresa ao próximo nível. Conte conosco para transformar desafios em oportunidades reais.
+      </p>
+      <p class="text-gray-600 mb-6 leading-relaxed">
+        Nossa equipe multidisciplinar alia conhecimento técnico aprofundado e experiência prática no
+        varejo e atacado, oferecendo muito mais do que softwares: entregamos parcerias estratégicas que
+        impulsionam o crescimento do seu negócio.
+      </p>
+
+      <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
+        <p class="text-gray-700 italic">
+          Com atendimento ágil, suporte especializado e foco em inovação, estamos prontos para levar sua
+          empresa ao próximo nível. Conte conosco para transformar desafios em oportunidades reais.
+        </p>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-1/2">
+      <!-- CORREÇÃO: Imagem com url_for -->
+      <img src="{{ url_for('static', filename='img-sistema/financeiro.png') }}" class="rounded-xl shadow-lg w-full max-w-full h-auto object-contain">
+    </div>
+  </div>
+</section>
+
+<section class="mb-10 bg-gray-50 rounded-xl px-4 py-10">
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold text-gray-800">
+      Nossos sistemas oferece também
+    </h2>
+    <p class="text-gray-600 mt-2 max-w-xl mx-auto text-sm">
+      Recursos adicionais para gestão eficiente, moderna e integrada.
+    </p>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6">
+    <div class="feature-card">
+      <i class="fas fa-boxes feature-icon text-2xl text-blue-500 mb-2"></i>
+      <h3 class="text-base font-bold mb-1">Controle de Estoque</h3>
+      <p class="text-gray-600">
+        Gestão precisa de entrada e saída de produtos com alertas automáticos.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-chart-line feature-icon text-2xl text-blue-500 mb-2"></i>
+      <h3 class="text-base font-bold mb-1">Análise de Lucratividade</h3>
+      <p class="text-gray-600">
+        Cálculo automático de margens e rentabilidade por produto e cliente.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-truck feature-icon text-2xl text-blue-500 mb-2"></i>
+      <h3 class="text-base font-bold mb-1">Gestão de Fornecedores</h3>
+      <p class="text-gray-600">
+        Cadastro completo e histórico de compras por fornecedor.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-file-invoice-dollar feature-icon text-2xl text-blue-500 mb-2"></i>
+      <h3 class="text-base font-bold mb-1">Emissão de Notas</h3>
+      <p class="text-gray-600">
+        Integração com sistemas fiscais para emissão de documentos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="support" class="mb-10 bg-gray-100 rounded-xl p-6">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">
+            Suporte Técnico Especializado
+        </h2>
+        <p class="text-gray-600 max-w-xl mx-auto text-sm">
+            Nosso compromisso vai além da implementação. Oferecemos suporte contínuo para seu negócio.
+        </p>
+        <div class="w-16 h-1 bg-blue-600 mx-auto mt-2"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Bloco 1 -->
+        <div class="bg-white p-4 rounded-lg shadow-sm text-center hover:shadow-md transition text-sm">
+            <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
+                <i class="fas fa-headset text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="font-bold text-base mb-2">Suporte</h3>
+            <p class="text-gray-600">Atendimento umanizado via chat, telefone, acesso remoto e presencial   
+<strong>+55 (66)
+                    99631-0123</strong></p>
+        </div>
+
+        <!-- Bloco 2 -->
+        <div class="bg-white p-4 rounded-lg shadow-sm text-center hover:shadow-md transition text-sm">
+            <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
+                <i class="fas fa-graduation-cap text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="font-bold text-base mb-2">Treinamentos</h3>
+            <p class="text-gray-600">Capacitação contínua da equipe com materiais didáticos exclusivos.</p>
+        </div>
+
+        <!-- Bloco 3 -->
+        <div class="bg-white p-4 rounded-lg shadow-sm text-center hover:shadow-md transition text-sm">
+            <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
+                <i class="fas fa-sync-alt text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="font-bold text-base mb-2">Atualizações</h3>
+            <p class="text-gray-600">Melhorias e funcionalidades novas entregues com frequência.</p>
+        </div>
+    </div>
+</section>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap' );
+
+  .slider-track {
+    display: flex;
+    white-space: nowrap; /* <- Impede quebra de linha */
+    animation: scroll 20s linear infinite;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>
+<!-- Seção com sombra e espaçamento -->
+<div class="bg-white shadow-lg rounded-xl py-8 px-4 mx-auto max-w-7xl mb-16">
+  
+  <!-- Título centralizado -->
+  <div class="text-center mb-6">
+    <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+      Empresas que confiam em nosso trabalho
+    </h2>
+  </div>
+
+  <!-- Slider de Logos -->
+  <div class="overflow-hidden relative">
+    <div class="slider-track">
+
+      <!-- Logos (cada logo ocupa 250px de largura, horizontalmente) -->
+      <!-- CORREÇÃO: Imagens com url_for -->
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 1 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 2 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 3 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 4 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+
+      <!-- Duplicação para rolagem contínua -->
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 1 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 2 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 3 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 4 da Universo Sistemas" class="h-20 object-contain" />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<section class="mb-20">
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: scale(1.01);
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.4) 0px 18px 36px -18px inset;
+        }
+    </style>
+
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+
+<div class="flex flex-col lg:flex-row items-stretch gap-6 px-4 sm:px-6">
+        <!-- Card Preto -->
+        <!-- Card ERP Empresarial Reforçado -->
+        <div class="card-hover bg-gray-800 text-white rounded-xl p-5 lg:w-1/3 w-full" style="box-shadow: rgba(58, 58, 68, 0.25) 0px 20px 40px -12px inset,
+    rgba(95, 85, 85, 0.3) 0px 12px 24px -18px inset;">
+
+            <h3 class="text-2xl font-bold mb-2">
+                ERP Empresarial
+            </h3>
+
+            <p class="text-gray-300 mb-4 text-sm">
+                Solução integrada para controlar e automatizar os setores financeiro, fiscal, RH e operações da
+                sua empresa, com dados centralizados e em tempo real.
+            </p>
+
+            <ul class="space-y-2 mb-6 text-sm">
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i>
+                    <span><strong>Controle financeiro e contábil</strong>  
+Fluxo de caixa, contas a
+                        pagar/receber e conciliações bancárias.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i>
+                    <span><strong>Emissão de documentos fiscais</strong>  
+NFe, NFCe, CT-e, integração com
+                        sistemas SEFAZ e contabilidade.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i>
+                    <span><strong>Contas a Pagar e Receber</strong>  
+Automatize lançamentos, controle
+                        vencimentos e gere relatórios financeiros em tempo real.</span>
+                </li>
+            </ul>
+
+            <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+            <a href="{{ url_for('solucoes') }}"
+                class="text-blue-400 hover:text-blue-300 font-medium text-sm flex items-center">
+                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="card-hover bg-blue-600 text-white rounded-xl p-5 lg:w-1/3" style="box-shadow: rgba(17, 3, 105, 0.25) 0px 20px 40px -12px inset,
+    rgba(248, 248, 248, 0.3) 0px 12px 24px -18px inset;">
+
+            <h3 class="text-2xl font-bold mb-2">
+                e-Commerce
+            </h3>
+
+            <p class="text-blue-100 mb-4 text-sm">
+                Plataforma completa de vendas online com automações inteligentes, integração a marketplaces e
+                controle centralizado de pedidos, pagamentos e logística.
+            </p>
+
+            <ul class="space-y-2 mb-6 text-sm">
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-white mt-1 mr-2"></i>
+                    <span><strong>Loja virtual personalizada</strong>  
+Crie vitrines modernas com checkout
+                        rápido e seguro.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-white mt-1 mr-2"></i>
+                    <span><strong>Integração com TEF/SITEF</strong>  
+Conciliação automática de pagamentos via
+                        cartão, PIX e boleto.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-white mt-1 mr-2"></i>
+                    <span><strong>Relatórios de conversão e abandono</strong>  
+Acompanhe métricas essenciais
+                        para aumentar suas vendas.</span>
+                </li>
+
+            </ul>
+
+            <!-- CORREÇÃO: Link para a rota 'solucoes' -->
+            <a href="{{ url_for('solucoes') }}"
+                class="text-white hover:text-blue-100 font-medium text-sm flex items-center">
+                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+
+                               <!-- Card Branco -->
+                <div class="card-hover bg-white rounded-xl p-5 lg:w-1/3 w-full" style="box-shadow: rgba(158, 158, 209, 0.25) 0px 20px 40px -12px inset,
+           rgba(150, 147, 147, 0.3) 0px 12px 24px -18px inset;">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                        Parceria
+                    </h3>
+
+                    <p class="text-gray-600 mb-4 text-sm">
+                        Estabelecemos parceria com a &rarr;(Orgamec)&larr; empresa de contabilidade para oferecer
+                        mais segurança fiscal aos nossos clientes.
+                    </p>
+
+                    <ul class="space-y-2 mb-6 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i>
+                            <span><strong>Análise de rentabilidade por setor</strong>  
+Descubra quais áreas da empresa
+                                geram mais retorno.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i>
+                            <span><strong>Atendimento consultivo</strong>  
+Apoio contábil próximo e humano, com foco
+                                em crescimento sustentável.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i>
+                            <span><strong>Integração direta com nossos sistemas</strong>  
+Sincronização automática de
+                                dados para evitar erros e retrabalho.</span>
+                        </li>
+                    </ul>
+
+                    <a href="https://br.linkedin.com/company/orgamecassessoriacontabil"
+                        class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
+                        Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                  <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
+                       
+                      <!-- CORREÇÃO: Imagem com url_for -->
+                      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png' ) }}" class="h-14 md:h-48 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0">
+                       
+                    </h3>
+                   
+                </div>
+
+                <div>
+                    <h4 id="font-bold mb-4 text-lg">Produtos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white">******</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">
+                                ******</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white">******</a></li>
+
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white">******</a></li>
+
+                                 <li><a href="#"
+                                class="text-gray-400 hover:text-white">*****</a></li>
+
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+                                class="text-gray-400 hover:text-white">Facebock</a></li>
+                        <li><a href="https://www.instagram.com/universo_sistemas/"
+                                class="text-gray-400 hover:text-white">Instagram</a></li>
+                        <li><a href="https://universosistemas.trinitysuite.com.br/portal/login"
+                                class="text-gray-400 hover:text-white">********</a></li>
+                        <li><a href="https://universosistemas.trinitysuite.com.br/portal/login"
+                                class="text-gray-400 hover:text-white">********</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Contato</h4>
+                    <address class="not-italic text-gray-400">
+                        <p class="mb-2"> <a
+                                href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/@-11.8715545,-55.5230777,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-11.8715545!4d-55.5205028?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D"><i
+                                    class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização</p></a>
+                        <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
+                        <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>atendimento@universosistemas.inf.br
+                        </p>
+                    </address>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+                            class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://web.whatsapp.com/" class="text-gray-400 hover:text-white"><i
+                                class="fab fa-whatsapp"></i></a>
+
+
+                        <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i
+                                class="fab fa-instagram"></i></a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>&copy;Universo Sistemas</p>
+            </div>
+        </div>
+    </footer>
+
+
+       <script>
+        // CORREÇÃO: O caminho da imagem agora é gerado pelo Flask.
+        // As aspas simples dentro das aspas duplas são importantes para que o JavaScript 
+        // leia o caminho como uma string.
+        const imagens = [
+            "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
+        ];
+
+        // O restante do seu JavaScript não precisa de nenhuma alteração.
+        let index = 0;
+        const hero = document.getElementById('hero');
+        const overlay = document.getElementById('hero-overlay');
+
+        function trocarImagem() {
+            const imagemAtual = imagens[index];
+            hero.style.backgroundImage = `url('${imagemAtual}')`;
+
+            // Esta verificação continua funcionando, pois o nome do arquivo ainda está no caminho.
+            if (imagemAtual.includes("parte-interna.png")) {
+                hero.classList.remove("text-white");
+                hero.classList.add("text-white");
+                overlay.classList.remove("hidden"); // mostra o overlay
+            } else {
+                hero.classList.remove("text-white");
+                hero.classList.add("text-white");
+                overlay.classList.add("hidden"); // esconde o overlay
+            }
+
+            index = (index + 1) % imagens.length;
+        }
+
+        setInterval(trocarImagem, 5000);
+        trocarImagem();
+
+        // Função para animar contadores 
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            let current = start;
+            const increment = target / (duration / 16); // Aproximadamente 60fps
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    // Se for número decimal (ex: 1.5), exibe com 1 casa
+                    if (target % 1 !== 0) {
+                        element.textContent = current.toFixed(1);
+                    } else {
+                        element.textContent = Math.floor(current);
+                    }
+                }
+            }, 16);
+        }
+
+
+        // Intersection Observer para detectar quando a seção está visível
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animar elementos fade-in
+                    const fadeElements = entry.target.querySelectorAll('.fade-in-up');
+                    fadeElements.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.classList.add('visible');
+                        }, index * 200);
+                    });
+
+                    // Animar contadores
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach((counter, index) => {
+                        const target = parseFloat(counter.getAttribute('data-target'));
+                        setTimeout(() => {
+                            animateCounter(counter, target);
+                        }, index * 300);
+                    });
+
+                    // Parar de observar após a animação
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observar a seção de estatísticas
+        const statsSection = document.getElementById('stats-section');
+        if (statsSection) { // Adiciona uma verificação para evitar erros se a seção não existir
+            observer.observe(statsSection);
+        }
+
+        // Adicionar efeito hover nos cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave',function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+   
+        history.replaceState(null, null, window.location.pathname);
+          document.addEventListener('DOMContentLoaded', function () {
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i.test(navigator.userAgent);
+            if (isMobile) {
+              const header = document.querySelector('header');
+              if (header) {
+                // Esta lógica pode precisar de ajuste, mas o código em si está ok.
+              }
+            }
+          });
+         
+   
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+
+            if (btn && menu) {
+              btn.addEventListener('click', function () {
+                menu.classList.toggle('hidden');
+              });
+            }
+        });
+ 
+        const botao = document.getElementById('botao-flutuante');
+        let scrollTimeout;
+
+        function mostrarBotao() {
+            if (botao) {
+                botao.style.opacity = '1';
+                if (scrollTimeout) clearTimeout(scrollTimeout);
+
+                scrollTimeout = setTimeout(() => {
+                  botao.style.opacity = '0.2'; // Opacidade baixa após inatividade
+                }, 2000); // 2 segundos sem scroll
+            }
+        }
+
+        // Detecta movimento de rolagem
+        window.addEventListener('scroll', mostrarBotao);
+
+        // Inicializa o estado (começa com opacidade total)
+        mostrarBotao();
+    </script>
+</body>
+</html>

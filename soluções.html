@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluções - Universo Sistemas</title>
+    <!-- tailwindcss -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+        }
+        .system-card {
+            transition: all 0.3s ease;
+        }
+        .system-card:hover {
+            transform: translateY(-5px );
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-50" id="top">
+
+<!-- header parte de cima do site -->
+<header class="flex bg-white sticky top-0 z-50 h-20 hidden md:flex" style="background-color: #e7fcfb;">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
+    
+    <!-- LOGO -->
+    <div class="flex items-center space-x-4">
+      <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
+      <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}"
+             alt="Logo Universo Sistemas"
+             class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
+      </a>
+    </div>
+    <!-- Links de navegação -->
+    <div class="flex items-center space-x-6">
+      <!-- CORREÇÃO: Links para as rotas do Flask -->
+      <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500">Quem somos</a>
+      <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500">Soluções</a>
+      <a href="#" class="text-gray-700 hover:text-blue-500">Parceiros</a>
+    </div>
+  </div>
+</header>
+
+<!-- Menu Mobile -->
+<header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
+  <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
+  <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
+  </a>
+  <button id="mobileMenuBtn" class="text-3xl focus:outline-none md:hidden">
+    ☰
+  </button>
+</header>
+<div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
+  <!-- CORREÇÃO: Links para as rotas do Flask -->
+  <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
+  <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem Somos</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">Parcerias</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">Suporte</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">Vendedores</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">SUPERMERCADOS</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">LOJAS</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">RESTAURANTES</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">MERCADO</a>
+  <a href="#" class="block px-4 py-3">Orgamec</a>
+</div>
+   
+<main class="container mx-auto px-4 py-12">
+
+    <section id="cervantes" class="fade-in mb-20">
+        <div class="system-card bg-white rounded-xl shadow-md overflow-hidden mb-8 flex flex-col md:flex-row">
+            <div class="md:w-1/2 p-4 order-2 md:order-1">
+                <div class="flex items-center mb-4">
+                    <div class="bg-indigo-100 rounded-lg p-2 mr-4">
+                        <i class="fas fa-store text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800">Link Pro</h2>
+                </div>
+                <p class="text-gray-600 mb-4">O Link Pro é um sistema de gestão completo para comércios, serviços, bares e restaurantes. Com ele, você automatiza o PDV, controla estoque, gerencia finanças, emite notas fiscais e atende com agilidade – tudo em um só lugar. Simples, rápido e sem complicações. Mais controle, mais vendas, menos retrabalho.</p>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Principais características:</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Desenvolvimento próprio de software garantindo total controle</li>
+                        <li>Soluções integradas para gestão comercial completa</li>
+                        <li>Módulos específicos para diferentes segmentos</li>
+                        <li>Personalização avançada para atender necessidades específicas</li>
+                        <li>Suporte técnico especializado e treinamentos</li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Benefícios:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <i class="fas fa-chart-line text-indigo-600 mb-2"></i>
+                            <h4 class="font-medium text-gray-800">Gestão comercial eficiente</h4>
+                            <p class="text-sm text-gray-600">Controle total de vendas, estoque e finanças</p>
+                        </div>
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <i class="fas fa-file-invoice text-indigo-600 mb-2"></i>
+                            <h4 class="font-medium text-gray-800">Emissão fiscal completa</h4>
+                            <p class="text-sm text-gray-600">SAT, NFC-e, NF-e e outros documentos fiscais</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- CORREÇÃO: Link para a rota 'form' -->
+                <a href="{{ url_for('form', sistema='Sistema Link Pro') }}">
+                    <button class="inline-block bg-teal-600 hover:bg-teal-800 text-white font-medium py-2 px-6 rounded-lg transition duration-300 transform hover:scale-90 shadow-md mt-4">
+                        Solicitar demonstração
+                    </button>
+                </a>
+            </div>
+            <div class="md:w-1/2 order-1 md:order-2 bg-gradient-to-br from-indigo-100 to-blue-100 flex items-center justify-center p-8">
+               <iframe width="560" height="315" src="https://www.youtube.com/embed/_wSTptFqsZI" title="Link Pro - Cadastro de Fornecedor" frameborder="0" allowfullscreen></iframe>                   
+            </div>
+        </div>
+    </section>
+
+    <section id="sysnop" class="fade-in mb-20">
+        <div class="system-card bg-white rounded-xl shadow-md overflow-hidden mb-8 flex flex-col md:flex-row">
+            <div class="md:w-1/2 p-8">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-lg p-2 mr-4">
+                        <i class="fas fa-network-wired text-blue-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800">Sysnop - Universo Sistemas</h2>
+                </div>
+                <p class="text-gray-600 mb-4">O Sysnop é um sistema de gestão empresarial, especializado em otimizar processos de compra e venda de mercadorias. Uma solução completa para empresas que buscam integração e automação de processos.</p>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Funcionalidades principais:</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Gestão completa de estoque com controles precisos</li>
+                        <li>Geração automatizada de notas fiscais (NF-e, NFC-e )</li>
+                        <li>Relatórios gerenciais personalizados e em tempo real</li>
+                        <li>Integração com diversos outros sistemas empresariais</li>
+                        <li>Suporte para múltiplas filiais e matriz</li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Vantagens para seu negócio:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <i class="fas fa-boxes text-blue-600 mb-2"></i>
+                            <h4 class="font-medium text-gray-800">Controle de estoque</h4>
+                            <p class="text-sm text-gray-600">Movimentações, inventários e valores precisos</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <i class="fas fa-chart-pie text-blue-600 mb-2"></i>
+                            <h4 class="font-medium text-gray-800">Business Intelligence</h4>
+                            <p class="text-sm text-gray-600">Relatórios poderosos para tomada de decisão</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- CORREÇÃO: Link para a rota 'form' -->
+                <a href="{{ url_for('form', sistema='Sistema Sysnop') }}">
+                    <button class="inline-block bg-teal-600 hover:bg-teal-800 text-white font-medium py-2 px-6 rounded-lg transition duration-300 transform hover:scale-90 shadow-md mt-4">
+                        Solicitar demonstração
+                    </button>
+                </a>
+            </div>
+            <div class="md:w-1/2 bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center p-8">
+                <!-- CORREÇÃO: Imagem com url_for -->
+                <img src="{{ url_for('static', filename='img-sistema/financeiro.png') }}" alt="Logo Sysnop" class="w-full h-full object-contain"
+                    onerror="this.src='https://via.placeholder.com/400x300?text=Sysnop+Universo+Sistemas'">
+            </div>
+        </div>
+    </section>
+
+    <section id="uniplus" class="fade-in">
+        <div class="system-card bg-white rounded-xl shadow-md overflow-hidden mb-8 flex flex-col md:flex-row">
+            <div class="md:w-1/2 p-8 order-2 md:order-1">
+                <div class="flex items-center mb-4">
+                    <div class="bg-red-100 rounded-lg p-2 mr-4">
+                        <i class="fas fa-tasks text-red-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800">Uniplus</h2>
+                </div>
+                <p class="text-gray-600 mb-4">O Uniplus é uma plataforma completa desenvolvida para gestão integrada de compras e vendas. Um sistema robusto que auxilia empresas de todos os portes no controle e na otimização de seus processos comerciais.</p>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Destaques do sistema:</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Integração total entre compras, vendas e financeiro</li>
+                        <li>Cadastro avançado de produtos com múltiplos atributos</li>
+                        <li>Controle de estoque com diversas modalidades de inventário</li>
+                        <li>Emissão de documentos fiscais em conformidade com legislação</li>
+                        <li>Plataforma web moderna e acessível de qualquer lugar</li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Por que escolher o Uniplus:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <i class="fas fa-shopping-cart text-red-600 mb-2"></i>
+                            <h4 class="font-medium text-gray-800">Gestão de compras</h4>
+                            <p class="text-sm text-gray-600">Cotações, pedidos e recebimento de mercadorias</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <i class="fas fa-exchange-alt text-red-600 mb-2"></i>
+                            <h4 class="font-medium text-gray-800">Controle de vendas</h4>
+                            <p class="text-sm text-gray-600">Pedidos, pré-vendas, orçamentos e comissionamento</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- CORREÇÃO: Link para a rota 'form' -->
+                <a href="{{ url_for('form', sistema='Sistema Uniplus' ) }}">
+                    <button class="inline-block bg-teal-600 hover:bg-teal-800 text-white font-medium py-2 px-6 rounded-lg transition duration-300 transform hover:scale-90 shadow-md mt-4">
+                        Solicitar demonstração
+                    </button>
+                </a>
+            </div>
+            <div class="md:w-1/2 order-1 md:order-2 bg-gradient-to-br from-gray-300 to-gray-490 flex items-center justify-center p-8">
+                <!-- CORREÇÃO: Imagem com url_for -->
+                <img src="{{ url_for('static', filename='img-sistema/pdvuniplus.png') }}" class="w-full h-full object-contain"
+                    onerror="this.src='https://via.placeholder.com/400x300?text=Uniplus+Intelidata'">
+            </div>
+        </div>
+    </section>
+
+    <section id="saurus" class="fade-in mb-20">
+      <div class="system-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row mb-8">
+        <div class="md:w-1/2 p-8">
+          <div class="flex items-center mb-4">
+            <div class="bg-green-100 rounded-lg p-2 mr-4">
+              <i class="fas fa-sync-alt text-green-600 text-2xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800">Saurus</h2>
+          </div>
+          <p class="text-gray-600 mb-4">O Saurus é uma plataforma ERP robusta, modular e altamente configurável, ideal para empresas de diversos setores que buscam máxima eficiência operacional, controle financeiro completo e conformidade fiscal. Desenhado para se adaptar às necessidades específicas de cada negócio, o Saurus proporciona integração total entre áreas, visibilidade estratégica em tempo real e escalabilidade contínua.</p>
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Principais recursos:</h3>
+            <ul class="list-disc pl-5 space-y-2 text-gray-700">
+              <li>Emissão fiscal completa: Suporte integrado a NF-e, NFC-e, NFSe, CT-e e outros documentos fiscais eletrônicos, com atualização automática conforme a legislação vigente.</li>
+              <li>Controle de estoque avançado: Gestão de inventários, rastreabilidade por lote, validade e localização, com alertas preventivos para reabastecimento.</li>
+              <li>Faturamento & financeiro integrados: Processamento de vendas, contas a pagar/receber, conciliação bancária e fluxo de caixa em um único ambiente.</li>
+              <li>Gestão de pedidos e CRM: Recebimento ágil de pedidos, acompanhamento de vendas, perfil de clientes e histórico completo de interações.</li>
+              <li>Relatórios e dashboards customizáveis</li>
+            </ul>
+          </div>
+          <!-- CORREÇÃO: Link para a rota 'form' -->
+          <a href="{{ url_for('form', sistema='Sistema Saurus' ) }}">
+              <button class="inline-block bg-teal-600 hover:bg-teal-800 text-white font-medium py-2 px-6 rounded-lg transition duration-300 transform hover:scale-90 shadow-md mt-4">
+                Solicitar demonstração
+              </button>
+          </a>
+        </div>
+        <div class="md:w-1/2 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center p-8">
+          <img src="#" alt="Saurus Logo" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/400x300?text=Saurus'">
+        </div>
+      </div>
+    </section>
+
+    <section id="meuerp" class="fade-in mb-20">
+      <div class="system-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row mb-8">
+        <div class="md:w-1/2 p-8 order-2 md:order-1">
+          <div class="flex items-center mb-4">
+            <div class="bg-blue-100 rounded-lg p-2 mr-4">
+              <i class="fas fa-cloud text-blue-600 text-2xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800">MeuERP Online</h2>
+          </div>
+          <p class="text-gray-600 mb-4">
+            O <strong>MeuERP Online</strong> é uma solução SaaS 100% web, projetada para empresas que buscam flexibilidade, agilidade e controle completo sem depender de instalação local. Acesse dados e processos de qualquer dispositivo com internet, a qualquer hora.
+          </p>
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Funcionalidades em destaque:</h3>
+            <ul class="list-disc pl-5 space-y-2 text-gray-700">
+              <li><strong>ERP 100% web:</strong> sem necessidade de instalação — basta login. Atualizações automáticas garantem que você sempre esteja com os recursos mais recentes.</li>
+              <li><strong>Controle de estoque e compras:</strong> estoque em tempo real, cadastros de fornecedores, pedidos de compra estruturados, e relatórios de inventário com histórico detalhado.</li>
+              <li><strong>Gestão financeira integrada:</strong> contas a pagar e receber, conciliação bancária automática e fluxo de caixa simplificado — tudo centralizado em um painel financeiro.</li>
+              <li><strong>Emissão fiscal digital:</strong> suporte a NF‑e e NFC‑e diretamente pelo sistema, com transmissão segura e emissão de DANFE (NF‑e ) e DANFCE (NFC‑e).</li>
+              <li><strong>Relatórios inteligentes:</strong> indicadores em tempo real (vendas, estoque, financeiro) e dashboards personalizados, exportáveis em Excel ou PDF para análise estratégica.</li>
+            </ul>
+          </div>
+          <!-- CORREÇÃO: Link para a rota 'form' -->
+          <a href="{{ url_for('form', sistema='Sistema MeuERP') }}">
+              <button class="inline-block bg-teal-600 hover:bg-teal-800 text-white font-medium py-2 px-6 rounded-lg transition duration-300 transform hover:scale-90 shadow-md mt-4">
+                Solicitar demonstração
+              </button>
+          </a>
+        </div>
+        <div class="md:w-1/2 order-1 md:order-2 bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center p-8">
+          <!-- CORREÇÃO: Imagem com url_for -->
+          <img src="{{ url_for('static', filename='img-sistema/meuerp-logo.png') }}" alt="MeuERP Logo" class="w-full h-full object-contain"
+            onerror="this.src='https://via.placeholder.com/400x300?text=MeuERP+Online'">
+        </div>
+      </div>
+    </section>
+</main>
+  
+<section class="bg-white rounded-xl shadow-md p-8 mb-12">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Comparativo entre os Sistemas</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b-2 border-gray-200">
+                    <th class="py-4 px-6 bg-gray-50 font-semibold text-gray-700">Característica</th>
+                    <th class="py-4 px-6 bg-gray-50 font-semibold text-gray-700">Link Pro</th>
+                    <th class="py-4 px-6 bg-gray-50 font-semibold text-gray-700">Sysnop</th>
+                    <th class="py-4 px-6 bg-gray-50 font-semibold text-gray-700">Uniplus</th>
+                    <th class="py-4 px-6 bg-gray-50 font-semibold text-gray-700">Sauros</th>
+                    <th class="py-4 px-6 bg-gray-50 font-semibold text-gray-700">Meu ERP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="py-4 px-6">Emissão de NF-e/NFC-e</td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="py-4 px-6">Controle integrado de estoque</td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="py-4 px-6">Versão Web</td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="py-4 px-6">Multiplataforma</td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-times text-red-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="py-4 px-6">Business Intelligence</td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-times text-red-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- Seção de contato -->
+<section class="bg-blue-700 text-white py-12 px-4">
+    <div class="container mx-auto text-center">
+        <h2 class="text-2xl font-bold mb-4">Tem dúvidas sobre qual sistema escolher?</h2>
+        <p class="mb-6 max-w-2xl mx-auto">Nossa equipe está pronta para ajudar você a encontrar a melhor solução
+            para seu negócio.</p>
+        
+        <!-- CORREÇÃO: O link <a> agora envolve o botão e aponta para a rota 'form' -->
+        <a href="{{ url_for('form') }}">
+            <button
+                class="bg-white text-indigo-700 font-medium py-3 px-8 rounded-lg hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>
+                Fale Conosco
+            </button>
+        </a>
+    </div>
+</section>
+
+
+<!-- parte de baixo do site -->  
+<footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
+                   
+                  <!-- CORREÇÃO: Imagem com url_for -->
+                  <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" class="h-14 md:h-20 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0">
+                   
+                </h3>
+                <p class="text-gray-400">Soluções tecnológicas para potencializar seu comércio com eficiência e
+                    inteligência.</p>
+            </div>
+
+            <div>
+                <h4 id="font-bold mb-4 text-lg">Produtos</h4>
+                <ul class="space-y-2">
+                    <li><a href="#"
+                            class="text-gray-400 hover:text-white">******</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">
+                            ******</a></li>
+                    <li><a href="#"
+                            class="text-gray-400 hover:text-white">******</a></li>
+
+                    <li><a href="#"
+                            class="text-gray-400 hover:text-white">******</a></li>
+
+                             <li><a href="#"
+                            class="text-gray-400 hover:text-white">*****</a></li>
+
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
+                <ul class="space-y-2">
+                    <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+                            class="text-gray-400 hover:text-white">Facebock</a></li>
+                    <li><a href="https://www.instagram.com/universo_sistemas/"
+                            class="text-gray-400 hover:text-white">Instagram</a></li>
+                    <li><a href="https://universosistemas.trinitysuite.com.br/portal/login"
+                            class="text-gray-400 hover:text-white">Suporte Técnico</a></li>
+                    <li><a href="https://universosistemas.trinitysuite.com.br/portal/login"
+                            class="text-gray-400 hover:text-white">Central de Ajuda</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-lg">Contato</h4>
+                <address class="not-italic text-gray-400">
+                    <p class="mb-2"> <a
+                            href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/@-11.8715545,-55.5230777,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-11.8715545!4d-55.5205028?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D"><i
+                                class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização</p></a>
+                    <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
+                    <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>Universosistemas@hotmail.com
+                    </p>
+                </address>
+                <div class="flex space-x-4 mt-4">
+                    <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+                        class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://web.whatsapp.com/" class="text-gray-400 hover:text-white"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+            <p>&copy;Universo Sistemas</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+     const backToTopButton = document.getElementById('back-to-top');
+
+
+   
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+
+    const sections = document.querySelectorAll('section');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+        history.replaceState(null, null, window.location.pathname);
+    });
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+
+    if (btn && menu) {
+      btn.addEventListener('click', function () {
+        menu.classList.toggle('hidden');
+      });
+    }
+  });
+
+</script>
+</body>
+
+</html>
