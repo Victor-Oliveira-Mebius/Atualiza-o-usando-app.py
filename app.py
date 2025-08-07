@@ -1,11 +1,11 @@
-print("MYSQLHOST:", os.getenv('MYSQLHOST'))
+import os  # <-- CORRETO: SEMPRE o import antes de tudo!
+print("MYSQLHOST:", os.getenv('MYSQLHOST'))  # <-- Para debug, pode remover depois
+
 from flask import Flask, render_template, request, redirect, jsonify
 import mysql.connector
 from datetime import datetime
-import os  # <-- CORREÇÃO 1: Importa a biblioteca 'os'
 
-# CORREÇÃO 2: A inicialização do Flask vem primeiro.
-# Diz ao Flask para procurar HTMLs na pasta atual e imagens na pasta 'static'.
+# Inicialização do Flask
 app = Flask(__name__, static_folder='static', template_folder='.')
 
 # Configuração da conexão para ler as variáveis de ambiente do Railway
@@ -16,12 +16,9 @@ db_config = {
     'database': os.getenv('MYSQLDATABASE'),
     'port': int(os.getenv('MYSQLPORT')),
     'charset': 'utf8'
- 
 }
 
-
 # --- ROTAS DO SITE ---
-# CORREÇÃO 3: Todas as rotas devem ser definidas ANTES da inicialização do servidor.
 
 @app.route('/')
 def index():
@@ -42,7 +39,6 @@ def form():
 @app.route('/clientes')
 def clientes():
     return render_template('Clientes.html')
-
 
 # --- ROTAS DA API (para interagir com o banco de dados) ---
 
@@ -78,7 +74,6 @@ def enviar():
 
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor()
-        
         cur.execute("""
             INSERT INTO clientes 
             (nome, email, telefone, empresa, sistema, mensagem, data_hora)
@@ -98,7 +93,5 @@ def enviar():
             conn.close()
 
 # --- INICIALIZAÇÃO DO SERVIDOR ---
-# CORREÇÃO 4: Este bloco deve ser a ÚLTIMA coisa no arquivo.
 if __name__ == '__main__':
     app.run(debug=True)
-
