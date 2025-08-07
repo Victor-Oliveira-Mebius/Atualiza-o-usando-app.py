@@ -15,6 +15,7 @@ def get_db_config():
         'charset': 'utf8'
     }
 
+# --- ROTAS DO SITE ---
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -35,10 +36,12 @@ def form():
 def clientes():
     return render_template('Clientes.html')
 
+# --- ROTAS DA API ---
+
 @app.route('/api/mensagens', methods=['GET'])
 def listar_mensagens():
     db_config = get_db_config()
-    print("Banco de dados de configuração:", db_config)  # Debug!
+    print("Banco de dados de configuração:", db_config)  # Para debug
     try:
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor(dictionary=True)
@@ -54,7 +57,7 @@ def listar_mensagens():
 @app.route('/api/enviar', methods=['POST'])
 def enviar():
     db_config = get_db_config()
-    print("Banco de dados de configuração:", db_config)  # Debug!
+    print("Banco de dados de configuração:", db_config)  # Para debug
     conn = None
     try:
         dados = request.get_json()
@@ -68,7 +71,7 @@ def enviar():
 
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor()
-        
+
         cur.execute("""
             INSERT INTO clientes 
             (nome, email, telefone, empresa, sistema, mensagem, data_hora)
@@ -77,7 +80,7 @@ def enviar():
 
         conn.commit()
         cur.close()
-        
+
         return jsonify({'status': 'sucesso'})
     except Exception as e:
         print("Erro ao inserir:", e)
@@ -88,5 +91,6 @@ def enviar():
         if conn and conn.is_connected():
             conn.close()
 
+# --- INICIALIZAÇÃO DO SERVIDOR ---
 if __name__ == '__main__':
     app.run(debug=True)
