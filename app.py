@@ -11,13 +11,13 @@ app = Flask(__name__, static_folder='static', template_folder='.')
 # Configuração da conexão para ler as variáveis de ambiente do Railway
 db_config = {
     'host': os.getenv('MYSQLHOST'),
-    'user': os.getenv('MYSQLUSER'),
-    'password': os.getenv('MYSQLPASSWORD'),
-    'database': os.getenv('MYSQLDATABASE'),
-    'porta': 3306,
-    #'port': int(os.getenv('MYSQLPORT')),
+    'user': os.getenv('USUÁRIO MYSQL'),
+    'password': os.getenv('SENHA MYSQL'),
+    'database': os.getenv('BANCO DE DADOS MYSQL'),
+    'port': int(os.getenv('MYSQLPORT')),
     'charset': 'utf8'
 }
+
 
 # --- ROTAS DO SITE ---
 # CORREÇÃO 3: Todas as rotas devem ser definidas ANTES da inicialização do servidor.
