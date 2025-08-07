@@ -1,4 +1,4 @@
-# Forçando um novo deploy no Railway
+print("MYSQLHOST:", os.getenv('MYSQLHOST'))
 from flask import Flask, render_template, request, redirect, jsonify
 import mysql.connector
 from datetime import datetime
@@ -16,6 +16,7 @@ db_config = {
     'database': os.getenv('MYSQLDATABASE'),
     'port': int(os.getenv('MYSQLPORT')),
     'charset': 'utf8'
+ 
 }
 
 
