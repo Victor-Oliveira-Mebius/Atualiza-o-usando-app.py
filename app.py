@@ -1,63 +1,26 @@
-import os  # <-- CORRETO: SEMPRE o import antes de tudo!
-print("MYSQLHOST:", os.getenv('MYSQLHOST'))  # <-- Para debug, pode remover depois
-
-from flask import Flask, render_template, request, redirect, jsonify
+import os
+from flask import Flask, render_template, request, jsonify
 import mysql.connector
 from datetime import datetime
 
-# Inicialização do Flask
 app = Flask(__name__, static_folder='static', template_folder='.')
 
-# Configuração da conexão para ler as variáveis de ambiente do Railway
 db_config = {
-    'host': os.getenv('MYSQLHOST'),
-    'user': os.getenv('MYSQLUSER'),
-    'password': os.getenv('MYSQLPASSWORD'),
-    'database': os.getenv('MYSQLDATABASE'),
-    'port': int(os.getenv('MYSQLPORT')),
+    'host': os.getenv('MYSQL_HOST'),
+    'user': os.getenv('MYSQL_USER'),
+    'password': os.getenv('MYSQL_PASSWORD'),
+    'database': os.getenv('MYSQL_DATABASE'),
+    'port': int(os.getenv('MYSQL_PORT')),
     'charset': 'utf8'
 }
-
-# --- ROTAS DO SITE ---
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/quem-somos')
-def quem_somos():
-    return render_template('quem-somos.html')
-
-@app.route('/solucoes')
-def solucoes():
-    return render_template('soluções.html')
-
 @app.route('/form')
 def form():
     return render_template('form.html')
-
-@app.route('/clientes')
-def clientes():
-    return render_template('Clientes.html')
-
-# --- ROTAS DA API (para interagir com o banco de dados) ---
-
-@app.route('/api/mensagens', methods=['GET'])
-def listar_mensagens():
-    conn = None
-    try:
-        conn = mysql.connector.connect(**db_config)
-        cur = conn.cursor(dictionary=True)
-        cur.execute("SELECT * FROM clientes ORDER BY data_hora DESC")
-        dados = cur.fetchall()
-        return jsonify(dados)
-    except Exception as e:
-        print("Erro ao listar mensagens:", e)
-        return jsonify({'status': 'erro', 'mensagem': str(e)})
-    finally:
-        if conn and conn.is_connected():
-            cur.close()
-            conn.close()
 
 @app.route('/api/enviar', methods=['POST'])
 def enviar():
@@ -74,6 +37,7 @@ def enviar():
 
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor()
+
         cur.execute("""
             INSERT INTO clientes 
             (nome, email, telefone, empresa, sistema, mensagem, data_hora)
@@ -92,6 +56,7 @@ def enviar():
             cur.close()
             conn.close()
 
-# --- INICIALIZAÇÃO DO SERVIDOR ---
+# Outras rotas...
+
 if __name__ == '__main__':
     app.run(debug=True)
