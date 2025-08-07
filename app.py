@@ -5,14 +5,20 @@ from datetime import datetime
 
 app = Flask(__name__, static_folder='static', template_folder='.')
 
-# O DICIONÁRIO db_config FOI REMOVIDO DAQUI
-
 # --- ROTAS DO SITE ---
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# ... (suas outras rotas do site continuam aqui, sem mudança) ...
+# CORREÇÃO: Adicionando as rotas que faltavam
+@app.route('/quem-somos')
+def quem_somos():
+    return render_template('quem-somos.html')
+
+@app.route('/solucoes')
+def solucoes():
+    return render_template('soluções.html')
+
 @app.route('/form')
 def form():
     return render_template('form.html')
@@ -21,11 +27,11 @@ def form():
 def clientes():
     return render_template('Clientes.html')
 
+
 # --- ROTAS DA API (COM A CORREÇÃO) ---
 
 @app.route('/api/mensagens', methods=['GET'])
 def listar_mensagens():
-    # CORREÇÃO: O db_config agora está DENTRO da função
     db_config = {
         'host': os.getenv('MYSQLHOST'),
         'user': os.getenv('MYSQLUSER'),
@@ -48,7 +54,6 @@ def listar_mensagens():
 
 @app.route('/api/enviar', methods=['POST'])
 def enviar():
-    # CORREÇÃO: O db_config também está DENTRO desta função
     db_config = {
         'host': os.getenv('MYSQLHOST'),
         'user': os.getenv('MYSQLUSER'),
