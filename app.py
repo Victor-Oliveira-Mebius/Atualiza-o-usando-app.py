@@ -2,7 +2,10 @@ import os
 import mysql.connector
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
-
+print("--- TESTE VARIÁVEIS DE AMBIENTE ---")
+for key in ['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DATABASE', 'MYSQL_PORT']:
+    print(f"{key}: {os.getenv(key)}")
+print("-----------------------------------")
 app = Flask(__name__, static_folder='static', template_folder='.')
 
 def get_db_config():
