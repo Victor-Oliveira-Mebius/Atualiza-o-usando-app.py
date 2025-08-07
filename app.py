@@ -11,9 +11,9 @@ app = Flask(__name__, static_folder='static', template_folder='.')
 # Configuração da conexão para ler as variáveis de ambiente do Railway
 db_config = {
     'host': os.getenv('MYSQLHOST'),
-    'user': os.getenv('USUÁRIO MYSQL'),
-    'password': os.getenv('SENHA MYSQL'),
-    'database': os.getenv('BANCO DE DADOS MYSQL'),
+    'user': os.getenv('MYSQLUSER'),
+    'password': os.getenv('MYSQLPASSWORD'),
+    'database': os.getenv('MYSQLDATABASE'),
     'port': int(os.getenv('MYSQLPORT')),
     'charset': 'utf8'
 }
