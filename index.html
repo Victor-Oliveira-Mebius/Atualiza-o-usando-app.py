@@ -876,13 +876,11 @@ Sincronização automática de
 
 
        <script>
-       const imagens = [
-        "{{ url_for('static', filename='img-sistema/imagem-aprimorada.png') }}",
-       // "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
-  
+const imagens = [
+  "{{ url_for('static', filename='img-sistema/imagem-aprimorada.png') }}"
+  // Se quiser adicionar mais imagens depois, pode adicionar aqui.
 ];
 
-let index = 0;
 const heroBg = document.getElementById('hero-bg');
 const titulo = document.getElementById('hero-titulo');
 const desc = document.getElementById('hero-desc');
@@ -900,22 +898,8 @@ function animarFundo() {
   heroBg.style.transform = "scale(1.08) translateY(-10px)";
   setTimeout(() => {
     heroBg.style.transform = "scale(1.00) translateY(0)";
-  }, 3500);
+  }, 1500); // Mantém o efeito só no carregamento
 }
-
-function trocarImagem() {
-  esconderTexto();
-  heroBg.style.opacity = 0;
-  setTimeout(() => {
-    heroBg.style.backgroundImage = `url('${imagens[index]}')`;
-    heroBg.style.opacity = 1;
-    animarFundo();
-    setTimeout(mostrarTexto, 800); // texto entra um pouco depois da imagem
-    index = (index + 1) % imagens.length;
-  }, 700);
-}
-
-setInterval(trocarImagem, 6000);
 
 window.addEventListener('DOMContentLoaded', () => {
   heroBg.style.backgroundImage = `url('${imagens[0]}')`;
@@ -923,7 +907,6 @@ window.addEventListener('DOMContentLoaded', () => {
   animarFundo();
   setTimeout(mostrarTexto, 600);
 });
-
 
         // Função para animar contadores 
   function animateCounter(element, target, duration = 2000) {
