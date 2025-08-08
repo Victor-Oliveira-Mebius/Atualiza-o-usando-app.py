@@ -134,24 +134,22 @@
     </button>
   </header> 
 
-<section id="hero" class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative">
-  <!-- Overlay com sombra escura e opacidade -->
-  <div id="hero-overlay" class="absolute inset-0 bg-black bg-opacity-30 rounded-lg hidden transition duration-500 z-0"></div>
-
-  <!-- Texto principal -->
+<section
+  id="hero"
+  class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative transition-opacity duration-700"
+  style="background-size: cover; background-position: center;">
+  <div class="absolute inset-0 z-0 pointer-events-none"
+    style="background: linear-gradient(120deg, rgba(24,33,53,0.82) 60%, rgba(0,164,255,0.30) 100%, rgba(116,0,184,0.16) 100%);">
+  </div>
   <div id="hero-texto" class="relative z-10 max-w-4xl">
-    <h1 class="text-5xl font-bold mb-5" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      Soluções para o Sucesso  
-do seu Negócio
+    <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Soluções para o Sucesso do seu Negócio
     </h1>
-    <p class="text-xl md:text-2xl mb-8 max-w-2xl" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
       Inovação com Eficiência para Empresas e Escritórios Contábeis
     </p>
   </div>
-
-  <!-- Botão flutuante fixado no canto inferior direito -->
   <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
-    <!-- CORREÇÃO: Link para a rota 'solucoes' -->
     <a href="{{ url_for('solucoes') }}">
       <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300 animate-bounce-once">
         Solicitar Demonstração
@@ -159,7 +157,15 @@ do seu Negócio
     </a>
   </div>
 </section>
-
+<style>
+  #hero.opacity-0 {
+    opacity: 0;
+  }
+  #hero {
+    opacity: 1;
+    transition: opacity 0.7s;
+  }
+</style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
     <!-- CORREÇÃO: Links para as rotas do Flask -->
@@ -837,21 +843,27 @@ Sincronização automática de
 
 
        <script>
-        // CORREÇÃO: O caminho da imagem agora é gerado pelo Flask.
-        // As aspas simples dentro das aspas duplas são importantes para que o JavaScript 
-        // leia o caminho como uma string.
-        const imagens = [
-            "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
-        ];
+       const imagens = [
+  "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
+  "{{ url_for('static', filename='img-sistema/imagem-de-computador-sistemas.webp') }}"
+];
 
-        // O restante do seu JavaScript não precisa de nenhuma alteração.
-        let index = 0;
-        const hero = document.getElementById('hero');
-        const overlay = document.getElementById('hero-overlay');
+let index = 0;
+const hero = document.getElementById('hero');
 
-        function trocarImagem() {
-            const imagemAtual = imagens[index];
-            hero.style.backgroundImage = `url('${imagemAtual}')`;
+function trocarImagem() {
+  hero.classList.add('opacity-0');
+  setTimeout(() => {
+    hero.style.backgroundImage = `url('${imagens[index]}')`;
+    hero.classList.remove('opacity-0');
+    index = (index + 1) % imagens.length;
+  }, 600);
+}
+
+setInterval(trocarImagem, 6000);
+window.addEventListener('DOMContentLoaded', () => {
+  hero.style.backgroundImage = `url('${imagens[0]}')`;
+});
 
             // Esta verificação continua funcionando, pois o nome do arquivo ainda está no caminho.
             if (imagemAtual.includes("parte-interna.png")) {
@@ -865,7 +877,7 @@ Sincronização automática de
             }
 
             index = (index + 1) % imagens.length;
-        }
+        
 
         setInterval(trocarImagem, 5000);
         trocarImagem();
