@@ -139,7 +139,10 @@
   class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative transition-opacity duration-700"
   style="background-size: cover; background-position: center;">
 
-  <!-- Primeira mensagem (visível ao carregar) -->
+  <!-- Overlay para escurecer imagem -->
+  <div id="hero-overlay" class="absolute inset-0 z-0 pointer-events-none" style="background: none;"></div>
+
+  <!-- Texto 1 -->
   <div class="hero-texto-1 relative z-10 max-w-4xl">
     <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
       Soluções para o Sucesso do seu Negócio
@@ -149,7 +152,7 @@
     </p>
   </div>
 
-  <!-- Segunda mensagem (inicialmente oculta) -->
+  <!-- Texto 2 -->
   <div class="hero-texto-2 relative z-10 max-w-4xl hidden">
     <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
       <ul>
@@ -162,7 +165,6 @@
       Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
     </p>
   </div>
-
   <!-- Botão flutuante -->
   <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
     <a href="{{ url_for('solucoes') }}">
@@ -859,26 +861,60 @@ Sincronização automática de
 
 
        <script>
-   const imagens = [
-  "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", // primeira
-  "{{ url_for('static', filename='img-sistema/parte-interna.png') }}" // segunda
-];
 
-let index = 0;
-const hero = document.getElementById('hero');
-const texto1 = document.querySelector('.hero-texto-1');
-const texto2 = document.querySelector('.hero-texto-2');
+document.addEventListener('DOMContentLoaded', () => {
+  // Ajuste os caminhos conforme seu projeto (Jinja mantido)
+  const imagens = [
+    "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", // 1ª
+    "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"                  // 2ª
+  ];
+  
+  const hero   = document.getElementById('hero');
+  const texto1 = document.querySelector('.hero-texto-1');
+  const texto2 = document.querySelector('.hero-texto-2');
 
-// Exibe a primeira imagem ao carregar
-hero.style.backgroundImage = `url('${imagens[index]}')`;
+  // Pré-carrega para evitar tela branca
+  imagens.forEach(src => { const img = new Image(); img.src = src; });
 
-// Após 3 segundos, troca para a segunda imagem e exibe o segundo texto
-setTimeout(() => {
-  index = 1;
-  hero.style.backgroundImage = `url('${imagens[index]}')`;
-  texto1.classList.add('hidden');
-  texto2.classList.remove('hidden');
-}, 3000);
+  // Estado inicial
+  let index = 0;
+  hero.style.backgroundImage = `url('${imagens[0]}')`;
+  if (texto1) texto1.classList.remove('hidden');
+  if (texto2) texto2.classList.add('hidden');
+
+  // Configurações de tempo
+  const PRIMEIRA_TROCA_MS = 3000;  // 3s após carregar
+  const INTERVALO_MS      = 5000;  // depois troca a cada 5s (ajuste se quiser)
+
+  function aplicarEstado(i) {
+    // Troca a imagem
+    hero.style.backgroundImage = `url('${imagens[i]}')`;
+
+    // Troca o texto de acordo com a imagem
+    if (i === 0) {
+      if (texto2) texto2.classList.add('hidden');
+      if (texto1) texto1.classList.remove('hidden');
+    } else {
+      if (texto1) texto1.classList.add('hidden');
+      if (texto2) texto2.classList.remove('hidden');
+    }
+  }
+
+  function proximaTroca() {
+    index = (index + 1) % imagens.length;
+    aplicarEstado(index);
+  }
+
+  // Primeira troca em 3s
+  setTimeout(() => {
+    proximaTroca();
+
+    // Trocas contínuas
+    setInterval(proximaTroca, INTERVALO_MS);
+  }, PRIMEIRA_TROCA_MS);
+});
+
+
 
 
 
