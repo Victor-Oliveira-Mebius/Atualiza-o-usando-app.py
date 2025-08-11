@@ -138,10 +138,9 @@
   id="hero"
   class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative transition-opacity duration-700"
   style="background-size: cover; background-position: center;">
-  <div class="absolute inset-0 z-0 pointer-events-none"
-    style="background: linear-gradient(120deg, rgba(24,33,53,0.82) 60%, rgba(0,164,255,0.30) 100%, rgba(116,0,184,0.16) 100%);">
-  </div>
-  <div id="hero-texto" class="relative z-10 max-w-4xl">
+
+  <!-- Primeira mensagem (visível ao carregar) -->
+  <div class="hero-texto-1 relative z-10 max-w-4xl">
     <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
       Soluções para o Sucesso do seu Negócio
     </h1>
@@ -149,6 +148,22 @@
       Inovação com Eficiência para Empresas e Escritórios Contábeis
     </p>
   </div>
+
+  <!-- Segunda mensagem (inicialmente oculta) -->
+  <div class="hero-texto-2 relative z-10 max-w-4xl hidden">
+    <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      <ul>
+        <li>Sistema rápido e fácil de usar</li>
+        <li>Relatórios automáticos</li>
+        <li>Suporte imediato e local</li>
+      </ul>
+    </h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
+    </p>
+  </div>
+
+  <!-- Botão flutuante -->
   <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
     <a href="{{ url_for('solucoes') }}">
       <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300 animate-bounce-once">
@@ -157,6 +172,7 @@
     </a>
   </div>
 </section>
+
 <style>
   #hero.opacity-0 {
     opacity: 0;
@@ -192,7 +208,7 @@
           Sistema Completo para sua Empresa
         </h2>
         <p class="text-gray-600 mb-6 font-playfair text-xl">
-          Nossos sistemas de gestão comercial foram desenvolvidos para automatizar e otimizar processos com foco em performance e experiência do cliente.
+          Você já imaginou controlar vendas, estoque e clientes em tempo real sem perder horas com planilhas?
         </p>
         <!-- Grid com os cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -843,138 +859,112 @@ Sincronização automática de
 
 
        <script>
-       const imagens = [
-  "{{ url_for('static', filename='img-sistema/imagem-pdv-Uniplus.jpeg') }}",
+   const imagens = [
+  "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", // primeira
+  "{{ url_for('static', filename='img-sistema/parte-interna.png') }}" // segunda
 ];
 
 let index = 0;
 const hero = document.getElementById('hero');
+const texto1 = document.querySelector('.hero-texto-1');
+const texto2 = document.querySelector('.hero-texto-2');
 
-function trocarImagem() {
-  hero.classList.add('opacity-0');
-  setTimeout(() => {
-    hero.style.backgroundImage = `url('${imagens[index]}')`;
-    hero.classList.remove('opacity-0');
-    index = (index + 1) % imagens.length;
-  }, 600);
-}
-        setInterval(trocarImagem, 5000);
-        trocarImagem();
+// Exibe a primeira imagem ao carregar
+hero.style.backgroundImage = `url('${imagens[index]}')`;
 
-        // Função para animar contadores 
-        function animateCounter(element, target, duration = 2000) {
-            let start = 0;
-            let current = start;
-            const increment = target / (duration / 16); // Aproximadamente 60fps
+// Após 3 segundos, troca para a segunda imagem e exibe o segundo texto
+setTimeout(() => {
+  index = 1;
+  hero.style.backgroundImage = `url('${imagens[index]}')`;
+  texto1.classList.add('hidden');
+  texto2.classList.remove('hidden');
+}, 3000);
 
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    // Se for número decimal (ex: 1.5), exibe com 1 casa
-                    if (target % 1 !== 0) {
-                        element.textContent = current.toFixed(1);
-                    } else {
-                        element.textContent = Math.floor(current);
-                    }
-                }
-            }, 16);
+
+
+    // ======= Animação de contadores =======
+    function animateCounter(element, target, duration = 2000) {
+      let start = 0;
+      let current = start;
+      const increment = target / (duration / 16); // ~60fps
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = (target % 1 !== 0) ? target.toFixed(1) : target;
+          clearInterval(timer);
+        } else {
+          if (target % 1 !== 0) {
+            element.textContent = current.toFixed(1);
+          } else {
+            element.textContent = Math.floor(current);
+          }
         }
+      }, 16);
+    }
 
+    // ======= Intersection Observer (fade-in + counters) =======
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    };
 
-        // Intersection Observer para detectar quando a seção está visível
-        const observerOptions = {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Animar elementos fade-in
-                    const fadeElements = entry.target.querySelectorAll('.fade-in-up');
-                    fadeElements.forEach((el, index) => {
-                        setTimeout(() => {
-                            el.classList.add('visible');
-                        }, index * 200);
-                    });
-
-                    // Animar contadores
-                    const counters = entry.target.querySelectorAll('.counter');
-                    counters.forEach((counter, index) => {
-                        const target = parseFloat(counter.getAttribute('data-target'));
-                        setTimeout(() => {
-                            animateCounter(counter, target);
-                        }, index * 300);
-                    });
-
-                    // Parar de observar após a animação
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observar a seção de estatísticas
-        const statsSection = document.getElementById('stats-section');
-        if (statsSection) { // Adiciona uma verificação para evitar erros se a seção não existir
-            observer.observe(statsSection);
-        }
-
-        // Adicionar efeito hover nos cards
-        document.querySelectorAll('.stat-card').forEach(card => {
-            card.addEventListener('mouseenter', function () {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-
-            card.addEventListener('mouseleave',function () {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-   
-        history.replaceState(null, null, window.location.pathname);
-          document.addEventListener('DOMContentLoaded', function () {
-            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i.test(navigator.userAgent);
-            if (isMobile) {
-              const header = document.querySelector('header');
-              if (header) {
-                // Esta lógica pode precisar de ajuste, mas o código em si está ok.
-              }
-            }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fadeElements = entry.target.querySelectorAll('.fade-in-up');
+          fadeElements.forEach((el, index) => {
+            setTimeout(() => el.classList.add('visible'), index * 200);
           });
-         
-   
-        document.addEventListener('DOMContentLoaded', function () {
-            const btn = document.getElementById('mobileMenuBtn');
-            const menu = document.getElementById('mobileMenu');
 
-            if (btn && menu) {
-              btn.addEventListener('click', function () {
-                menu.classList.toggle('hidden');
-              });
-            }
-        });
- 
-        const botao = document.getElementById('botao-flutuante');
-        let scrollTimeout;
+          const counters = entry.target.querySelectorAll('.counter');
+          counters.forEach((counter, index) => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            setTimeout(() => animateCounter(counter, target), index * 300);
+          });
 
-        function mostrarBotao() {
-            if (botao) {
-                botao.style.opacity = '1';
-                if (scrollTimeout) clearTimeout(scrollTimeout);
-
-                scrollTimeout = setTimeout(() => {
-                  botao.style.opacity = '0.2'; // Opacidade baixa após inatividade
-                }, 2000); // 2 segundos sem scroll
-            }
+          observer.unobserve(entry.target);
         }
+      });
+    }, observerOptions);
 
-        // Detecta movimento de rolagem
-        window.addEventListener('scroll', mostrarBotao);
+    const statsSection = document.getElementById('stats-section');
+    if (statsSection) observer.observe(statsSection);
 
-        // Inicializa o estado (começa com opacidade total)
-        mostrarBotao();
+    // ======= Hover cards =======
+    document.querySelectorAll('.stat-card').forEach(card => {
+      card.addEventListener('mouseenter', function () {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+        this.style.transition = 'transform .2s ease';
+      });
+      card.addEventListener('mouseleave', function () {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // ======= Menu mobile =======
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('mobileMenuBtn');
+      const menu = document.getElementById('mobileMenu');
+      if (btn && menu) {
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+      }
+    });
+
+    // ======= Botão flutuante (some um pouco após inatividade de scroll) =======
+    const botao = document.getElementById('botao-flutuante');
+    let scrollTimeout;
+    function mostrarBotao() {
+      if (!botao) return;
+      botao.style.opacity = '1';
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
+    }
+    window.addEventListener('scroll', mostrarBotao);
+    mostrarBotao();
+
+    // Ano dinâmico
+    document.getElementById('ano').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
