@@ -134,46 +134,63 @@
     </button>
   </header> 
 
-<section
-  id="hero"
-  class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative transition-opacity duration-700"
-  style="background-size: cover; background-position: center;">
+ <section
+    id="hero"
+    class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative touchzone">
+    <img src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}" alt="Imagem de Apresentação do Mercado" class="absolute inset-0 w-full h-full object-cover" />
 
-  <!-- Overlay para escurecer imagem -->
-  <div id="hero-overlay" class="absolute inset-0 z-0 pointer-events-none" style="background: none;"></div>
+    <!-- Overlay para escurecer só quando estiver na 2ª imagem -->
+    <div id="hero-overlay" class="absolute inset-0 z-0 pointer-events-none" style="background: none;"></div>
 
-  <!-- Texto 1 -->
-  <div class="hero-texto-1 relative z-10 max-w-4xl">
-    <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      Soluções para o Sucesso do seu Negócio
-    </h1>
-    <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      Inovação com Eficiência para Empresas e Escritórios Contábeis
-    </p>
-  </div>
+    <!-- Texto 1 (inicialmente visível) -->
+    <div class="hero-texto-1 relative z-10 max-w-4xl">
+      <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+        Soluções para o Sucesso do seu Negócio
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+        Inovação com Eficiência para Empresas e Escritórios Contábeis
+      </p>
+    </div>
 
-  <!-- Texto 2 -->
-  <div class="hero-texto-2 relative z-10 max-w-4xl hidden">
-    <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      <ul>
+    <!-- Texto 2 (inicialmente oculto) -->
+    <div class="hero-texto-2 relative z-10 max-w-4xl hidden">
+      <h2 class="text-4xl md:text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+        Principais Vantagens
+      </h2>
+      <ul class="list-disc list-inside text-xl md:text-2xl mb-6 drop-shadow-md">
         <li>Sistema rápido e fácil de usar</li>
         <li>Relatórios automáticos</li>
         <li>Suporte imediato e local</li>
       </ul>
-    </h1>
-    <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
-    </p>
-  </div>
-  <!-- Botão flutuante -->
-  <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
-    <a href="{{ url_for('solucoes') }}">
-      <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300 animate-bounce-once">
-        Solicitar Demonstração
-      </button>
-    </a>
-  </div>
-</section>
+      <p class="text-lg md:text-xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+        Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
+      </p>
+    </div>
+
+    <!-- Botões de navegação -->
+    <button id="prevBtn" class="nav-btn left-4" aria-label="Slide anterior" type="button">
+      <!-- chevron esquerdo -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <button id="nextBtn" class="nav-btn right-4" aria-label="Próximo slide" type="button">
+      <!-- chevron direito -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- Botão flutuante (opcional) -->
+    <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
+      <a href="{{ url_for('solucoes') }}">
+        <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300">
+          Solicitar Demonstração
+        </button>
+      </a>
+    </div>
+  </section>
 
 <style>
   #hero.opacity-0 {
@@ -217,8 +234,8 @@
           <!-- CARD 1 -->
           <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
             <i class="fas fa-shield-alt text-3xl text-blue-500 mb-4"></i>
-            <h3 class="text-lg font-playfair font-bold mb-2">Segurança de Dados</h3>
-            <p class="text-gray-600">Proteção avançada com backups automáticos e criptografia.</p>
+            <h3 class="text-lg font-playfair font-bold mb-2">Anos no mercado</h3>
+            <p class="text-gray-600">A Universo Sistemas está no mercado há mais de 20 anos, oferecendo soluções de alta qualidade.</p>
           </div>
           <!-- CARD 2 -->
           <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
@@ -277,72 +294,9 @@
 </style>
 
 
-     <section id="stats-section"
-    class="py-10 bg-white px-4 sm:px-6 lg:px-8"
-    style="box-shadow: rgba(195, 186, 253, 0.25) 0px 30px 60px -12px inset,
-           rgba(190, 213, 248, 0.3) 0px 18px 36px -18px inset;">
-  
-  <div class="container mx-auto px-4">
-    <!-- Título da seção -->
-    <div class="text-center mb-10 fade-in-up">
-      <h2 class="text-2xl font-bold text-gray-800 mb-2">
-        NÚMEROS QUE FALAM POR SI
-      </h2>
-      <p class="text-base text-gray-600">
-        Resultados comprovados ao longo dos anos
-      </p>
-    </div>
 
-    <!-- Cards de estatísticas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+ 
 
-      <!-- Card 1: Clientes Ativos -->
-      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 fade-in-up">
-        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-users text-blue-600 text-xl"></i>
-        </div>
-        <div class="counter text-blue-600 mb-1" data-target="1200">0</div>
-        <div class="text-blue-600 text-sm font-medium">+</div>
-        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">Clientes Ativos</h3>
-        <p class="text-sm text-gray-600">Empresas que confiam</p>
-      </div>
-
-      <!-- Card 2: Tempo de mercado -->
-      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 fade-in-up">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-calendar-alt text-green-600 text-xl"></i>
-        </div>
-        <div class="counter text-green-600 mb-1" data-target="20">0</div>
-        <div class="text-green-600 text-sm font-medium">+ anos</div>
-        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">No Mercado</h3>
-        <p class="text-sm text-gray-600">Experiência sólida</p>
-      </div>
-
-      <!-- Card 3: Estabilidade -->
-      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-purple-50 to-violet-50 fade-in-up">
-        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-chart-line text-purple-600 text-xl"></i>
-        </div>
-        <div class="counter text-purple-600 mb-1" data-target="99.9">0</div>
-        <div class="text-purple-600 text-sm font-medium">%</div>
-        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">Estabilidade</h3>
-        <p class="text-sm text-gray-600">Uptime garantido</p>
-      </div>
-
-      <!-- Card 4: Suporte -->
-      <div class="stat-card text-center rounded-xl bg-gradient-to-br from-orange-50 to-red-50 fade-in-up">
-        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-headset text-orange-600 text-xl"></i>
-        </div>
-        <div class="counter text-orange-600 mb-1" data-target="16">0</div>
-        <div class="text-orange-600 text-sm font-medium">7/7</div>
-        <h3 class="text-base font-bold text-gray-800 mt-2 mb-1">Suporte</h3>
-        <p class="text-sm text-gray-600">Atendimento ágil</p>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 <style>
@@ -436,6 +390,92 @@
     </div>
   </div>
 </section>
+
+
+<!-- Seção de Vendas Impactante -->
+<section class="bg-gradient-to-r from-blue-50 to-gray-50 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    
+    <!-- Coluna de Texto -->
+    <div>
+      <div class="inline-block bg-red-100 border-l-4 border-red-600 mb-8 p-4 text-left w-full">
+        <div class="flex items-center">
+          <svg class="h-6 w-6 text-red-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          <span class="font-bold text-red-800">ATENÇÃO DONOS DE MERCADO EM SINOP</span>
+        </div>
+      </div>
+      
+      <!-- Título Principal -->
+      <div class="mb-6">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-gray-600 mb-4">
+          ❌ Sistema lento e confuso? 
+        </h2>
+      </div>
+
+      <div class="text-gray-800 mb-6 p-4 rounded-lg shadow-md bg-gray-50">
+        <p class="text-lg md:text-xl font-medium">
+          ✅ Tenha controle total das vendas e estoque, com relatórios automáticos e suporte ágil.
+        </p>
+        <p class="text-gray-600 mt-2">
+          Não fique para trás. <span class="font-semibold text-yellow-600">A concorrência já está usando automação para vender mais!!</span> 
+        </p>
+      </div>
+
+      <!-- Lista de Benefícios -->
+      <ul class="grid grid-cols-1 gap-4 mb-10 text-left">
+        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-gray-800 font-medium">Controle de estoque em tempo real - nunca mais perca vendas por falta de produtos</span>
+        </li>
+        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-gray-800 font-medium">Relatórios automáticos que mostram EXATAMENTE onde está seu lucro</span>
+        </li>
+        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-gray-800 font-medium">Suporte local em Sinop que resolve seus problemas na hora</span>
+        </li>
+        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-gray-800 font-medium">Sistema rápido que não trava mesmo no horário de pico</span>
+        </li>
+      </ul>
+
+      <!-- Oferta Especial -->
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-md">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="text-left">
+            <h3 class="text-lg font-bold text-yellow-800">SOLICITE AGORA</h3>
+            <p class="text-yellow-700"><span class="font-bold">uma demonstração gratuita</span></p>
+          </div>
+          <a href="{{ url_for('solucoes') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 whitespace-nowrap">
+            QUERO MEU SISTEMA AGORA!
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna da Imagem -->
+    <div class="flex justify-center lg:justify-end">
+      <img src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}"
+           alt="Imagem pdv caixa compras"
+           class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
+    </div>
+
+  </div>
+</section>
+
+
 
 <section id="about" class="mb-20">
   <div class="text-center mb-12">
@@ -862,60 +902,87 @@ Sincronização automática de
 
        <script>
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Ajuste os caminhos conforme seu projeto (Jinja mantido)
-  const imagens = [
-    "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", // 1ª
-    "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"                  // 2ª
-  ];
-  
-  const hero   = document.getElementById('hero');
-  const texto1 = document.querySelector('.hero-texto-1');
-  const texto2 = document.querySelector('.hero-texto-2');
+ document.addEventListener('DOMContentLoaded', () => {
+    // slides: cada item amarra imagem + qual texto mostrar
+    const slides = [
+      {
+        bg: "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}",
+        overlay: 0.0,     // sem escurecer
+        showText: 1       // mostra texto 1
+      },
+      {
+        bg: "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
+        overlay: 0.3,     // 30% escuro
+        showText: 2       // mostra texto 2
+      }
+    ];
 
-  // Pré-carrega para evitar tela branca
-  imagens.forEach(src => { const img = new Image(); img.src = src; });
+    // elementos
+    const hero    = document.getElementById('hero');
+    const overlay = document.getElementById('hero-overlay');
+    const t1      = document.querySelector('.hero-texto-1');
+    const t2      = document.querySelector('.hero-texto-2');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-  // Estado inicial
-  let index = 0;
-  hero.style.backgroundImage = `url('${imagens[0]}')`;
-  if (texto1) texto1.classList.remove('hidden');
-  if (texto2) texto2.classList.add('hidden');
+    // pré-carregar imagens
+    slides.forEach(s => { const im = new Image(); im.src = s.bg; });
 
-  // Configurações de tempo
-  const PRIMEIRA_TROCA_MS = 3000;  // 3s após carregar
-  const INTERVALO_MS      = 5000;  // depois troca a cada 5s (ajuste se quiser)
+    // estado
+    let i = 0;
 
-  function aplicarEstado(i) {
-    // Troca a imagem
-    hero.style.backgroundImage = `url('${imagens[i]}')`;
-
-    // Troca o texto de acordo com a imagem
-    if (i === 0) {
-      if (texto2) texto2.classList.add('hidden');
-      if (texto1) texto1.classList.remove('hidden');
-    } else {
-      if (texto1) texto1.classList.add('hidden');
-      if (texto2) texto2.classList.remove('hidden');
+    function aplicarSlide(idx) {
+      const s = slides[idx];
+      // troca background
+      hero.style.backgroundImage = `url('${s.bg}')`;
+      // overlay
+      overlay.style.background = s.overlay > 0 ? `rgba(0,0,0,${s.overlay})` : 'none';
+      // textos
+      if (s.showText === 1) {
+        t2.classList.add('hidden');
+        t1.classList.remove('hidden');
+      } else {
+        t1.classList.add('hidden');
+        t2.classList.remove('hidden');
+      }
     }
-  }
 
-  function proximaTroca() {
-    index = (index + 1) % imagens.length;
-    aplicarEstado(index);
-  }
+    function proximo() {
+      i = (i + 1) % slides.length;
+      aplicarSlide(i);
+    }
 
-  // Primeira troca em 3s
-  setTimeout(() => {
-    proximaTroca();
+    function anterior() {
+      i = (i - 1 + slides.length) % slides.length;
+      aplicarSlide(i);
+    }
 
-    // Trocas contínuas
-    setInterval(proximaTroca, INTERVALO_MS);
-  }, PRIMEIRA_TROCA_MS);
-});
+    // inicial
+    aplicarSlide(i);
 
+    // eventos dos botões
+    nextBtn.addEventListener('click', proximo);
+    prevBtn.addEventListener('click', anterior);
 
+    // teclado ← →
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') proximo();
+      if (e.key === 'ArrowLeft')  anterior();
+    });
 
+    // swipe no mobile
+    let startX = null;
+    hero.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const endX = e.changedTouches[0].clientX;
+      const dx = endX - startX;
+      const LIMIAR = 40; // px
+      if (dx > LIMIAR) anterior();
+      if (dx < -LIMIAR) proximo();
+      startX = null;
+    }, { passive: true });
+  });
 
 
     // ======= Animação de contadores =======
