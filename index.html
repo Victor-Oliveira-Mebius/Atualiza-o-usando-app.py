@@ -60,14 +60,17 @@
       color: #3b82f6;
     }
 
-    .hero-image {
-      width: 100vw;
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: background-image 1s ease-in-out;
-    }
+.hero-image {
+  width: 100%;             /* evita scroll lateral */
+  min-height: 60vh;        /* altura responsiva */
+  height: auto;            /* deixa crescer conforme conteúdo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@media (min-width: 768px) {
+  .hero-image { min-height: 80vh; }
+}
 
     .stat-card {
       transition: all 0.3s ease;
@@ -136,7 +139,7 @@
 
  <section
   id="hero"
-  class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative touchzone">
+  class="hero-image text-white flex items-center justify-start px-4 md:px-8 min-h-[60vh] md:min-h-[80vh] lg:min-h-[700px] relative touchzone">
 
   <!-- BG como <img> ABSOLUTO -->
   <img id="hero-bg"
