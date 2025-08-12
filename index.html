@@ -135,62 +135,74 @@
   </header> 
 
  <section
-    id="hero"
-    class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative touchzone">
-    <img src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}" alt="Imagem de Apresentação do Mercado" class="absolute inset-0 w-full h-full object-cover" />
+  id="hero"
+  class="hero-image text-white flex items-center justify-start px-8 min-h-[700px] relative touchzone">
 
-    <!-- Overlay para escurecer só quando estiver na 2ª imagem -->
-    <div id="hero-overlay" class="absolute inset-0 z-0 pointer-events-none" style="background: none;"></div>
+  <!-- BG como <img> ABSOLUTO -->
+  <img id="hero-bg"
+       src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}"
+       alt="Imagem de Apresentação do Mercado"
+       class="absolute inset-0 w-full h-full object-cover z-0" />
 
-    <!-- Texto 1 (inicialmente visível) -->
-    <div class="hero-texto-1 relative z-10 max-w-4xl">
-      <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-        Soluções para o Sucesso do seu Negócio
-      </h1>
-      <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-        Inovação com Eficiência para Empresas e Escritórios Contábeis
-      </p>
-    </div>
+  <!-- Overlay (fica acima do bg) -->
+  <div id="hero-overlay"
+       class="absolute inset-0 pointer-events-none z-10"
+       style="background: none;"></div>
 
-    <!-- Texto 2 (inicialmente oculto) -->
-    <div class="hero-texto-2 relative z-10 max-w-4xl hidden">
-      <h2 class="text-4xl md:text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-        Principais Vantagens
-      </h2>
-      <ul class="list-disc list-inside text-xl md:text-2xl mb-6 drop-shadow-md">
-        <li>Sistema rápido e fácil de usar</li>
-        <li>Relatórios automáticos</li>
-        <li>Suporte imediato e local</li>
-      </ul>
-      <p class="text-lg md:text-xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-        Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
-      </p>
-    </div>
+  <!-- Texto 1 -->
+  <div class="hero-texto-1 relative z-20 max-w-4xl">
+    <h1 class="text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Soluções para o Sucesso do seu Negócio
+    </h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Inovação com Eficiência para Empresas e Escritórios Contábeis
+    </p>
+  </div>
 
-    <!-- Botões de navegação -->
-    <button id="prevBtn" class="nav-btn left-4" aria-label="Slide anterior" type="button">
-      <!-- chevron esquerdo -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-      </svg>
-    </button>
+  <!-- Texto 2 -->
+  <div class="hero-texto-2 relative z-20 max-w-4xl hidden">
+    <h2 class="text-4xl md:text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Principais Vantagens
+    </h2>
+    <ul class="list-disc list-inside text-xl md:text-2xl mb-6 drop-shadow-md">
+      <li>Sistema rápido e fácil de usar</li>
+      <li>Relatórios automáticos</li>
+      <li>Suporte imediato e local</li>
+    </ul>
+    <p class="text-lg md:text-xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
+      Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
+    </p>
+  </div>
 
-    <button id="nextBtn" class="nav-btn right-4" aria-label="Próximo slide" type="button">
-      <!-- chevron direito -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-      </svg>
-    </button>
+  <!-- Botões de navegação (ABSOLUTOS + z-index alto) -->
+  <button id="prevBtn"
+          class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 text-white z-30
+                 flex items-center justify-center shadow hover:bg-black/60 focus:outline-none focus:ring-4 focus:ring-white/40"
+          aria-label="Slide anterior" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+  </button>
 
-    <!-- Botão flutuante (opcional) -->
-    <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
-      <a href="{{ url_for('solucoes') }}">
-        <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300">
-          Solicitar Demonstração
-        </button>
-      </a>
-    </div>
-  </section>
+  <button id="nextBtn"
+          class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 text-white z-30
+                 flex items-center justify-center shadow hover:bg-black/60 focus:outline-none focus:ring-4 focus:ring-white/40"
+          aria-label="Próximo slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </button>
+
+  <!-- Botão flutuante -->
+  <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
+    <a href="{{ url_for('solucoes') }}">
+      <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300">
+        Solicitar Demonstração
+      </button>
+    </a>
+  </div>
+</section>
+
 
 <style>
   #hero.opacity-0 {
@@ -467,7 +479,7 @@
 
     <!-- Coluna da Imagem -->
     <div class="flex justify-center lg:justify-end">
-      <img src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}"
+      <img src="{{ url_for('static', filename='img-sistema/pdv-uniplus-img.jpeg') }}"
            alt="Imagem pdv caixa compras"
            class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
     </div>
@@ -901,74 +913,75 @@ Sincronização automática de
 
 
        <script>
-
- document.addEventListener('DOMContentLoaded', () => {
-    // slides: cada item amarra imagem + qual texto mostrar
-    const slides = [
-      {
-        bg: "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}",
-        overlay: 0.0,     // sem escurecer
-        showText: 1       // mostra texto 1
-      },
-      {
-        bg: "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
-        overlay: 0.3,     // 30% escuro
-        showText: 2       // mostra texto 2
-      }
-    ];
-
-    // elementos
-    const hero    = document.getElementById('hero');
-    const overlay = document.getElementById('hero-overlay');
-    const t1      = document.querySelector('.hero-texto-1');
-    const t2      = document.querySelector('.hero-texto-2');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    // pré-carregar imagens
-    slides.forEach(s => { const im = new Image(); im.src = s.bg; });
-
-    // estado
-    let i = 0;
-
-    function aplicarSlide(idx) {
-      const s = slides[idx];
-      // troca background
-      hero.style.backgroundImage = `url('${s.bg}')`;
-      // overlay
-      overlay.style.background = s.overlay > 0 ? `rgba(0,0,0,${s.overlay})` : 'none';
-      // textos
-      if (s.showText === 1) {
-        t2.classList.add('hidden');
-        t1.classList.remove('hidden');
-      } else {
-        t1.classList.add('hidden');
-        t2.classList.remove('hidden');
-      }
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = [
+    {
+      bg: "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}",
+      overlay: 0.0,
+      showText: 1
+    },
+    {
+      bg: "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
+      overlay: 0.3,
+      showText: 2
     }
+  ];
 
-    function proximo() {
-      i = (i + 1) % slides.length;
-      aplicarSlide(i);
+  const heroImg = document.getElementById('hero-bg');   // <-- aqui!
+  const overlay = document.getElementById('hero-overlay');
+  const t1      = document.querySelector('.hero-texto-1');
+  const t2      = document.querySelector('.hero-texto-2');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  slides.forEach(s => { const im = new Image(); im.src = s.bg; });
+
+  let i = 0;
+
+  function aplicarSlide(idx) {
+    const s = slides[idx];
+    // troca a imagem exibida
+    heroImg.src = s.bg;
+    // overlay
+    overlay.style.background = s.overlay > 0 ? `rgba(0,0,0,${s.overlay})` : 'none';
+    // textos
+    if (s.showText === 1) {
+      t2.classList.add('hidden');
+      t1.classList.remove('hidden');
+    } else {
+      t1.classList.add('hidden');
+      t2.classList.remove('hidden');
     }
+  }
 
-    function anterior() {
-      i = (i - 1 + slides.length) % slides.length;
-      aplicarSlide(i);
-    }
+  function proximo()  { i = (i + 1) % slides.length; aplicarSlide(i); }
+  function anterior() { i = (i - 1 + slides.length) % slides.length; aplicarSlide(i); }
 
-    // inicial
-    aplicarSlide(i);
+  // inicial
+  aplicarSlide(i);
 
-    // eventos dos botões
-    nextBtn.addEventListener('click', proximo);
-    prevBtn.addEventListener('click', anterior);
+  // eventos
+  nextBtn.addEventListener('click', proximo);
+  prevBtn.addEventListener('click', anterior);
 
-    // teclado ← →
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') proximo();
-      if (e.key === 'ArrowLeft')  anterior();
-    });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') proximo();
+    if (e.key === 'ArrowLeft')  anterior();
+  });
+
+  let startX = null;
+  const hero = document.getElementById('hero');
+  hero.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  hero.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const dx = endX - startX;
+    const LIMIAR = 40;
+    if (dx >  LIMIAR) anterior();
+    if (dx < -LIMIAR) proximo();
+    startX = null;
+  }, { passive: true });
+});
 
     // swipe no mobile
     let startX = null;
@@ -982,30 +995,10 @@ Sincronização automática de
       if (dx < -LIMIAR) proximo();
       startX = null;
     }, { passive: true });
-  });
+  
 
 
-    // ======= Animação de contadores =======
-    function animateCounter(element, target, duration = 2000) {
-      let start = 0;
-      let current = start;
-      const increment = target / (duration / 16); // ~60fps
-
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          element.textContent = (target % 1 !== 0) ? target.toFixed(1) : target;
-          clearInterval(timer);
-        } else {
-          if (target % 1 !== 0) {
-            element.textContent = current.toFixed(1);
-          } else {
-            element.textContent = Math.floor(current);
-          }
-        }
-      }, 16);
-    }
-
+   
     // ======= Intersection Observer (fade-in + counters) =======
     const observerOptions = {
       threshold: 0.3,
