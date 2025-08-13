@@ -143,7 +143,7 @@
 
   <!-- BG como <img> ABSOLUTO -->
   <img id="hero-bg"
-     src="{{ url_for('static', filename='img-sistema/descrição-na-imagem.png') }}"
+     src="{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}"
      alt="Imagem de Apresentação do Mercado"
      class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
 
@@ -162,41 +162,6 @@
   </p>
 </div>-->
 
-
-
-  <!-- Texto 2 -->
-  <div class="hero-texto-1 relative z-20 max-w-4xl hidden">
-    <h2 class="text-4xl md:text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      Principais Vantagens
-    </h2>
-    <ul class="list-disc list-inside text-xl md:text-2xl mb-6 drop-shadow-md">
-      <li>Sistema rápido e fácil de usar</li>
-      <li>Relatórios automáticos</li>
-      <li>Suporte imediato e local</li>
-    </ul>
-    <p class="text-lg md:text-xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-      Não fique para trás! 📲 Fale agora e peça sua demonstração gratuita.
-    </p>
-  </div>
-
-  <!-- Botões de navegação (ABSOLUTOS + z-index alto) -->
-  <button id="prevBtn"
-          class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 text-white z-30
-                 flex items-center justify-center shadow hover:bg-black/60 focus:outline-none focus:ring-4 focus:ring-white/40"
-          aria-label="Slide anterior" type="button">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-    </svg>
-  </button>
-
-  <button id="nextBtn"
-          class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 text-white z-30
-                 flex items-center justify-center shadow hover:bg-black/60 focus:outline-none focus:ring-4 focus:ring-white/40"
-          aria-label="Próximo slide" type="button">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-    </svg>
-  </button>
 
   <!-- Botão flutuante -->
   <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
@@ -918,98 +883,10 @@ Sincronização automática de
 
 
        <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const slides = [
-    { bg: "{{ url_for('static', filename='img-sistema/descrição-na-imagem.png') }}",             overlay: 0.3, showText: 2 },
-    { bg: "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", overlay: 0.3, showText: 1 },
+const imagens = [
+
+  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
   ];
-
-  const hero     = document.getElementById('hero');
-  const heroImg  = document.getElementById('hero-bg');
-  const overlay  = document.getElementById('hero-overlay');
-  const t1       = document.querySelector('.hero-texto-1');
-  const t2       = document.querySelector('.hero-texto-2');
-  const prevBtn  = document.getElementById('prevBtn');
-  const nextBtn  = document.getElementById('nextBtn');
-
-  slides.forEach(s => { const im = new Image(); im.src = s.bg; });
-
-  let i = 0;
-  function aplicarSlide(idx){
-    const s = slides[idx];
-    heroImg.src = s.bg;
-    overlay.style.background = s.overlay ? `rgba(0,0,0,${s.overlay})` : 'none';
-    if (s.showText === 1) { t2.classList.add('hidden'); t1.classList.remove('hidden'); }
-    else { t1.classList.add('hidden'); t2.classList.remove('hidden'); }
-  }
-  function proximo(){ i = (i + 1) % slides.length; aplicarSlide(i); }
-  function anterior(){ i = (i - 1 + slides.length) % slides.length; aplicarSlide(i); }
-
-  aplicarSlide(i);
-  if (nextBtn) nextBtn.addEventListener('click', proximo);
-  if (prevBtn) prevBtn.addEventListener('click', anterior);
-
-  // Swipe
-  let startX = null;
-  hero.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive:true });
-  hero.addEventListener('touchend', (e) => {
-    if (startX === null) return;
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx > 40) anterior();
-    if (dx < -40) proximo();
-    startX = null;
-  }, { passive:true });
-
-  // Menu mobile
-  const btn = document.getElementById('mobileMenuBtn');
-  const menu = document.getElementById('mobileMenu');
-  if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-
-  // Botão flutuante (fade)
-  const botao = document.getElementById('botao-flutuante');
-  let to;
-  const mostrarBotao = () => {
-    if (!botao) return;
-    botao.style.opacity = '1';
-    if (to) clearTimeout(to);
-    to = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
-  };
-  window.addEventListener('scroll', mostrarBotao);
-  mostrarBotao();
-
-  // Ano (se existir)
-  const anoEl = document.getElementById('ano');
-  if (anoEl) anoEl.textContent = new Date().getFullYear();
-});
-
-   // ======= Intersection Observer (fade-in + counters) =======
-    const observerOptions = {
-      threshold: 0.3,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const fadeElements = entry.target.querySelectorAll('.fade-in-up');
-          fadeElements.forEach((el, index) => {
-            setTimeout(() => el.classList.add('visible'), index * 200);
-          });
-
-          const counters = entry.target.querySelectorAll('.counter');
-          counters.forEach((counter, index) => {
-            const target = parseFloat(counter.getAttribute('data-target'));
-            setTimeout(() => animateCounter(counter, target), index * 300);
-          });
-
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    const statsSection = document.getElementById('stats-section');
-    if (statsSection) observer.observe(statsSection);
-
     // ======= Hover cards =======
     document.querySelectorAll('.stat-card').forEach(card => {
       card.addEventListener('mouseenter', function () {
