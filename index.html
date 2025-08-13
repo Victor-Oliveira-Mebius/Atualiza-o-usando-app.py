@@ -145,7 +145,7 @@
   <img id="hero-bg"
        src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}"
        alt="Imagem de Apresentação do Mercado"
-       class="absolute inset-0 w-full h-full object-cover z-0" />
+       class="absolute inset-0 w-full h-full object-cover z-0  object-[50%_20%] sm:object-[50%_25%] md:object-[50%_30%] lg:object-center" />
 
   <!-- Overlay (fica acima do bg) -->
   <div id="hero-overlay"
@@ -918,7 +918,7 @@ Sincronização automática de
        <script>
 document.addEventListener('DOMContentLoaded', () => {
   const slides = [
-    { bg: "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", overlay: 0.0, showText: 1 },
+    { bg: "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}", overlay: 0.3, showText: 1 },
     { bg: "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",             overlay: 0.3, showText: 2 }
   ];
 
