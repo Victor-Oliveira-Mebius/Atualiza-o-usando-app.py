@@ -143,9 +143,9 @@
 
   <!-- BG como <img> ABSOLUTO -->
   <img id="hero-bg"
-       src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}"
-       alt="Imagem de Apresentação do Mercado"
-       class="absolute inset-0 w-full h-full object-cover z-0  object-[50%_20%] sm:object-[50%_25%] md:object-[50%_30%] lg:object-center" />
+     src="{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}"
+     alt="Imagem de Apresentação do Mercado"
+     class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
 
   <!-- Overlay (fica acima do bg) -->
   <div id="hero-overlay"
@@ -474,7 +474,7 @@
             <p class="text-yellow-700"><span class="font-bold">uma demonstração gratuita</span></p>
           </div>
           <a href="{{ url_for('solucoes') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 whitespace-nowrap">
-            QUERO MEU SISTEMA AGORA!
+            Escolha seu sistema!
           </a>
         </div>
       </div>
