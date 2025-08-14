@@ -878,45 +878,46 @@ Sincronização automática de
     </footer>
 
 
-       <script>
-const imagens = [
-
-  "{{ url_for('static', filename='img-sistema/parte-interna.png) }}",
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const imagens = [
+    "{% endraw %}{{ url_for('static', filename='img-sistema/parte-interna.png') }}{% raw %}"
   ];
-    // ======= Hover cards =======
-    document.querySelectorAll('.stat-card').forEach(card => {
-      card.addEventListener('mouseenter', function () {
-        this.style.transform = 'translateY(-8px) scale(1.02)';
-        this.style.transition = 'transform .2s ease';
-      });
-      card.addEventListener('mouseleave', function () {
-        this.style.transform = 'translateY(0) scale(1)';
-      });
+
+  // ======= Hover cards =======
+  document.querySelectorAll('.stat-card').forEach((card) => {
+    card.addEventListener('mouseenter', function () {
+      this.style.transform = 'translateY(-8px) scale(1.02)';
+      this.style.transition = 'transform .2s ease';
     });
-
-    // ======= Menu mobile =======
-    document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.getElementById('mobileMenuBtn');
-      const menu = document.getElementById('mobileMenu');
-      if (btn && menu) {
-        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-      }
+    card.addEventListener('mouseleave', function () {
+      this.style.transform = 'translateY(0) scale(1)';
     });
+  });
 
-    // ======= Botão flutuante (some um pouco após inatividade de scroll) =======
-    const botao = document.getElementById('botao-flutuante');
-    let scrollTimeout;
-    function mostrarBotao() {
-      if (!botao) return;
-      botao.style.opacity = '1';
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
-    }
-    window.addEventListener('scroll', mostrarBotao);
-    mostrarBotao();
+  // ======= Menu mobile =======
+  const btn = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  }
 
-    // Ano dinâmico
-    document.getElementById('ano').textContent = new Date().getFullYear();
-    </script>
+  // ======= Botão flutuante (some um pouco após inatividade de scroll) =======
+  const botao = document.getElementById('botao-flutuante');
+  let scrollTimeout;
+  function mostrarBotao() {
+    if (!botao) return;
+    botao.style.opacity = '1';
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
+  }
+  window.addEventListener('scroll', mostrarBotao);
+  mostrarBotao();
+
+  // Ano dinâmico
+  const anoEl = document.getElementById('ano');
+  if (anoEl) anoEl.textContent = new Date().getFullYear();
+});
+</script>
 </body>
 </html>
