@@ -176,12 +176,11 @@
   transition: transform .6s ease;
 }
 
-/* Slide */
 .hero-slide {
-  position: relative;
-  min-width: 100%;
-  height: 100%;
-  background: #000;           /* letterbox quando a imagem não preenche */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white; /* ou cor da sua marca */
 }
 
 /* Imagem: NÃO CORTAR (object-contain) */
@@ -997,12 +996,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('heroPrev');
   const nextBtn = document.getElementById('heroNext');
 
-  // ====== RENDER DINÂMICO DOS SLIDES (sem texto) ======
-  track.innerHTML = slides.map((src, i) => `
-    <div class="hero-slide${i === 0 ? ' active' : ''}">
-      <img src="${src}" alt="Banner ${i+1}">
-    </div>
-  `).join('');
+track.innerHTML = slides.map((src, i) => `
+  <div class="hero-slide${i === 0 ? ' active' : ''}" style="background-image: url('${src}')"></div>
+`).join('');
 
   dotsWrap.innerHTML = slides.map((_, i) =>
     `<button class="hero-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Ir ao slide ${i+1}"></button>`
