@@ -24,7 +24,7 @@
 <body class="font-sans bg-gray-50" id="top">
 
 <!-- header parte de cima do site -->
-<header class="flex bg-white sticky top-0 z-50 h-20 hidden md:flex" style="background-color: #e7fcfb;">
+<header class="flex bg-white sticky top-0 z-50 h-20 hidden md:flex" style="background-color: #ffffff;">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
     <!-- LOGO -->
     <div class="flex items-center space-x-4">
@@ -348,62 +348,81 @@
   </div>
 </section>
 
-<!-- parte de baixo do site -->
-<footer class="bg-gray-900 text-white py-12">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-      <div>
-        <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
-          <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" class="h-14 md:h-20 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0" alt="Universo Sistemas">
-        </h3>
-        <p class="text-gray-400">Soluções tecnológicas para potencializar seu comércio com eficiência e
-          inteligência.</p>
-      </div>
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                  <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
+                       
+                      <!-- CORREÇÃO: Imagem com url_for -->
+                      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png' ) }}" class="h-14 md:h-48 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0">
+                       
+                    </h3>
+                   
+                </div>
 
-      <div>
-        <h4 id="font-bold mb-4 text-lg">Produtos</h4>
-        <ul class="space-y-2">
-          <li><a href="#" class="text-gray-400 hover:text-white">******</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">******</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">******</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">******</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">*****</a></li>
-        </ul>
-      </div>
+                <div>
+                    <h4 id="font-bold mb-4 text-lg">Produtos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white">******</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">
+                                ******</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white">******</a></li>
 
-      <div>
-        <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
-        <ul class="space-y-2">
-          <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="text-gray-400 hover:text-white">Facebock</a></li>
-          <li><a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white">Instagram</a></li>
-          <li><a href="https://universosistemas.trinitysuite.com.br/portal/login" class="text-gray-400 hover:text-white">Suporte Técnico</a></li>
-          <li><a href="https://universosistemas.trinitysuite.com.br/portal/login" class="text-gray-400 hover:text-white">Central de Ajuda</a></li>
-        </ul>
-      </div>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white">******</a></li>
 
-      <div>
-        <h4 class="font-bold mb-4 text-lg">Contato</h4>
-        <address class="not-italic text-gray-400">
-          <p class="mb-2">
-            <a href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/@-11.8715545,-55.5230777,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-11.8715545!4d-55.5205028?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D">
-              <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização
-            </a>
-          </p>
-          <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
-          <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>Universosistemas@hotmail.com</p>
-        </address>
-        <div class="flex space-x-4 mt-4">
-          <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://web.whatsapp.com/" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
-          <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                                 <li><a href="#"
+                                class="text-gray-400 hover:text-white">*****</a></li>
+
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+                                class="text-gray-400 hover:text-white">Facebock</a></li>
+                        <li><a href="https://www.instagram.com/universo_sistemas/"
+                                class="text-gray-400 hover:text-white">Instagram</a></li>
+                        <li><a href="https://universosistemas.trinitysuite.com.br/portal/login"
+                                class="text-gray-400 hover:text-white">********</a></li>
+                        <li><a href="https://universosistemas.trinitysuite.com.br/portal/login"
+                                class="text-gray-400 hover:text-white">********</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Contato</h4>
+                    <address class="not-italic text-gray-400">
+                        <p class="mb-2"> <a
+                                href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/@-11.8715545,-55.5230777,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-11.8715545!4d-55.5205028?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D"><i
+                                    class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização</p></a>
+                        <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
+                        <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>atendimento@universosistemas.inf.br
+                        </p>
+                    </address>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+                            class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://web.whatsapp.com/" class="text-gray-400 hover:text-white"><i
+                                class="fab fa-whatsapp"></i></a>
+
+
+                        <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i
+                                class="fab fa-instagram"></i></a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>&copy;Universo Sistemas</p>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
-      <p>&copy;Universo Sistemas</p>
-    </div>
-  </div>
-</footer>
+    </footer>
 
 <script>
   // Back to top (proteção caso o botão não exista)

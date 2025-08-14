@@ -102,7 +102,7 @@
 </head>
 <body> <!-- Adicionei a tag body que estava faltando -->
   <!-- Header Desktop -->
-  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300" style="background-color: #edfaf9;">
+  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300" style="background-color: #ffffff;">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
       
       <!-- Logo -->
@@ -141,36 +141,32 @@
   id="hero"
   class="hero-image text-white flex items-center justify-start px-4 md:px-8 min-h-[60vh] md:min-h-[80vh] lg:min-h-[700px] relative touchzone">
 
-  <!-- BG como <img> ABSOLUTO -->
   <img id="hero-bg"
-     src="{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}"
-     alt="Imagem de Apresentação do Mercado"
-     class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
+       src="{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
+       alt="Imagem de Apresentação do Mercado"
+       class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
 
   <!-- Overlay (fica acima do bg) -->
   <div id="hero-overlay"
        class="absolute inset-0 pointer-events-none z-10"
        style="background: none;"></div>
 
-<!-- Texto 1 (inicialmente visível) 
-<div class="hero-texto-2 relative z-10 max-w-4xl">
-  <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 drop-shadow-lg" style="font-family: 'Playfair Display', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-
+  <!-- Texto central -->
+  <h1 class="relative z-20 text-4xl md:text-5xl font-bold text-white text-center"
+      style="text-shadow: 0 0 10px rgba(255, 255, 200, 0.9), 0 0 20px rgba(255, 255, 150, 0.7);">
+    Soluções para o sucesso do seu negócio
   </h1>
-  <p class="text-base sm:text-lg md:text-2xl mb-8 max-w-2xl drop-shadow-md" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
-   
-  </p>
-</div>-->
-
 
   <!-- Botão flutuante -->
-  <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
+  <div id="botao-flutuante"
+       class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
     <a href="{{ url_for('solucoes') }}">
       <button class="bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300">
         Solicitar Demonstração
       </button>
     </a>
   </div>
+
 </section>
 
 
@@ -449,7 +445,7 @@
 
     <!-- Coluna da Imagem -->
     <div class="flex justify-center lg:justify-end">
-      <img src="{{ url_for('static', filename='img-sistema/pdv-uniplus-img.jpeg') }}"
+      <img src="{{ url_for('static', filename='img-sistema/grafico-universo-sistemas.png') }}"
            alt="Imagem pdv caixa compras"
            class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
     </div>
@@ -473,7 +469,7 @@
         Expertise em Sistemas Comerciais
       </h3>
       <p class="text-gray-600 mb-6 leading-relaxed">
-        Há mais de 18 anos, somos referência em soluções tecnológicas para o comércio de mercadorias,
+        Há mais de 20 anos, somos referência em soluções tecnológicas para o comércio de mercadorias,
         ajudando empresas a automatizar processos, reduzir custos e aumentar resultados.
 
         Com atendimento ágil, suporte especializado e foco em inovação, estamos prontos para levar sua
@@ -495,7 +491,7 @@
 
     <div class="w-full lg:w-1/2">
       <!-- CORREÇÃO: Imagem com url_for -->
-      <img src="{{ url_for('static', filename='img-sistema/financeiro.png') }}" class="rounded-xl shadow-lg w-full max-w-full h-auto object-contain">
+      <img src="{{ url_for('static', filename='img-sistema/telas-de-graficos.png') }}" class="rounded-xl shadow-lg w-full max-w-full h-auto object-contain">
     </div>
   </div>
 </section>
@@ -885,7 +881,7 @@ Sincronização automática de
        <script>
 const imagens = [
 
-  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
+  "{{ url_for('static', filename='img-sistema/parte-interna.png) }}",
   ];
     // ======= Hover cards =======
     document.querySelectorAll('.stat-card').forEach(card => {
