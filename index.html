@@ -877,17 +877,16 @@ Sincronização automática de
         </div>
     </footer>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const imagens = [
     "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
   ];
 
-  // Aplica opacidade de 30% à imagem de fundo
-  const heroBg = document.getElementById('hero-bg');
-  if (heroBg) {
-    heroBg.style.opacity = '0.3';
+  // Aplica overlay escuro (30% preto)
+  const overlay = document.getElementById('hero-overlay');
+  if (overlay) {
+    overlay.style.background = 'rgba(0, 0, 0, 0.3)'; // 0.3 = 30% opacidade
   }
 
   // ======= Hover cards =======
