@@ -884,6 +884,12 @@ document.addEventListener('DOMContentLoaded', function () {
     "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
   ];
 
+  // Aplica opacidade de 30% à imagem de fundo
+  const heroBg = document.getElementById('hero-bg');
+  if (heroBg) {
+    heroBg.style.opacity = '0.3';
+  }
+
   // ======= Hover cards =======
   document.querySelectorAll('.stat-card').forEach((card) => {
     card.addEventListener('mouseenter', function () {
@@ -919,6 +925,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (anoEl) anoEl.textContent = new Date().getFullYear();
 });
 </script>
+
 
 </body>
 </html>
