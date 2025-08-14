@@ -996,9 +996,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('heroPrev');
   const nextBtn = document.getElementById('heroNext');
 
-track.innerHTML = slides.map((src, i) => `
-  <div class="hero-slide${i === 0 ? ' active' : ''}" style="background-image: url('${src}')"></div>
-`).join('');
+  // ====== RENDER DINÂMICO DOS SLIDES (sem texto) ======
+  track.innerHTML = slides.map((src, i) => `
+    <div class="hero-slide${i === 0 ? ' active' : ''}">
+      <img src="${src}" alt="Banner ${i+1}">
+    </div>
+  `).join('');
 
   dotsWrap.innerHTML = slides.map((_, i) =>
     `<button class="hero-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Ir ao slide ${i+1}"></button>`
