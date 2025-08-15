@@ -138,7 +138,7 @@
   </header> 
 <section id="hero" class="relative w-full bg-white">
   <div class="hero-wrap">
-    <!-- Track (preenchido via JS) -->
+    <!-- Slides (preenchidos via JS) -->
     <div class="hero-track" id="heroTrack"></div>
 
     <!-- Setas -->
@@ -153,20 +153,22 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <style>
-/* Área principal; altura vem do JS */
+/* ----- LAYOUT GERAL ----- */
 #hero { width: 100%; background: #fff; }
 
-/* Container visível do carrossel */
-.hero-wrap {
+.hero-wrap{
   position: relative;
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  /* height é aplicado via JS */
+  /* Altura fixa (responsiva) -> ajuste se quiser */
+  height: 380px;            /* desktop */
 }
+@media (max-width:1024px){ .hero-wrap{ height: 320px; } }  /* tablet */
+@media (max-width:768px){  .hero-wrap{ height: 260px; } }  /* mobile */
 
 /* Trilho */
-.hero-track {
+.hero-track{
   position: absolute;
   inset: 0;
   display: flex;
@@ -174,76 +176,55 @@
 }
 
 /* Slide */
-.hero-slide {
+.hero-slide{
   position: relative;
   min-width: 100%;
   height: 100%;
-  background: #111; /* fallback ao carregar */
+  background: #000; /* fallback durante carregamento */
 }
 
-/* Camada de fundo: cobre tudo, sem bordas vazias */
-.hero-bg {
+/* Imagem: preencher 100% SEM barras (irá cortar o excesso) */
+.hero-slide img{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;            /* preenche tudo (pode cortar, mas é o BG) */
-  filter: blur(16px) brightness(0.8);
-  transform: scale(1.08);       /* leve zoom pra esconder bordas do blur */
-  z-index: 0;
-}
-
-/* Camada principal: imagem 100% INTEIRA sem cortes */
-.hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;          /* mantém íntegra */
-  object-position: center;
+  object-fit: cover;       /* <- chave! preenche o banner */
+  object-position: center; /* centraliza o corte */
   z-index: 1;
   transition: transform 6s ease;
 }
-.hero-slide.active .hero-img { transform: scale(1.02); }
+.hero-slide.active img{ transform: scale(1.02); } /* leve movimento opcional */
 
-/* Overlay escuro suave (opcional; deixa o texto/dots mais visíveis) */
-.hero-slide::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.20);
+/* Overlay discreto (opcional) */
+.hero-slide::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.18); /* ajuste ou remova se não quiser escurecer */
   z-index: 2;
 }
 
-/* Setas */
-.hero-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px; height: 44px;
-  border: none; border-radius: 999px;
-  background: rgba(255,255,255,.95);
-  color: #111; font-size: 28px; line-height: 1;
-  cursor: pointer; z-index: 3;
-  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+/* ----- CONTROLES ----- */
+.hero-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border:none; border-radius:999px;
+  background: rgba(255,255,255,.95); color:#111; font-size:28px;
+  cursor:pointer; z-index:3; box-shadow:0 6px 20px rgba(0,0,0,.25);
 }
-.hero-prev { left: 10px; }
-.hero-next { right: 10px; }
-.hero-arrow:hover { background: #fff; }
+.hero-prev{ left:10px; }
+.hero-next{ right:10px; }
+.hero-arrow:hover{ background:#fff; }
 
-/* Dots */
-.hero-dots {
-  position: absolute;
-  left: 50%; bottom: 12px;
-  transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 3;
+.hero-dots{
+  position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+  display:flex; gap:8px; z-index:3;
 }
-.hero-dot {
-  width: 8px; height: 8px; border-radius: 999px;
-  background: rgba(255,255,255,.6);
-  border: none; cursor: pointer;
+.hero-dot{
+  width:8px; height:8px; border:none; border-radius:999px;
+  background:rgba(255,255,255,.6); cursor:pointer;
 }
-.hero-dot.active { background: #fff; }
+.hero-dot.active{ background:#fff; }
 </style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
@@ -945,16 +926,15 @@ Sincronização automática de
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // --- SLIDES (somente imagens) ---
+  // Somente imagens (sem textos). Evite acentos em nomes de arquivos.
   const slides = [
     "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
     "{{ url_for('static', filename='img-sistema/pdv-uniplus-img.jpeg') }}",
-    "{{ url_for('static', filename='img-sistema/imagem-apresentacao-mercado.jpeg') }}", // evite acentos no nome de arquivo
+    "{{ url_for('static', filename='img-sistema/imagem-apresentacao-mercado.jpeg') }}",
     "{{ url_for('static', filename='img-sistema/banner4.jpg') }}",
     "{{ url_for('static', filename='img-sistema/banner5.jpg') }}"
   ];
 
-  // --- ELEMENTOS ---
   const hero     = document.getElementById('hero');
   const wrap     = hero?.querySelector('.hero-wrap');
   const track    = document.getElementById('heroTrack');
@@ -962,16 +942,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn  = document.getElementById('heroPrev');
   const nextBtn  = document.getElementById('heroNext');
 
-  if (!hero || !wrap || !track || !dotsWrap || !prevBtn || !nextBtn) {
-    console.warn('Hero carousel: elementos ausentes.');
-    return;
-  }
+  if (!hero || !wrap || !track || !dotsWrap || !prevBtn || !nextBtn) return;
 
-  // --- RENDER: duas camadas (BG + IMG) ---
+  // Render (1 <img> por slide)
   track.innerHTML = slides.map((src, i) => `
     <div class="hero-slide${i === 0 ? ' active' : ''}">
-      <img class="hero-bg"  src="${src}" alt="Fundo ${i+1}" aria-hidden="true">
-      <img class="hero-img" src="${src}" alt="Banner ${i+1}">
+      <img src="${src}" alt="Banner ${i+1}">
     </div>
   `).join('');
 
@@ -982,83 +958,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const slideEls = Array.from(track.children);
   const dotEls   = Array.from(dotsWrap.children);
 
-  // --- CONTROLES ---
+  // Carrossel
   let index = 0;
   const total = slides.length;
   const intervalMs = 5000;
   let timer = null;
 
-  // Proporção (w/h) de cada imagem (da camada principal)
-  const ratios = new Array(total).fill(null);
-
-  // ALTURA MÁXIMA DO BANNER (menor em mobile/tablet)
-  function getMaxHeight() {
-    const w = window.innerWidth;
-    if (w <= 768)  return 260;   // mobile
-    if (w <= 1024) return 320;   // tablet
-    return 380;                  // desktop
-  }
-
-  // Define a altura do wrap: min(largura/ratioAtual, maxHeight)
-  function setWrapHeight() {
-    const w = wrap.clientWidth || hero.clientWidth || window.innerWidth;
-    const r = ratios[index] || ratios.find(Boolean) || (16/9);
-    const hIdeal = Math.round(w / r);     // altura p/ conter a imagem inteira
-    const h = Math.min(hIdeal, getMaxHeight());
-    wrap.style.height = h + 'px';
-  }
-
-  // Navegação
-  function goTo(i) {
+  function goTo(i){
     index = (i + total) % total;
     track.style.transform = `translateX(${-index * 100}%)`;
     slideEls.forEach((el, k) => el.classList.toggle('active', k === index));
     dotEls.forEach((d, k) => d.classList.toggle('active', k === index));
-    setWrapHeight();
     restart();
   }
-  function next() { goTo(index + 1); }
-  function prev() { goTo(index - 1); }
+  function next(){ goTo(index + 1); }
+  function prev(){ goTo(index - 1); }
   function start(){ timer = setInterval(next, intervalMs); }
-  function stop() { if (timer) clearInterval(timer); }
+  function stop(){ if (timer) clearInterval(timer); }
   function restart(){ stop(); start(); }
 
-  nextBtn.addEventListener('click', next);
   prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
   dotEls.forEach(d => d.addEventListener('click', e => goTo(+e.currentTarget.dataset.index)));
 
-  // Pausar autoplay no hover (desktop)
   track.addEventListener('mouseenter', stop);
   track.addEventListener('mouseleave', start);
 
-  // Debounce do resize
-  let rszId;
-  window.addEventListener('resize', () => {
-    clearTimeout(rszId);
-    rszId = setTimeout(setWrapHeight, 120);
-  });
-
-  // Registrar proporções quando as imagens carregarem
-  slideEls.forEach((sl, k) => {
-    const img = sl.querySelector('.hero-img');
-    if (!img) return;
-
-    const register = () => {
-      if (img.naturalWidth && img.naturalHeight) {
-        ratios[k] = img.naturalWidth / img.naturalHeight;
-        if (k === index) setWrapHeight();
-      }
-    };
-    if (img.complete) register();
-    else img.addEventListener('load', register);
-
-    img.addEventListener('error', () => {
-      console.warn('Falha ao carregar imagem do slide', k + 1, img.src);
-    });
-  });
-
-  // Inicializa
-  setWrapHeight();
+  // Inicia
   start();
 });
 </script>
