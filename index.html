@@ -136,7 +136,6 @@
       ☰
     </button>
   </header> 
-<!-- HERO CAROUSEL (sem texto, sem blur, sem cortes) -->
 <section id="hero" class="relative w-full bg-white">
   <div class="hero-wrap">
     <!-- Track preenchido via JS -->
@@ -155,6 +154,7 @@
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <style>
 /* Área principal: o segredo é o aspect-ratio por breakpoint */
+/* Área principal com proporção por breakpoint */
 #hero { width: 100%; background: #fff; }
 
 .hero-wrap{
@@ -162,9 +162,7 @@
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-
-  /* Proporção muda por breakpoint (sem JS) */
-  aspect-ratio: 21 / 9;          /* Desktop */
+  aspect-ratio: 21 / 9;           /* Desktop */
 }
 @media (max-width:1024px){
   .hero-wrap{ aspect-ratio: 16 / 9; } /* Tablet */
@@ -186,40 +184,38 @@
   position: relative;
   min-width: 100%;
   height: 100%;
-  background: #fff; /* fundo limpo enquanto carrega */
+  background: #000; /* fallback durante carregamento */
 }
 
-/* Garantir que o <img> dentro de <picture> preencha o container */
+/* A imagem preenche TODO o espaço (sem barras) */
 .hero-img{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;        /* imagem inteira, SEM cortes */
-  object-position: center;
+  object-fit: cover;                    /* <- cobre o banner */
+  object-position: var(--pos, center);  /* foco ajustável por slide */
   display: block;
   z-index: 1;
   transition: transform 6s ease;
 }
-.hero-slide.active .hero-img{ transform: scale(1.02); } /* leve vida opcional */
+.hero-slide.active .hero-img{ transform: scale(1.02); } /* vida */
 
-/* Setas */
 .hero-arrow{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   width: 44px; height: 44px;
   border: none; border-radius: 999px;
-  background: rgba(0,0,0,.06);
+  background: rgba(255,255,255,.95);
   color: #111; font-size: 28px; line-height: 1;
   cursor: pointer; z-index: 3;
   box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
 .hero-prev{ left: 10px; }
 .hero-next{ right: 10px; }
-.hero-arrow:hover{ background: rgba(0,0,0,.12); }
+.hero-arrow:hover{ background: #fff; }
 
-/* Dots */
 .hero-dots{
   position: absolute;
   left: 50%; bottom: 12px;
@@ -229,9 +225,9 @@
 .hero-dot{
   width: 8px; height: 8px; border-radius: 999px;
   border: none; cursor: pointer;
-  background: rgba(0,0,0,.25);
+  background: rgba(255,255,255,.6);
 }
-.hero-dot.active{ background: rgba(0,0,0,.55); }
+.hero-dot.active{ background: #fff; }
 </style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
@@ -933,32 +929,38 @@ Sincronização automática de
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Para cada slide, 3 variações (desktop/tablet/mobile) nas proporções 21:9, 16:9, 4:5
+  // Para cada slide, você pode opcionalmente definir "pos" para o foco do corte (object-position)
+  // Ex.: "center 30%" (mais alto), "left center", "right 40%", etc.
   const slides = [
     {
       desktop: "{{ url_for('static', filename='img-sistema/ajuste-tamanho.png') }}",
       tablet:  "{{ url_for('static', filename='img-sistema/ajuste-tamanho.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}"
+      mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
+      pos: "center center"
     },
     {
       desktop: "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
       tablet:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}"
+      mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
+      pos: "center center"
     },
     {
       desktop: "{{ url_for('static', filename='img-sistema/hero3-desktop-21x9.jpg') }}",
       tablet:  "{{ url_for('static', filename='img-sistema/hero3-tablet-16x9.jpg') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/hero3-mobile-4x5.jpg') }}"
+      mobile:  "{{ url_for('static', filename='img-sistema/hero3-mobile-4x5.jpg') }}",
+      pos: "center 35%"
     },
     {
       desktop: "{{ url_for('static', filename='img-sistema/hero4-desktop-21x9.jpg') }}",
       tablet:  "{{ url_for('static', filename='img-sistema/hero4-tablet-16x9.jpg') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/hero4-mobile-4x5.jpg') }}"
+      mobile:  "{{ url_for('static', filename='img-sistema/hero4-mobile-4x5.jpg') }}",
+      pos: "center center"
     },
     {
       desktop: "{{ url_for('static', filename='img-sistema/hero5-desktop-21x9.jpg') }}",
       tablet:  "{{ url_for('static', filename='img-sistema/hero5-tablet-16x9.jpg') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/hero5-mobile-4x5.jpg') }}"
+      mobile:  "{{ url_for('static', filename='img-sistema/hero5-mobile-4x5.jpg') }}",
+      pos: "center center"
     }
   ];
 
@@ -971,16 +973,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextBtn  = document.getElementById('heroNext');
   if (!hero || !wrap || !track || !dotsWrap || !prevBtn || !nextBtn) return;
 
-  // Render com <picture> (art direction)
+  // Render com <picture>
   track.innerHTML = slides.map((s, i) => `
-    <div class="hero-slide${i === 0 ? ' active' : ''}">
+    <div class="hero-slide${i === 0 ? ' active' : ''}" style="--pos:${s.pos || 'center center'}">
       <picture>
-        <!-- Mobile primeiro (4:5) -->
         <source media="(max-width: 768px)"  srcset="${s.mobile}">
-        <!-- Tablet (16:9) -->
         <source media="(max-width: 1024px)" srcset="${s.tablet}">
-        <!-- Desktop (21:9) -->
-        <img class="hero-img" src="${s.desktop}" alt="Banner ${i+1}">
+        <img class="hero-img" src="${s.desktop}" alt="Banner ${i+1}" loading="${i===0?'eager':'lazy'}">
       </picture>
     </div>
   `).join('');
@@ -1022,6 +1021,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicia
   start();
+
+  // Swipe no mobile (opcional)
+  let startX = null;
+  track.addEventListener('touchstart', (e) => startX = e.touches[0].clientX, {passive:true});
+  track.addEventListener('touchend', (e) => {
+    if (startX == null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+    startX = null;
+  }, {passive:true});
 });
 </script>
 
