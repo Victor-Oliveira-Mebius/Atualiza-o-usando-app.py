@@ -136,12 +136,13 @@
       ☰
     </button>
   </header> 
+<!-- HERO CAROUSEL (sem texto, sem blur, sem cortes) -->
 <section id="hero" class="relative w-full bg-white">
   <div class="hero-wrap">
-    <!-- Slides (preenchidos via JS) -->
+    <!-- Track preenchido via JS -->
     <div class="hero-track" id="heroTrack"></div>
 
-    <!-- Setas -->
+    <!-- Controles -->
     <button class="hero-arrow hero-prev" aria-label="Anterior" id="heroPrev">‹</button>
     <button class="hero-arrow hero-next" aria-label="Próximo" id="heroNext">›</button>
 
@@ -153,7 +154,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <style>
-/* ----- LAYOUT GERAL ----- */
+/* Área principal: o segredo é o aspect-ratio por breakpoint */
 #hero { width: 100%; background: #fff; }
 
 .hero-wrap{
@@ -161,11 +162,16 @@
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  /* Altura fixa (responsiva) -> ajuste se quiser */
-  height: 380px;            /* desktop */
+
+  /* Proporção muda por breakpoint (sem JS) */
+  aspect-ratio: 21 / 9;          /* Desktop */
 }
-@media (max-width:1024px){ .hero-wrap{ height: 320px; } }  /* tablet */
-@media (max-width:768px){  .hero-wrap{ height: 260px; } }  /* mobile */
+@media (max-width:1024px){
+  .hero-wrap{ aspect-ratio: 16 / 9; } /* Tablet */
+}
+@media (max-width:768px){
+  .hero-wrap{ aspect-ratio: 4 / 5; }  /* Mobile */
+}
 
 /* Trilho */
 .hero-track{
@@ -180,51 +186,52 @@
   position: relative;
   min-width: 100%;
   height: 100%;
-  background: #000; /* fallback durante carregamento */
+  background: #fff; /* fundo limpo enquanto carrega */
 }
 
-/* Imagem: preencher 100% SEM barras (irá cortar o excesso) */
-.hero-slide img{
+/* Garantir que o <img> dentro de <picture> preencha o container */
+.hero-img{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* <- chave! preenche o banner */
-  object-position: center; /* centraliza o corte */
+  object-fit: contain;        /* imagem inteira, SEM cortes */
+  object-position: center;
+  display: block;
   z-index: 1;
   transition: transform 6s ease;
 }
-.hero-slide.active img{ transform: scale(1.02); } /* leve movimento opcional */
+.hero-slide.active .hero-img{ transform: scale(1.02); } /* leve vida opcional */
 
-/* Overlay discreto (opcional) */
-.hero-slide::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,.18); /* ajuste ou remova se não quiser escurecer */
-  z-index: 2;
-}
-
-/* ----- CONTROLES ----- */
+/* Setas */
 .hero-arrow{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:44px; height:44px; border:none; border-radius:999px;
-  background: rgba(255,255,255,.95); color:#111; font-size:28px;
-  cursor:pointer; z-index:3; box-shadow:0 6px 20px rgba(0,0,0,.25);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border: none; border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  color: #111; font-size: 28px; line-height: 1;
+  cursor: pointer; z-index: 3;
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
-.hero-prev{ left:10px; }
-.hero-next{ right:10px; }
-.hero-arrow:hover{ background:#fff; }
+.hero-prev{ left: 10px; }
+.hero-next{ right: 10px; }
+.hero-arrow:hover{ background: rgba(0,0,0,.12); }
 
+/* Dots */
 .hero-dots{
-  position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
-  display:flex; gap:8px; z-index:3;
+  position: absolute;
+  left: 50%; bottom: 12px;
+  transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 3;
 }
 .hero-dot{
-  width:8px; height:8px; border:none; border-radius:999px;
-  background:rgba(255,255,255,.6); cursor:pointer;
+  width: 8px; height: 8px; border-radius: 999px;
+  border: none; cursor: pointer;
+  background: rgba(0,0,0,.25);
 }
-.hero-dot.active{ background:#fff; }
+.hero-dot.active{ background: rgba(0,0,0,.55); }
 </style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
@@ -926,31 +933,59 @@ Sincronização automática de
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Somente imagens (sem textos). Evite acentos em nomes de arquivos.
+  // Para cada slide, 3 variações (desktop/tablet/mobile) nas proporções 21:9, 16:9, 4:5
   const slides = [
-    "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
-    "{{ url_for('static', filename='img-sistema/pdv-uniplus-img.jpeg') }}",
-    "{{ url_for('static', filename='img-sistema/imagem-apresentacao-mercado.jpeg') }}",
-    "{{ url_for('static', filename='img-sistema/banner4.jpg') }}",
-    "{{ url_for('static', filename='img-sistema/banner5.jpg') }}"
+    {
+      desktop: "{{ url_for('static', filename='img-sistema/hero1-desktop-21x9.jpg') }}",
+      tablet:  "{{ url_for('static', filename='img-sistema/hero1-tablet-16x9.jpg') }}",
+      mobile:  "{{ url_for('static', filename='img-sistema/hero1-mobile-4x5.jpg') }}"
+    },
+    {
+      desktop: "{{ url_for('static', filename='img-sistema/hero2-desktop-21x9.jpg') }}",
+      tablet:  "{{ url_for('static', filename='img-sistema/hero2-tablet-16x9.jpg') }}",
+      mobile:  "{{ url_for('static', filename='img-sistema/hero2-mobile-4x5.jpg') }}"
+    },
+    {
+      desktop: "{{ url_for('static', filename='img-sistema/hero3-desktop-21x9.jpg') }}",
+      tablet:  "{{ url_for('static', filename='img-sistema/hero3-tablet-16x9.jpg') }}",
+      mobile:  "{{ url_for('static', filename='img-sistema/hero3-mobile-4x5.jpg') }}"
+    },
+    {
+      desktop: "{{ url_for('static', filename='img-sistema/hero4-desktop-21x9.jpg') }}",
+      tablet:  "{{ url_for('static', filename='img-sistema/hero4-tablet-16x9.jpg') }}",
+      mobile:  "{{ url_for('static', filename='img-sistema/hero4-mobile-4x5.jpg') }}"
+    },
+    {
+      desktop: "{{ url_for('static', filename='img-sistema/hero5-desktop-21x9.jpg') }}",
+      tablet:  "{{ url_for('static', filename='img-sistema/hero5-tablet-16x9.jpg') }}",
+      mobile:  "{{ url_for('static', filename='img-sistema/hero5-mobile-4x5.jpg') }}"
+    }
   ];
 
+  // Elementos
   const hero     = document.getElementById('hero');
   const wrap     = hero?.querySelector('.hero-wrap');
   const track    = document.getElementById('heroTrack');
   const dotsWrap = document.getElementById('heroDots');
   const prevBtn  = document.getElementById('heroPrev');
   const nextBtn  = document.getElementById('heroNext');
-
   if (!hero || !wrap || !track || !dotsWrap || !prevBtn || !nextBtn) return;
 
-  // Render (1 <img> por slide)
-  track.innerHTML = slides.map((src, i) => `
+  // Render com <picture> (art direction)
+  track.innerHTML = slides.map((s, i) => `
     <div class="hero-slide${i === 0 ? ' active' : ''}">
-      <img src="${src}" alt="Banner ${i+1}">
+      <picture>
+        <!-- Mobile primeiro (4:5) -->
+        <source media="(max-width: 768px)"  srcset="${s.mobile}">
+        <!-- Tablet (16:9) -->
+        <source media="(max-width: 1024px)" srcset="${s.tablet}">
+        <!-- Desktop (21:9) -->
+        <img class="hero-img" src="${s.desktop}" alt="Banner ${i+1}">
+      </picture>
     </div>
   `).join('');
 
+  // Dots
   dotsWrap.innerHTML = slides.map((_, i) =>
     `<button class="hero-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Ir ao slide ${i+1}"></button>`
   ).join('');
@@ -981,6 +1016,7 @@ document.addEventListener('DOMContentLoaded', () => {
   nextBtn.addEventListener('click', next);
   dotEls.forEach(d => d.addEventListener('click', e => goTo(+e.currentTarget.dataset.index)));
 
+  // Pausar autoplay no hover (desktop)
   track.addEventListener('mouseenter', stop);
   track.addEventListener('mouseleave', start);
 
