@@ -950,12 +950,12 @@ document.addEventListener('DOMContentLoaded', () => {
       mobile:  "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
       pos: "center 35%"
     },
-    {
-      desktop: "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-      tablet:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-      pos: "center center"
-    },
+{
+  desktop: "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
+  tablet:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
+  mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
+  pos: "center 80%"   // <- foca mais embaixo para não cortar o texto
+},
     {
       desktop: "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
       tablet:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
