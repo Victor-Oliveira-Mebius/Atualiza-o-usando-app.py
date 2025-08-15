@@ -137,9 +137,10 @@
     </button>
   </header> 
 
- <section id="hero" class="relative w-full bg-black">
+<!-- HERO CAROUSEL -->
+<section id="hero" class="relative w-full bg-white">
   <div class="hero-wrap">
-    <!-- Slides (preenchidos via JS) -->
+    <!-- Track (preenchido via JS) -->
     <div class="hero-track" id="heroTrack"></div>
 
     <!-- Setas -->
@@ -150,22 +151,22 @@
     <div class="hero-dots" id="heroDots"></div>
   </div>
 </section>
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
+<script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <style>
-  /* Área principal */
+/* Container principal do hero: altura é controlada via JS (aspect ratio) */
 #hero {
-  /* altura menor, como você pediu */
-  height: 380px;              /* desktop */
+  width: 100%;
+  background: #fff; /* no lugar do preto */
 }
-@media (max-width: 1024px) { #hero { height: 340px; } }
-@media (max-width: 768px)  { #hero { height: 300px; } }
 
+/* Envoltório com overflow hidden só para o track */
 .hero-wrap {
   position: relative;
-  height: 100%;
   width: 100%;
-  overflow: hidden;           /* esconde o que passar */
+  overflow: hidden;
   border-radius: 10px;
+  /* a altura é aplicada via JS inline conforme o slide atual */
 }
 
 /* Trilho dos slides */
@@ -176,58 +177,37 @@
   transition: transform .6s ease;
 }
 
+/* Cada slide ocupa 100% da largura do wrap */
 .hero-slide {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: white; /* ou cor da sua marca */
+  position: relative;
+  min-width: 100%;
+  height: 100%;
+  background: #fff; /* cor das bordas caso demore a carregar */
 }
 
-/* Imagem: NÃO CORTAR (object-contain) */
+/* Imagens SEM cortar */
 .hero-slide img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;        /* <- não recorta */
+  object-fit: contain;   /* <- não recorta */
   object-position: center;
   z-index: 0;
-  /* leve zoom ao trocar para dar “vida”, sem cortar */
   transition: transform 6s ease;
 }
 
 .hero-slide.active img {
-  transform: scale(1.02);
+  transform: scale(1.02); /* leve “vida” */
 }
 
-/* Overlay escuro */
+/* Overlay escuro por cima da imagem */
 .hero-slide::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.35); /* ~35% escuro, ajuste à vontade */
+  background: rgba(0,0,0,.35); /* ajuste à vontade */
   z-index: 1;
-}
-
-/* Conteúdo no topo da imagem */
-.hero-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  padding: 0 24px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  color: #fff;
-  text-shadow: 0 0 10px rgba(255,255,200,.9), 0 0 20px rgba(255,255,150,.7);
-}
-
-.hero-title {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: .5px;
-  font-size: clamp(24px, 4vw, 42px);
 }
 
 /* Setas */
@@ -270,6 +250,10 @@
   cursor: pointer;
 }
 .hero-dot.active { background: rgba(255,255,255,1); }
+
+/* Fade-in opcional do hero ao carregar */
+#hero.opacity-0 { opacity: 0; }
+#hero { opacity: 1; transition: opacity .7s; }
 </style>
 
 <style>
@@ -981,22 +965,29 @@ Sincronização automática de
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Somente as imagens (sem títulos)
+  // ====== SOMENTE IMAGENS (sem textos) ======
   const slides = [
     "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
     "{{ url_for('static', filename='img-sistema/pdv-uniplus-img.jpeg') }}",
-    "{{ url_for('static', filename='img-sistema/imagem-apresentação-mercado.jpeg') }}",
+    "{{ url_for('static', filename='img-sistema/imagem-apresentacao-mercado.jpeg') }}", // <- sem acentos
     "{{ url_for('static', filename='img-sistema/banner4.jpg') }}",
     "{{ url_for('static', filename='img-sistema/banner5.jpg') }}"
   ];
 
   // ====== ELEMENTOS ======
-  const track   = document.getElementById('heroTrack');
-  const dotsWrap= document.getElementById('heroDots');
-  const prevBtn = document.getElementById('heroPrev');
-  const nextBtn = document.getElementById('heroNext');
+  const hero     = document.getElementById('hero');
+  const wrap     = hero ? hero.querySelector('.hero-wrap') : null;
+  const track    = document.getElementById('heroTrack');
+  const dotsWrap = document.getElementById('heroDots');
+  const prevBtn  = document.getElementById('heroPrev');
+  const nextBtn  = document.getElementById('heroNext');
 
-  // ====== RENDER DINÂMICO DOS SLIDES (sem texto) ======
+  if (!hero || !wrap || !track || !dotsWrap || !prevBtn || !nextBtn) {
+    console.warn('Hero carousel: elementos ausentes no HTML.');
+    return;
+  }
+
+  // ====== RENDER (sem conteúdo textual) ======
   track.innerHTML = slides.map((src, i) => `
     <div class="hero-slide${i === 0 ? ' active' : ''}">
       <img src="${src}" alt="Banner ${i+1}">
@@ -1010,17 +1001,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const slideEls = Array.from(track.children);
   const dotEls   = Array.from(dotsWrap.children);
 
-  // ====== LÓGICA DO CARROSSEL ======
+  // ====== CONTROLES ======
   let index = 0;
-  let timer = null;
   const total = slides.length;
   const intervalMs = 5000;
+  let timer = null;
 
+  // Proporção (larg/alt) de cada imagem
+  const ratios = new Array(total).fill(null);
+
+  // Ajusta a ALTURA do wrap conforme a proporção do slide atual
+  function setWrapHeight() {
+    const w = wrap.clientWidth || hero.clientWidth || window.innerWidth;
+    const r = ratios[index] || ratios.find(Boolean) || (16/9); // fallback 16:9
+    const h = Math.round(w / r);
+    wrap.style.height = h + 'px';
+  }
+
+  // Navegação
   function goTo(i) {
     index = (i + total) % total;
     track.style.transform = `translateX(${-index * 100}%)`;
     slideEls.forEach((el, k) => el.classList.toggle('active', k === index));
     dotEls.forEach((d, k) => d.classList.toggle('active', k === index));
+    setWrapHeight();
     restart();
   }
 
@@ -1037,10 +1041,37 @@ document.addEventListener('DOMContentLoaded', () => {
   track.addEventListener('mouseenter', stop);
   track.addEventListener('mouseleave', start);
 
-  // Inicia
+  // Debounce de resize
+  let rszId;
+  window.addEventListener('resize', () => {
+    clearTimeout(rszId);
+    rszId = setTimeout(setWrapHeight, 120);
+  });
+
+  // Captura proporções quando cada imagem carregar
+  slideEls.forEach((sl, k) => {
+    const img = sl.querySelector('img');
+    if (!img) return;
+
+    function register() {
+      if (img.naturalWidth && img.naturalHeight) {
+        ratios[k] = img.naturalWidth / img.naturalHeight;
+        if (k === index) setWrapHeight();
+      }
+    }
+    if (img.complete) register();
+    else img.addEventListener('load', register);
+
+    img.addEventListener('error', () => {
+      console.warn('Falha ao carregar imagem do slide', k + 1, img.src);
+    });
+  });
+
+  // Inicializa
+  setWrapHeight();
   start();
 
-  // ======= (Opcional) seu restante de JS pode ficar aqui dentro =======
+  // ======= Seu JS extra (menu, botão flutuante, ano) =======
   const btn  = document.getElementById('mobileMenuBtn');
   const menu = document.getElementById('mobileMenu');
   if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
@@ -1053,13 +1084,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scrollTimeout) clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
   }
-  window.addEventListener('scroll', mostrarBotao);
+  window.addEventListener('scroll', mostrarBotao, { passive: true });
   mostrarBotao();
 
   const anoEl = document.getElementById('ano');
   if (anoEl) anoEl.textContent = new Date().getFullYear();
 });
 </script>
+
 
 
 
