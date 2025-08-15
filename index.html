@@ -150,20 +150,19 @@
   </div>
 </section>
 
-<!-- CSS e JS -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <style>
-/* Container principal; altura aplicada via JS */
+/* Área principal; altura vem do JS */
 #hero { width: 100%; background: #fff; }
 
-/* Área visível do carrossel */
+/* Container visível do carrossel */
 .hero-wrap {
   position: relative;
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  /* height é setado via JS (min(largura/ratio, max-height)) */
+  /* height é aplicado via JS */
 }
 
 /* Trilho */
@@ -179,29 +178,41 @@
   position: relative;
   min-width: 100%;
   height: 100%;
-  background: #fff;
+  background: #111; /* fallback ao carregar */
 }
 
-/* Imagem: não corta */
-.hero-slide img {
+/* Camada de fundo: cobre tudo, sem bordas vazias */
+.hero-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;       /* mantém a imagem inteira */
-  object-position: center;
+  object-fit: cover;            /* preenche tudo (pode cortar, mas é o BG) */
+  filter: blur(16px) brightness(0.8);
+  transform: scale(1.08);       /* leve zoom pra esconder bordas do blur */
   z-index: 0;
+}
+
+/* Camada principal: imagem 100% INTEIRA sem cortes */
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;          /* mantém íntegra */
+  object-position: center;
+  z-index: 1;
   transition: transform 6s ease;
 }
-.hero-slide.active img { transform: scale(1.02); }
+.hero-slide.active .hero-img { transform: scale(1.02); }
 
-/* Overlay escuro */
+/* Overlay escuro suave (opcional; deixa o texto/dots mais visíveis) */
 .hero-slide::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.30);   /* ajuste a gosto */
-  z-index: 1;
+  background: rgba(0,0,0,.20);
+  z-index: 2;
 }
 
 /* Setas */
@@ -211,7 +222,7 @@
   transform: translateY(-50%);
   width: 44px; height: 44px;
   border: none; border-radius: 999px;
-  background: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.95);
   color: #111; font-size: 28px; line-height: 1;
   cursor: pointer; z-index: 3;
   box-shadow: 0 6px 20px rgba(0,0,0,.25);
@@ -229,10 +240,10 @@
 }
 .hero-dot {
   width: 8px; height: 8px; border-radius: 999px;
-  background: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.6);
   border: none; cursor: pointer;
 }
-.hero-dot.active { background: rgba(255,255,255,1); }
+.hero-dot.active { background: #fff; }
 </style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
@@ -938,7 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const slides = [
     "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
     "{{ url_for('static', filename='img-sistema/pdv-uniplus-img.jpeg') }}",
-    "{{ url_for('static', filename='img-sistema/imagem-apresentacao-mercado.jpeg') }}", // evite acentos no nome do arquivo
+    "{{ url_for('static', filename='img-sistema/imagem-apresentacao-mercado.jpeg') }}", // evite acentos no nome de arquivo
     "{{ url_for('static', filename='img-sistema/banner4.jpg') }}",
     "{{ url_for('static', filename='img-sistema/banner5.jpg') }}"
   ];
@@ -956,12 +967,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // --- RENDER ---
+  // --- RENDER: duas camadas (BG + IMG) ---
   track.innerHTML = slides.map((src, i) => `
     <div class="hero-slide${i === 0 ? ' active' : ''}">
-      <img src="${src}" alt="Banner ${i+1}">
+      <img class="hero-bg"  src="${src}" alt="Fundo ${i+1}" aria-hidden="true">
+      <img class="hero-img" src="${src}" alt="Banner ${i+1}">
     </div>
   `).join('');
+
   dotsWrap.innerHTML = slides.map((_, i) =>
     `<button class="hero-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Ir ao slide ${i+1}"></button>`
   ).join('');
@@ -975,23 +988,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const intervalMs = 5000;
   let timer = null;
 
-  // Proporção (w/h) de cada imagem
+  // Proporção (w/h) de cada imagem (da camada principal)
   const ratios = new Array(total).fill(null);
 
-  // ALTURAS MÁXIMAS (banner menor) — ajuste se quiser
+  // ALTURA MÁXIMA DO BANNER (menor em mobile/tablet)
   function getMaxHeight() {
     const w = window.innerWidth;
-    if (w <= 768) return 260;     // mobile
-    if (w <= 1024) return 320;    // tablet
-    return 380;                   // desktop
+    if (w <= 768)  return 260;   // mobile
+    if (w <= 1024) return 320;   // tablet
+    return 380;                  // desktop
   }
 
-  // Define a altura do wrap: min(largura/ratioAtual, alturaMax)
+  // Define a altura do wrap: min(largura/ratioAtual, maxHeight)
   function setWrapHeight() {
     const w = wrap.clientWidth || hero.clientWidth || window.innerWidth;
     const r = ratios[index] || ratios.find(Boolean) || (16/9);
-    const hIdeal = Math.round(w / r);         // altura ideal para caber a imagem inteira
-    const h = Math.min(hIdeal, getMaxHeight()); // "banner menor"
+    const hIdeal = Math.round(w / r);     // altura p/ conter a imagem inteira
+    const h = Math.min(hIdeal, getMaxHeight());
     wrap.style.height = h + 'px';
   }
 
@@ -1014,20 +1027,20 @@ document.addEventListener('DOMContentLoaded', () => {
   prevBtn.addEventListener('click', prev);
   dotEls.forEach(d => d.addEventListener('click', e => goTo(+e.currentTarget.dataset.index)));
 
-  // pausa no hover (desktop)
+  // Pausar autoplay no hover (desktop)
   track.addEventListener('mouseenter', stop);
   track.addEventListener('mouseleave', start);
 
-  // debounce de resize
+  // Debounce do resize
   let rszId;
   window.addEventListener('resize', () => {
     clearTimeout(rszId);
     rszId = setTimeout(setWrapHeight, 120);
   });
 
-  // Captura proporções quando as imagens carregarem
+  // Registrar proporções quando as imagens carregarem
   slideEls.forEach((sl, k) => {
-    const img = sl.querySelector('img');
+    const img = sl.querySelector('.hero-img');
     if (!img) return;
 
     const register = () => {
