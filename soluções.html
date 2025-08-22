@@ -23,148 +23,56 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-  <!-- Header Desktop -->
-  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300" style="background-color: #ffffff;">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
-      
-      <!-- Logo -->
-      <div class="flex items-center">
-        <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-        <a href="{{ url_for('index') }}" class="transition transform hover:scale-105 duration-300">
-          <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
-        </a>
-      </div>
-      
-      <!-- Navegação Desktop -->
-      <nav>
-        <div class="flex items-center space-x-6">
-          <!-- CORREÇÃO: Links para as rotas do Flask -->
-          <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
-          <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
-          <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Parceiros</a>
-        </div>
-      </nav>
-
+  <header class="flex bg-white sticky top-0 z-50 h-20 hidden md:flex" style="background-color: #ffffff;">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
+    
+    <!-- LOGO -->
+    <div class="flex items-center space-x-4" >
+      <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
+      <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}"
+             alt="Logo Universo Sistemas"
+             class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
+      </a>
     </div>
-  </header>
-
-  <!-- Header Mobile -->
-  <header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
-    <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-    <a href="{{ url_for('index') }}">
-      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/> 
-    </a>
-    <button id="mobileMenuBtn" class="text-3xl focus:outline-none">
-      ☰
-    </button>
-  </header> 
-<section id="hero" class="relative w-full bg-white">
-  <div class="hero-wrap">
-    <!-- Track preenchido via JS -->
-    <div class="hero-track" id="heroTrack"></div>
-
-    <!-- Controles -->
-    <button class="hero-arrow hero-prev" aria-label="Anterior" id="heroPrev">‹</button>
-    <button class="hero-arrow hero-next" aria-label="Próximo" id="heroNext">›</button>
-
-    <!-- Dots -->
-    <div class="hero-dots" id="heroDots"></div>
+    <div class="flex items-center space-x-6" >
+      <!-- CORREÇÃO: Links para as rotas do Flask -->
+      <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500">Quem somos</a>
+      <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500">Soluções</a>
+      <a href="#" class="text-gray-700 hover:text-blue-500">Parceiros</a>
+    </div>
   </div>
-</section>
+</header>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
-<script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
-<style>
-/* Área principal: o segredo é o aspect-ratio por breakpoint */
-/* Área principal com proporção por breakpoint */
-#hero { width: 100%; background: #fff; }
+<header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
+  <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
+  <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
+  </a>
+  <button id="mobileMenuBtn" class="text-3xl focus:outline-none md:hidden">
+    ☰
+  </button>
+</header>
 
-.hero-wrap{
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 10px;
-  aspect-ratio: 21 / 9;           /* Desktop */
-}
-@media (max-width:1024px){
-  .hero-wrap{ aspect-ratio: 16 / 9; } /* Tablet */
-}
-@media (max-width:768px){
-  .hero-wrap{ aspect-ratio: 4 / 5; }  /* Mobile */
-}
-
-/* Trilho */
-.hero-track{
-  position: absolute;
-  inset: 0;
-  display: flex;
-  transition: transform .6s ease;
-}
-
-/* Slide */
-.hero-slide{
-  position: relative;
-  min-width: 100%;
-  height: 100%;
-  background: #000; /* fallback durante carregamento */
-}
-
-/* A imagem preenche TODO o espaço (sem barras) */
-.hero-img{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;                    /* <- cobre o banner */
-  object-position: var(--pos, center);  /* foco ajustável por slide */
-  display: block;
-  z-index: 1;
-  transition: transform 6s ease;
-}
-.hero-slide.active .hero-img{ transform: scale(1.02); } /* vida */
-
-.hero-arrow{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px; height: 44px;
-  border: none; border-radius: 999px;
-  background: rgba(255,255,255,.95);
-  color: #111; font-size: 28px; line-height: 1;
-  cursor: pointer; z-index: 3;
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
-}
-.hero-prev{ left: 10px; }
-.hero-next{ right: 10px; }
-.hero-arrow:hover{ background: #fff; }
-
-.hero-dots{
-  position: absolute;
-  left: 50%; bottom: 12px;
-  transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 3;
-}
-.hero-dot{
-  width: 8px; height: 8px; border-radius: 999px;
-  border: none; cursor: pointer;
-  background: rgba(255,255,255,.6);
-}
-.hero-dot.active{ background: #fff; }
-</style>
-  <!-- Menu Mobile -->
-  <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
-    <!-- CORREÇÃO: Links para as rotas do Flask -->
-    <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
-    <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Parcerias</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Suporte</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Vendedores</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Supermercados</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Lojas</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Restaurantes</a>
-    <a href="#" class="block px-4 py-3 border-b border-gray-200">Mercado</a>
-    <a href="#" class="block px-4 py-3">Orgamec</a>
-  </div>
+<div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
+  <!-- CORREÇÃO: Links para as rotas do Flask -->
+  <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
+  <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem Somos</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">Parcerias</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">Suporte</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">Vendedores</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">SUPERMERCADOS</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">LOJAS</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">RESTAURANTES</a>
+  <a href="#" class="block px-4 py-3 border-b border-gray-200">MERCADO</a>
+  <a href="#" class="block px-4 py-3">Orgamec</a>
+</div>
+   
+<main class="max-w-7xl mx-auto px-6 py-16">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-800 drop-shadow-lg">Quem Somos</h1>
+      <p class="text-lg text-gray-500 opacity-80 mt-2">Universo Sistemas - Transformando a gestão empresarial há mais de 18 anos</p>
+    </header>
 
   <!-- HERO SUAVE (opcional) -->
   <section class="soft-bg">
