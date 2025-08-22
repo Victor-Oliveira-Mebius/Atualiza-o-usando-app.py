@@ -136,98 +136,44 @@
       ☰
     </button>
   </header> 
-<section id="hero" class="relative w-full bg-white">
-  <div class="hero-wrap">
-    <!-- Track preenchido via JS -->
-    <div class="hero-track" id="heroTrack"></div>
 
-    <!-- Controles -->
-    <button class="hero-arrow hero-prev" aria-label="Anterior" id="heroPrev">‹</button>
-    <button class="hero-arrow hero-next" aria-label="Próximo" id="heroNext">›</button>
+ <section
+  id="hero"
+  class="hero-image text-white flex items-center justify-start px-4 md:px-8 min-h-[60vh] md:min-h-[80vh] lg:min-h-[700px] relative touchzone">
 
-    <!-- Dots -->
-    <div class="hero-dots" id="heroDots"></div>
+  <img id="hero-bg"
+       src="{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
+       alt="Imagem de Apresentação do Mercado"
+       class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
+
+  <!-- Overlay (fica acima do bg) -->
+  <div id="hero-overlay"
+       class="absolute inset-0 pointer-events-none z-10"
+       style="background: none;"></div>
+
+
+
+  <!-- Botão flutuante -->
+  <div id="botao-flutuante"
+       class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
+    <a href="{{ url_for('solucoes') }}">
+      <button class="bg-cyan-600 hover:bg-cyan-800 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300">
+        Solicitar Demonstração
+      </button>
+    </a>
   </div>
+
 </section>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
-<script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+
 <style>
-/* Área principal: o segredo é o aspect-ratio por breakpoint */
-/* Área principal com proporção por breakpoint */
-#hero { width: 100%; background: #fff; }
-
-.hero-wrap{
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 10px;
-  aspect-ratio: 21 / 9;           /* Desktop */
-}
-@media (max-width:1024px){
-  .hero-wrap{ aspect-ratio: 16 / 9; } /* Tablet */
-}
-@media (max-width:768px){
-  .hero-wrap{ aspect-ratio: 4 / 5; }  /* Mobile */
-}
-
-/* Trilho */
-.hero-track{
-  position: absolute;
-  inset: 0;
-  display: flex;
-  transition: transform .6s ease;
-}
-
-/* Slide */
-.hero-slide{
-  position: relative;
-  min-width: 100%;
-  height: 100%;
-  background: #000; /* fallback durante carregamento */
-}
-
-/* A imagem preenche TODO o espaço (sem barras) */
-.hero-img{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;                    /* <- cobre o banner */
-  object-position: var(--pos, center);  /* foco ajustável por slide */
-  display: block;
-  z-index: 1;
-  transition: transform 6s ease;
-}
-.hero-slide.active .hero-img{ transform: scale(1.02); } /* vida */
-
-.hero-arrow{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px; height: 44px;
-  border: none; border-radius: 999px;
-  background: rgba(255,255,255,.95);
-  color: #111; font-size: 28px; line-height: 1;
-  cursor: pointer; z-index: 3;
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
-}
-.hero-prev{ left: 10px; }
-.hero-next{ right: 10px; }
-.hero-arrow:hover{ background: #fff; }
-
-.hero-dots{
-  position: absolute;
-  left: 50%; bottom: 12px;
-  transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 3;
-}
-.hero-dot{
-  width: 8px; height: 8px; border-radius: 999px;
-  border: none; cursor: pointer;
-  background: rgba(255,255,255,.6);
-}
-.hero-dot.active{ background: #fff; }
+  #hero.opacity-0 {
+    opacity: 0;
+  }
+  #hero {
+    opacity: 1;
+    transition: opacity 0.7s;
+  }
 </style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
@@ -928,113 +874,52 @@ Sincronização automática de
     </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Para cada slide, você pode opcionalmente definir "pos" para o foco do corte (object-position)
-  // Ex.: "center 30%" (mais alto), "left center", "right 40%", etc.
-  const slides = [
-    {
-      desktop: "{{ url_for('static', filename='img-sistema/ajuste-tamanho.png') }}",
-      tablet:  "{{ url_for('static', filename='img-sistema/ajuste-tamanho.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
-      pos: "center center"
-    },
-    {
-      desktop: "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
-      tablet:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
-      pos: "center center"
-    },
-    {
-      desktop: "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
-      tablet:  "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/parte-interna.png') }}",
-      pos: "center 35%"
-    },
-{
-  desktop: "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-  tablet:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-  mobile:  "{{ url_for('static', filename='img-sistema/imagens-tamanho-ajustado.png') }}",
-  pos: "center 80%"   // <- foca mais embaixo para não cortar o texto
-},
-    {
-      desktop: "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-      tablet:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-      mobile:  "{{ url_for('static', filename='img-sistema/imagem-alterada.png') }}",
-      pos: "center center"
-    }
+document.addEventListener('DOMContentLoaded', function () {
+  const imagens = [
+    "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
   ];
 
-  // Elementos
-  const hero     = document.getElementById('hero');
-  const wrap     = hero?.querySelector('.hero-wrap');
-  const track    = document.getElementById('heroTrack');
-  const dotsWrap = document.getElementById('heroDots');
-  const prevBtn  = document.getElementById('heroPrev');
-  const nextBtn  = document.getElementById('heroNext');
-  if (!hero || !wrap || !track || !dotsWrap || !prevBtn || !nextBtn) return;
-
-  // Render com <picture>
-  track.innerHTML = slides.map((s, i) => `
-    <div class="hero-slide${i === 0 ? ' active' : ''}" style="--pos:${s.pos || 'center center'}">
-      <picture>
-        <source media="(max-width: 768px)"  srcset="${s.mobile}">
-        <source media="(max-width: 1024px)" srcset="${s.tablet}">
-        <img class="hero-img" src="${s.desktop}" alt="Banner ${i+1}" loading="${i===0?'eager':'lazy'}">
-      </picture>
-    </div>
-  `).join('');
-
-  // Dots
-  dotsWrap.innerHTML = slides.map((_, i) =>
-    `<button class="hero-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Ir ao slide ${i+1}"></button>`
-  ).join('');
-
-  const slideEls = Array.from(track.children);
-  const dotEls   = Array.from(dotsWrap.children);
-
-  // Carrossel
-  let index = 0;
-  const total = slides.length;
-  const intervalMs = 5000;
-  let timer = null;
-
-  function goTo(i){
-    index = (i + total) % total;
-    track.style.transform = `translateX(${-index * 100}%)`;
-    slideEls.forEach((el, k) => el.classList.toggle('active', k === index));
-    dotEls.forEach((d, k) => d.classList.toggle('active', k === index));
-    restart();
+  // Aplica overlay escuro (50% preto)
+  const overlay = document.getElementById('hero-overlay');
+  if (overlay) {
+    overlay.style.background = 'rgba(0, 0, 0, 0.5)'; // 0.5 = 50% opacidade
   }
-  function next(){ goTo(index + 1); }
-  function prev(){ goTo(index - 1); }
-  function start(){ timer = setInterval(next, intervalMs); }
-  function stop(){ if (timer) clearInterval(timer); }
-  function restart(){ stop(); start(); }
 
-  prevBtn.addEventListener('click', prev);
-  nextBtn.addEventListener('click', next);
-  dotEls.forEach(d => d.addEventListener('click', e => goTo(+e.currentTarget.dataset.index)));
+  // ======= Hover cards =======
+  document.querySelectorAll('.stat-card').forEach((card) => {
+    card.addEventListener('mouseenter', function () {
+      this.style.transform = 'translateY(-8px) scale(1.02)';
+      this.style.transition = 'transform .2s ease';
+    });
+    card.addEventListener('mouseleave', function () {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
 
-  // Pausar autoplay no hover (desktop)
-  track.addEventListener('mouseenter', stop);
-  track.addEventListener('mouseleave', start);
+  // ======= Menu mobile =======
+  const btn = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  }
 
-  // Inicia
-  start();
+  // ======= Botão flutuante (some um pouco após inatividade de scroll) =======
+  const botao = document.getElementById('botao-flutuante');
+  let scrollTimeout;
+  function mostrarBotao() {
+    if (!botao) return;
+    botao.style.opacity = '1';
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
+  }
+  window.addEventListener('scroll', mostrarBotao);
+  mostrarBotao();
 
-  // Swipe no mobile (opcional)
-  let startX = null;
-  track.addEventListener('touchstart', (e) => startX = e.touches[0].clientX, {passive:true});
-  track.addEventListener('touchend', (e) => {
-    if (startX == null) return;
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
-    startX = null;
-  }, {passive:true});
+  // Ano dinâmico
+  const anoEl = document.getElementById('ano');
+  if (anoEl) anoEl.textContent = new Date().getFullYear();
 });
 </script>
-
-
 
 
 </body>

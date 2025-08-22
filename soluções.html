@@ -68,10 +68,7 @@
   <a href="#" class="block px-4 py-3">Orgamec</a>
 </div>
    
-<main class="max-w-7xl mx-auto px-6 py-16">
-    <header class="text-center mb-12">
-      <h1 class="text-4xl font-bold text-gray-800 drop-shadow-lg">Quem Somos</h1>
-      <p class="text-lg text-gray-500 opacity-80 mt-2">Universo Sistemas - Transformando a gestão empresarial há mais de 18 anos</p>
+
     </header>
 
   <!-- HERO SUAVE (opcional) -->
@@ -291,54 +288,129 @@
   </section>
 
   <!-- FOOTER (seu mesmo) -->
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-        <div>
-          <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png' ) }}" class="h-14 md:h-16 w-auto object-contain">
-        </div>
-        <div>
-          <h4 class="font-bold mb-4 text-lg">Produtos</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="#" class="hover:text-white">******</a></li>
-            <li><a href="#" class="hover:text-white">******</a></li>
-            <li><a href="#" class="hover:text-white">******</a></li>
-            <li><a href="#" class="hover:text-white">******</a></li>
-            <li><a href="#" class="hover:text-white">*****</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="hover:text-white">Facebook</a></li>
-            <li><a href="https://www.instagram.com/universo_sistemas/" class="hover:text-white">Instagram</a></li>
-            <li><a href="https://universosistemas.trinitysuite.com.br/portal/login" class="hover:text-white">********</a></li>
-            <li><a href="https://universosistemas.trinitysuite.com.br/portal/login" class="hover:text-white">********</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold mb-4 text-lg">Contato</h4>
-          <address class="not-italic text-gray-400">
-            <p class="mb-2">
-              <a class="hover:text-white" href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/">
-                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i> Localização
-              </a>
-            </p>
-            <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i> +55 66 99631-0123</p>
-            <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i> atendimento@universosistemas.inf.br</p>
-          </address>
-          <div class="flex gap-4 mt-4 text-gray-400">
-            <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="hover:text-white"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://web.whatsapp.com/" class="hover:text-white"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.instagram.com/universo_sistemas/" class="hover:text-white"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
+  <footer class="bg-gray-950 text-gray-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-12">
+      
+      <!-- COL 1: LOGO + DESCR -->
+      <div class="text-center sm:text-left">
+        <img
+          src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}"
+          alt="Universo Sistemas"
+          class="h-10 sm:h-12 w-auto mx-auto sm:mx-0 mb-4"
+        />
+  
       </div>
-      <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
-        <p>&copy; Universo Sistemas</p>
+
+      <!-- COL 2: PRODUTOS -->
+      <div class="text-center sm:text-left">
+        <h4 class="font-semibold text-white mb-4">Produtos</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">******</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">******</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">******</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">******</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">*****</a></li>
+        </ul>
+      </div>
+
+      <!-- COL 3: LINKS ÚTEIS -->
+      <div class="text-center sm:text-left">
+        <h4 class="font-semibold text-white mb-4">Links Úteis</h4>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+              class="hover:text-white transition-colors"
+              target="_blank" rel="noopener noreferrer"
+            >Facebook</a>
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/universo_sistemas/"
+              class="hover:text-white transition-colors"
+              target="_blank" rel="noopener noreferrer"
+            >Instagram</a>
+          </li>
+          <li>
+            <a
+              href="https://universosistemas.trinitysuite.com.br/portal/login"
+              class="hover:text-white transition-colors"
+              target="_blank" rel="noopener noreferrer"
+            >********</a>
+          </li>
+          <li>
+            <a
+              href="https://universosistemas.trinitysuite.com.br/portal/login"
+              class="hover:text-white transition-colors"
+              target="_blank" rel="noopener noreferrer"
+            >********</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COL 4: CONTATO -->
+      <div class="text-center sm:text-left">
+        <h4 class="font-semibold text-white mb-4">Contato</h4>
+        <address class="not-italic space-y-2 text-sm">
+          <p>
+            <a
+              class="hover:text-white inline-flex items-center gap-2 transition-colors"
+              href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <i class="fas fa-map-marker-alt text-blue-400"></i>
+              Localização
+            </a>
+          </p>
+          <p class="inline-flex items-center gap-2">
+            <i class="fas fa-phone-alt text-blue-400"></i>
+            +55 66 99631-0123
+          </p>
+          <p class="inline-flex items-center gap-2 break-all">
+            <i class="fas fa-envelope text-blue-400"></i>
+            atendimento@universosistemas.inf.br
+          </p>
+        </address>
+
+        <!-- Social -->
+        <div class="flex justify-center sm:justify-start gap-4 mt-4">
+          <a
+            href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
+            class="hover:text-white transition-colors"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a
+            href="https://web.whatsapp.com/"
+            class="hover:text-white transition-colors"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="WhatsApp"
+          >
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/universo_sistemas/"
+            class="hover:text-white transition-colors"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </footer>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 
   <script>
    // Back to top (proteção caso o botão não exista)
