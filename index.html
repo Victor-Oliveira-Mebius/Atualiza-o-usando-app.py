@@ -152,7 +152,27 @@
        style="background: none;"></div>
 
 
-
+<!-- Botão flutuante: WhatsApp -->
+<div id="whatsapp-flutuante"
+     class="fixed right-6 bottom-24 z-50 transition-opacity duration-500 opacity-100">
+  <a href="https://wa.me/5566996310123?text=Olá!%20Quero%20ajuda%20para%20escolher%20o%20sistema."
+     target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <div
+      class="w-12 h-12 sm:w-14 sm:h-14 rounded-full
+             bg-green-500 hover:bg-green-600
+             shadow-lg hover:shadow-xl
+             flex items-center justify-center
+             transition-all duration-300 transform hover:scale-105
+             focus:outline-none focus:ring-4 focus:ring-green-300">
+      <!-- Ícone WhatsApp (SVG) -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+           class="w-6 h-6 sm:w-7 sm:h-7 text-white">
+        <path fill="currentColor"
+          d="M380.9 97.1C339 55.2 283.2 32 224.5 32 100.7 32 0 132.7 0 256.5c0 43.1 11.3 85.1 32.9 122.2L0 480l104.6-30.4c35.7 19.6 75.8 29.9 116.8 29.9h.1c123.7 0 224.5-100.7 224.5-224.5 0-58.7-23.2-114.5-65.1-156.4zM224.5 438.7h-.1c-37.3 0-73.8-10-105.7-28.9l-7.6-4.5-62.1 18.1 18.5-60.5-4.9-7.8C43.4 320.7 32 289.1 32 256.5 32 149.3 117.3 64 224.5 64c58.9 0 114.3 22.9 155.9 64.6 41.6 41.7 64.6 97 64.6 155.9 0 107.2-85.3 192.2-190.5 192.2zM334 298.3c-5.3-2.6-31.5-15.5-36.4-17.3-4.9-1.9-8.5-2.6-12.1 2.6-3.6 5.3-13.9 17.3-17 20.9-3.1 3.6-6.3 4-11.6 1.3-5.3-2.6-22.2-8.2-42.3-26.2-15.6-13.9-26.2-31-29.3-36.3-3.1-5.3-.3-8.2 2.3-10.7 2.4-2.4 5.3-6.3 7.9-9.4 2.6-3.1 3.4-5.3 5.3-8.9 1.8-3.6.9-6.7-.4-9.3-1.3-2.6-12.1-29.2-16.6-40-4.4-10.6-8.9-9.2-12.1-9.4-3.1-.2-6.7-.2-10.3-.2s-9.4 1.3-14.3 6.7c-4.9 5.3-18.8 18.4-18.8 44.9 0 26.5 19.3 52.1 22 55.7 2.6 3.6 38 58 91.9 81.3 12.8 5.5 22.8 8.8 30.6 11.2 12.9 4.1 24.7 3.5 34 2.1 10.4-1.6 31.5-12.9 36-25.4 4.5-12.5 4.5-23.2 3.1-25.4-1.5-2.1-4.9-3.4-10.2-6z"/>
+      </svg>
+    </div>
+  </a>
+</div>
   <!-- Botão flutuante -->
 <div id="botao-flutuante"
      class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
@@ -421,7 +441,7 @@
           <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
           </svg>
-          <span class="text-gray-800 font-medium">Suporte local em Sinop que resolve seus problemas na hora</span>
+          <span class="text-gray-800 font-medium">Suporte que resolve seus problemas na hora</span>
         </li>
         <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
@@ -914,6 +934,35 @@ document.addEventListener('DOMContentLoaded', function () {
       this.style.transform = 'translateY(0) scale(1)';
     });
   });
+
+
+
+// ======= Botões flutuantes: somem levemente após inatividade de scroll =======
+  const flutuantes = [
+    document.getElementById('botao-flutuante'),
+    document.getElementById('whatsapp-flutuante')
+  ];
+
+  
+  function mostrarBotoes() {
+    // mostra todos imediatamente
+    for (const el of flutuantes) {
+      if (el) el.style.opacity = '1';
+    }
+    // após 2s sem scroll, reduza opacidade
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      for (const el of flutuantes) {
+        if (el) el.style.opacity = '0.2';
+      }
+    }, 2000);
+  }
+
+  window.addEventListener('scroll', mostrarBotoes);
+  mostrarBotoes();
+
+
+
 
   // ======= Menu mobile =======
   const btn = document.getElementById('mobileMenuBtn');
