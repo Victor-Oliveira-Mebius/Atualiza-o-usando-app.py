@@ -939,51 +939,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// ======= Botões flutuantes: somem levemente após inatividade de scroll =======
+
+
+
+
+  // =========================
+  // Botões flutuantes: "apagão" após inatividade
+  // =========================
+
+  // Pegue os elementos (mantém os mesmos IDs que você já usa)
   const flutuantes = [
     document.getElementById('botao-flutuante'),
-    document.getElementById('whatsapp-flutuante')
-  ];
+    document.getElementById('whatsapp-flutuante'),
+  ].filter(Boolean); // remove nulos se algum não existir
 
-  
-  function mostrarBotoes() {
-    // mostra todos imediatamente
-    for (const el of flutuantes) {
-      if (el) el.style.opacity = '1';
-    }
-    // após 2s sem scroll, reduza opacidade
-    if (scrollTimeout) clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      for (const el of flutuantes) {
-        if (el) el.style.opacity = '0.2';
-      }
-    }, 2000);
+  // Configurações
+  const INACTIVE_MS   = 3000;  // 3s sem interação
+  const ACTIVE_OP     = 1;     // opacidade quando ativo
+  const DIM_OP        = 0.06;  // opacidade “quase 0” quando inativo
+
+  let inactivityTimer = null;
+
+  // aplica opacidade a todos
+  function setOpacityAll(v) {
+    for (const el of flutuantes) el.style.opacity = String(v);
   }
 
-  window.addEventListener('scroll', mostrarBotoes);
-  mostrarBotoes();
+  // chamada em qualquer interação do usuário
+  function userActivity() {
+    // volta a mostrar
+    setOpacityAll(ACTIVE_OP);
 
-
-
-
-  // ======= Menu mobile =======
-  const btn = document.getElementById('mobileMenuBtn');
-  const menu = document.getElementById('mobileMenu');
-  if (btn && menu) {
-    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    // reinicia timer
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      // apaga quase por completo
+      setOpacityAll(DIM_OP);
+    }, INACTIVE_MS);
   }
 
-  // ======= Botão flutuante (some um pouco após inatividade de scroll) =======
-  const botao = document.getElementById('botao-flutuante');
-  let scrollTimeout;
-  function mostrarBotao() {
-    if (!botao) return;
-    botao.style.opacity = '1';
-    if (scrollTimeout) clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => { botao.style.opacity = '0.2'; }, 2000);
-  }
-  window.addEventListener('scroll', mostrarBotao);
-  mostrarBotao();
+  // Eventos que consideramos como "atividade"
+  const activityEvents = ['scroll', 'mousemove', 'touchstart', 'keydown'];
+  activityEvents.forEach(evt =>
+    window.addEventListener(evt, userActivity, { passive: true })
+  );
+
+  // estado inicial (mostra e arma o timer)
+  userActivity();
 
   // Ano dinâmico
   const anoEl = document.getElementById('ano');
