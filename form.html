@@ -68,12 +68,8 @@
 
   <script>
 
-
-  // === Helper: monta o texto e abre o WhatsApp ===
   function abrirWhatsAppComDados(d) {
     const numero = '5566999624725'; // (66) 99962-4725
-
-    // Monta a mensagem com formatação simples
     const texto = [
       'Olá! Quero ajuda para escolher o sistema.',
       '',
@@ -88,11 +84,49 @@
     ].join('\n');
 
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
-
-    // Abre em nova aba (ou use location.href = url para ir na mesma)
-    window.open(url, '_blank');
+    // Tente nova aba; se bloquear, use location.href
+    const win = window.open(url, '_blank');
+    if (!win) location.href = url;
   }
 
+  document.getElementById('formulario').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const nome     = document.querySelector('#name').value || '';
+    const email    = document.querySelector('#email').value || '';
+    const telefone = document.querySelector('#phone').value || '';
+    const empresa  = document.querySelector('#company').value || '';
+    const sistema  = document.querySelector('#sistema').value || '';
+    const mensagem = document.querySelector('#message').value || '';
+
+    if (!nome || !email || !telefone || !mensagem) {
+      alert('Por favor, preencha os campos obrigatórios.');
+      return;
+    }
+
+    const dados = { nome, email, telefone, empresa, sistema, mensagem };
+
+    fetch('/api/enviar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados)
+    })
+    .then(r => r.json())
+    .then(r => {
+      if (r.status === 'sucesso') {
+        abrirWhatsAppComDados(dados);   // <<---- AGORA CHAMA
+        alert(`Obrigado pela mensagem, ${nome}!`);
+        document.getElementById('formulario').reset();
+      } else {
+        alert('Erro ao enviar. Tente novamente.');
+        console.log('Erro:', r);
+      }
+    })
+    .catch(err => {
+      console.error('Erro:', err);
+      alert('Erro de conexão. Tente mais tarde.');
+    });
+  });
  
 
 
