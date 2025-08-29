@@ -1,65 +1,72 @@
 import os
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
-
-# psycopg 3 (PostgreSQL)
-import psycopg
-from psycopg.rows import dict_row
+import mysql.connector
 
 # ------------------------------------------------------------------------------
 # Config Flask
 # ------------------------------------------------------------------------------
-# Usa os arquivos HTML diretamente na raiz (mesmo padrão que você já usa)
+# Use os HTMLs diretamente na raiz (como está no seu projeto)
 app = Flask(__name__, static_folder="static", template_folder=".")
 
 DEBUG = os.getenv("FLASK_DEBUG", "0") == "1"
 
 # ------------------------------------------------------------------------------
-# Conexão com o banco (PostgreSQL no Render)
+# DB helpers (MySQL)
 # ------------------------------------------------------------------------------
-def get_conn():
-    """
-    Conecta no PostgreSQL usando o DSN fornecido pelo Render em DATABASE_URL.
-    Ex.: postgres://user:pass@host:port/dbname
-    """
-    dsn = os.getenv("DATABASE_URL")
-    if not dsn:
-        raise RuntimeError(
-            "DATABASE_URL não configurado. Defina essa variável nas Environment Variables do Render."
-        )
-    # Em geral, o DSN do Render já vem com sslmode=require
-    return psycopg.connect(dsn, autocommit=False, row_factory=dict_row)
+def get_db_config():
+    return {
+        "host": os.getenv("MYSQL_HOST", ""),
+        "user": os.getenv("MYSQL_USER", ""),
+        "password": os.getenv("MYSQL_PASSWORD", ""),
+        "database": os.getenv("MYSQL_DATABASE", ""),
+        "port": int(os.getenv("MYSQL_PORT", "3306")),
+        "charset": "utf8mb4",
+        "use_pure": True,
+        "connection_timeout": 10,
+    }
+
+def open_conn():
+    cfg = get_db_config()
+    # Validação simples
+    if not all([cfg["host"], cfg["user"], cfg["password"], cfg["database"]]):
+        raise RuntimeError("Variáveis MYSQL_* não configuradas corretamente no Render.")
+    return mysql.connector.connect(**cfg)
 
 def init_db():
-    """
-    Cria a tabela 'clientes' se não existir.
-    """
-    with get_conn() as conn, conn.cursor() as cur:
+    """Cria a tabela se não existir (id auto incremental, etc.)."""
+    try:
+        conn = open_conn()
+        cur = conn.cursor()
         cur.execute(
             """
             CREATE TABLE IF NOT EXISTS clientes (
-                id        SERIAL PRIMARY KEY,
-                nome      TEXT NOT NULL,
-                email     TEXT NOT NULL,
-                telefone  TEXT NOT NULL,
-                empresa   TEXT,
-                sistema   TEXT,
-                mensagem  TEXT NOT NULL,
-                data_hora TIMESTAMP NOT NULL DEFAULT NOW()
-            );
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nome VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                telefone VARCHAR(100) NOT NULL,
+                empresa VARCHAR(255),
+                sistema VARCHAR(255),
+                mensagem TEXT NOT NULL,
+                data_hora DATETIME NOT NULL
+            ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
             """
         )
         conn.commit()
+        cur.close()
+        conn.close()
+        print("[init_db] Tabela 'clientes' OK")
+    except Exception as e:
+        print("[init_db] Erro ao criar/verificar tabela:", e)
 
-# Inicializa a tabela ao subir a app
+# Inicializa tabela no boot (ignora erro para não derrubar app)
 try:
     init_db()
 except Exception as e:
-    # Não quebra a app se falhar na inicialização; loga o erro
-    print("[init_db] Erro ao criar/verificar tabela:", e)
+    print("[init_db] Ignorado:", e)
 
 # ------------------------------------------------------------------------------
-# Rotas de páginas (mantive exatamente como você já tinha)
+# Rotas de páginas (mantêm seus nomes/arquivos)
 # ------------------------------------------------------------------------------
 @app.route("/")
 def index():
@@ -71,12 +78,12 @@ def quem_somos():
 
 @app.route("/solucoes")
 def solucoes():
-    # nome real do arquivo: soluções.html (com acento)
+    # arquivo tem acento
     return render_template("soluções.html")
 
 @app.route("/clientes")
 def clientes():
-    # nome real do arquivo: Clientes.html (com C maiúsculo)
+    # arquivo com C maiúsculo
     return render_template("Clientes.html")
 
 @app.route("/form")
@@ -93,13 +100,13 @@ def health():
 # ------------------------------------------------------------------------------
 @app.get("/api/mensagens")
 def listar_mensagens():
-    """
-    Retorna todas as mensagens (mais recentes primeiro).
-    """
     try:
-        with get_conn() as conn, conn.cursor() as cur:
-            cur.execute("SELECT * FROM clientes ORDER BY data_hora DESC;")
-            dados = cur.fetchall()
+        conn = open_conn()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT * FROM clientes ORDER BY data_hora DESC")
+        dados = cur.fetchall()
+        cur.close()
+        conn.close()
         return jsonify(dados), 200
     except Exception as e:
         print("[/api/mensagens] Erro:", e)
@@ -107,39 +114,35 @@ def listar_mensagens():
 
 @app.post("/api/enviar")
 def enviar():
-    """
-    Recebe JSON com: nome, email, telefone, empresa, sistema, mensagem
-    e salva na tabela 'clientes'.
-    """
     conn = None
     try:
         dados = request.get_json(force=True) or {}
-        nome     = dados.get("nome", "").strip()
-        email    = dados.get("email", "").strip()
-        telefone = dados.get("telefone", "").strip()
-        empresa  = dados.get("empresa", "")
-        sistema  = dados.get("sistema", "")
-        mensagem = dados.get("mensagem", "").strip()
+        nome     = (dados.get("nome") or "").strip()
+        email    = (dados.get("email") or "").strip()
+        telefone = (dados.get("telefone") or "").strip()
+        empresa  = (dados.get("empresa") or "").strip()
+        sistema  = (dados.get("sistema") or "").strip()
+        mensagem = (dados.get("mensagem") or "").strip()
         data_hora = datetime.now()
 
-        # validações mínimas (mantidas)
+        # validações mínimas
         if not nome or not email:
             return jsonify({"status": "erro", "mensagem": "Nome e e-mail são obrigatórios."}), 400
         if not telefone or not mensagem:
             return jsonify({"status": "erro", "mensagem": "Telefone e mensagem são obrigatórios."}), 400
 
-        conn = get_conn()
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO clientes
-                    (nome, email, telefone, empresa, sistema, mensagem, data_hora)
-                VALUES
-                    (%s,   %s,    %s,       %s,      %s,      %s,       %s)
-                """,
-                (nome, email, telefone, empresa, sistema, mensagem, data_hora),
-            )
+        conn = open_conn()
+        cur = conn.cursor()
+        cur.execute(
+            """
+            INSERT INTO clientes
+            (nome, email, telefone, empresa, sistema, mensagem, data_hora)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """,
+            (nome, email, telefone, empresa, sistema, mensagem, data_hora),
+        )
         conn.commit()
+        cur.close()
         return jsonify({"status": "sucesso"}), 201
 
     except Exception as e:
