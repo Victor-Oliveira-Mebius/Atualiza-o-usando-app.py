@@ -7,26 +7,22 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-
-
-     
-
-<header class="flex bg-white sticky top-0 z-50 h-20   hidden md:flex">
+<header class="flex bg-white sticky top-0 z-50 h-20 hidden md:flex">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
-    
-    <!-- LOGO -->
     <div class="flex items-center space-x-4">
-      <a href="#top">
-        <img src="./img-sistema/imagem-chat2.png"
+      <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}"
              alt="Logo Universo Sistemas"
-     class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
+             class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
       </a>
     </div>
-
+  </div>
 </header>
+
 <body class="bg-gray-50 text-gray-800">
   <div class="max-w-6xl mx-auto p-6">
     <h1 class="text-3xl font-bold text-blue-700 mb-6">📬 Mensagens Recebidas</h1>
+
     <div class="mb-4 flex flex-col md:flex-row gap-3 md:items-center">
       <button id="btn-toggle-filtros" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         🔍 Buscar filtros
@@ -35,6 +31,7 @@
         🗑️ Excluir todos
       </button>
     </div>
+
     <div id="filtros-container" class="mb-6 bg-white p-4 rounded shadow hidden">
       <h2 class="font-semibold mb-2">Filtrar mensagens</h2>
       <form id="filtro-form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -48,11 +45,14 @@
         </button>
       </form>
     </div>
+
     <div id="tabela-container"></div>
+
     <div class="mt-10">
-      <a href="./form.html" class="text-blue-600 hover:underline">&larr; Voltar ao formulário</a>
+      <a href="{{ url_for('form') }}" class="text-blue-600 hover:underline">&larr; Voltar ao formulário</a>
     </div>
   </div>
+
   <script>
     const container = document.getElementById('tabela-container');
     const filtroForm = document.getElementById('filtro-form');
@@ -60,137 +60,134 @@
     const toggleBtn = document.getElementById('btn-toggle-filtros');
     const excluirTodosBtn = document.getElementById('btn-excluir-todos');
 
-  let clientesData = [];
+    let clientesData = [];
 
-  toggleBtn.addEventListener('click', () => {
-    filtrosContainer.classList.toggle('hidden');
-    toggleBtn.textContent = filtrosContainer.classList.contains('hidden') ? '🔍 Buscar filtros' : '❌ Ocultar filtros';
-  });
-
-  excluirTodosBtn.addEventListener('click', () => {
-    alert('As mensagens são armazenadas no banco de dados e não podem ser apagadas por aqui.');
-  });
-
-  function formatarDataDisplay(dataStr) {
-    const data = new Date(dataStr);
-    if (isNaN(data)) return dataStr;
-    return data.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  }
-
-  function renderTabela(filtro = {}) {
-    let clientes = [...clientesData];
-
-    clientes.sort((a, b) => new Date(b.data_hora) - new Date(a.data_hora));
-    clientes = clientes.filter(c => {
-      if (filtro.data && new Date(c.data_hora).toISOString().split('T')[0] !== filtro.data) return false;
-      if (filtro.nome && !c.nome.toLowerCase().includes(filtro.nome.toLowerCase())) return false;
-      if (filtro.empresa && !c.empresa.toLowerCase().includes(filtro.empresa.toLowerCase())) return false;
-      if (filtro.telefone && !c.telefone.toLowerCase().includes(filtro.telefone.toLowerCase())) return false;
-      if (filtro.sistema && !(c.sistema || '').toLowerCase().includes(filtro.sistema.toLowerCase())) return false;
-      return true;
+    toggleBtn.addEventListener('click', () => {
+      filtrosContainer.classList.toggle('hidden');
+      toggleBtn.textContent = filtrosContainer.classList.contains('hidden') ? '🔍 Buscar filtros' : '❌ Ocultar filtros';
     });
 
-    if (clientes.length === 0) {
-      container.innerHTML = `<div class="text-gray-500 text-lg">Nenhuma mensagem encontrada.</div>`;
-      return;
+    excluirTodosBtn.addEventListener('click', () => {
+      alert('As mensagens são armazenadas no banco de dados e não podem ser apagadas por aqui.');
+    });
+
+    function formatarDataDisplay(dataStr) {
+      const data = new Date(dataStr);
+      if (isNaN(data)) return dataStr;
+      return data.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     }
 
-    let tabela = `
-      <div class="overflow-x-auto">
-        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <thead class="bg-blue-600 text-white">
-            <tr>
-              <th class="py-3 px-4 text-left">Nome</th>
-              <th class="py-3 px-4 text-left">Email</th>
-              <th class="py-3 px-4 text-left">Telefone</th>
-              <th class="py-3 px-4 text-left">Empresa</th>
-              <th class="py-3 px-4 text-left">Sistema</th>
-              <th class="py-3 px-4 text-left max-w-xs">Mensagem</th>
-              <th class="py-3 px-4 text-left">Data</th>
-            </tr>
-          </thead>
-          <tbody>
-    `;
+    function renderTabela(filtro = {}) {
+      let clientes = [...clientesData];
 
-    clientes.forEach((c, index) => {
-      const mensagemId = `mensagem-${index}`;
-      tabela += `
-        <tr class="border-b hover:bg-gray-50 align-top">
-          <td class="py-3 px-4">${c.nome}</td>
-          <td class="py-3 px-4">${c.email}</td>
-          <td class="py-3 px-4">${c.telefone}</td>
-          <td class="py-3 px-4">${c.empresa}</td>
-          <td class="py-3 px-4">${c.sistema || '-'}</td>
-          <td class="py-3 px-4 max-w-xs">
-            <div class="relative">
-              <p id="${mensagemId}" class="message max-h-24 overflow-hidden transition-all duration-300 whitespace-pre-line">${c.mensagem}</p>
-              <div class="fade-gradient absolute bottom-0 left-0 w-full h-12 bg-gradient-to-b from-transparent to-white pointer-events-none"></div>
-              <button data-target="${mensagemId}" class="toggle-btn text-blue-600 hover:underline mt-2 block">Mostrar mais</button>
-            </div>
-          </td>
-          <td class="py-3 px-4 text-sm text-gray-500">${formatarDataDisplay(c.data_hora)}</td>
-        </tr>
-      `;
-    });
-
-    tabela += `</tbody></table></div>`;
-    container.innerHTML = tabela;
-
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-target');
-        const paragrafo = document.getElementById(targetId);
-        const isCollapsed = paragrafo.classList.contains('max-h-24');
-        paragrafo.classList.toggle('max-h-24');
-        paragrafo.classList.toggle('max-h-full');
-        const gradient = paragrafo.nextElementSibling;
-        if (gradient) gradient.style.display = isCollapsed ? 'none' : 'block';
-        btn.textContent = isCollapsed ? 'Mostrar menos' : 'Mostrar mais';
+      clientes.sort((a, b) => new Date(b.data_hora) - new Date(a.data_hora));
+      clientes = clientes.filter(c => {
+        if (filtro.data && new Date(c.data_hora).toISOString().split('T')[0] !== filtro.data) return false;
+        if (filtro.nome && !c.nome.toLowerCase().includes(filtro.nome.toLowerCase())) return false;
+        if (filtro.empresa && !c.empresa.toLowerCase().includes(filtro.empresa.toLowerCase())) return false;
+        if (filtro.telefone && !c.telefone.toLowerCase().includes(filtro.telefone.toLowerCase())) return false;
+        if (filtro.sistema && !(c.sistema || '').toLowerCase().includes(filtro.sistema.toLowerCase())) return false;
+        return true;
       });
+
+      if (clientes.length === 0) {
+        container.innerHTML = `<div class="text-gray-500 text-lg">Nenhuma mensagem encontrada.</div>`;
+        return;
+      }
+
+      let tabela = `
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-blue-600 text-white">
+              <tr>
+                <th class="py-3 px-4 text-left">Nome</th>
+                <th class="py-3 px-4 text-left">Email</th>
+                <th class="py-3 px-4 text-left">Telefone</th>
+                <th class="py-3 px-4 text-left">Empresa</th>
+                <th class="py-3 px-4 text-left">Sistema</th>
+                <th class="py-3 px-4 text-left max-w-xs">Mensagem</th>
+                <th class="py-3 px-4 text-left">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      clientes.forEach((c, index) => {
+        const mensagemId = `mensagem-${index}`;
+        tabela += `
+          <tr class="border-b hover:bg-gray-50 align-top">
+            <td class="py-3 px-4">${c.nome}</td>
+            <td class="py-3 px-4">${c.email}</td>
+            <td class="py-3 px-4">${c.telefone}</td>
+            <td class="py-3 px-4">${c.empresa}</td>
+            <td class="py-3 px-4">${c.sistema || '-'}</td>
+            <td class="py-3 px-4 max-w-xs">
+              <div class="relative">
+                <p id="${mensagemId}" class="message max-h-24 overflow-hidden transition-all duration-300 whitespace-pre-line">${c.mensagem}</p>
+                <div class="fade-gradient absolute bottom-0 left-0 w-full h-12 bg-gradient-to-b from-transparent to-white pointer-events-none"></div>
+                <button data-target="${mensagemId}" class="toggle-btn text-blue-600 hover:underline mt-2 block">Mostrar mais</button>
+              </div>
+            </td>
+            <td class="py-3 px-4 text-sm text-gray-500">${formatarDataDisplay(c.data_hora)}</td>
+          </tr>
+        `;
+      });
+
+      tabela += `</tbody></table></div>`;
+      container.innerHTML = tabela;
+
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const paragrafo = document.getElementById(targetId);
+          const isCollapsed = paragrafo.classList.contains('max-h-24');
+          paragrafo.classList.toggle('max-h-24');
+          paragrafo.classList.toggle('max-h-full');
+          const gradient = paragrafo.nextElementSibling;
+          if (gradient) gradient.style.display = isCollapsed ? 'none' : 'block';
+          btn.textContent = isCollapsed ? 'Mostrar menos' : 'Mostrar mais';
+        });
+      });
+    }
+
+    function pegarFiltros() {
+      return {
+        data: document.getElementById('filtro-data').value,
+        nome: document.getElementById('filtro-nome').value.trim(),
+        empresa: document.getElementById('filtro-empresa').value.trim(),
+        telefone: document.getElementById('filtro-telefone').value.trim(),
+        sistema: document.getElementById('filtro-sistema').value.trim()
+      };
+    }
+
+    filtroForm.addEventListener('input', () => {
+      renderTabela(pegarFiltros());
     });
-  }
 
-  function pegarFiltros() {
-    return {
-      data: document.getElementById('filtro-data').value,
-      nome: document.getElementById('filtro-nome').value.trim(),
-      empresa: document.getElementById('filtro-empresa').value.trim(),
-      telefone: document.getElementById('filtro-telefone').value.trim(),
-      sistema: document.getElementById('filtro-sistema').value.trim()
-    };
-  }
-
-  filtroForm.addEventListener('input', () => {
-    renderTabela(pegarFiltros());
-  });
-
-  document.getElementById('btn-limpar').addEventListener('click', () => {
-    filtroForm.reset();
-    renderTabela();
-  });
-
-  // ✅ Buscar do Flask
-  fetch('/api/mensagens')
-    .then(res => res.json())
-    .then(data => {
-      clientesData = data;
+    document.getElementById('btn-limpar').addEventListener('click', () => {
+      filtroForm.reset();
       renderTabela();
-    })
-    .catch(err => {
-      container.innerHTML = `<div class="text-red-500">Erro ao buscar mensagens no servidor.</div>`;
-      console.error(err);
     });
 
-  history.replaceState(null, null, window.location.pathname);
-</script>
+    // Busca na API
+    fetch('/api/mensagens')
+      .then(res => res.json())
+      .then(data => {
+        clientesData = data;
+        renderTabela();
+      })
+      .catch(err => {
+        container.innerHTML = `<div class="text-red-500">Erro ao buscar mensagens no servidor.</div>`;
+        console.error(err);
+      });
 
-    
-
+    history.replaceState(null, null, window.location.pathname);
+  </script>
 </body>
 </html>

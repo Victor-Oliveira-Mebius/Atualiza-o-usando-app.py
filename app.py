@@ -20,22 +20,17 @@ DEBUG = os.getenv("FLASK_DEBUG", "0") == "1"
 def get_conn():
     """
     Abre conexão com Postgres usando a variável de ambiente DATABASE_URL.
-    Pegue a 'URL do banco de dados externo' na página do seu Postgres e
-    cole em Settings -> Environment do seu Web Service como DATABASE_URL.
-    Ex: postgres://usuario:senha@host:5432/nomedb
+    Ex.: postgres://usuario:senha@host:5432/nomedb
     """
     dsn = os.getenv("DATABASE_URL")
     if not dsn:
         raise RuntimeError(
             "DATABASE_URL não configurado. Defina no Render (Settings -> Environment)."
         )
-    # Row factory para retornar dicts, e autocommit desativado
     return psycopg.connect(dsn, autocommit=False, row_factory=dict_row)
 
 def init_db():
-    """
-    Cria a tabela 'clientes' se não existir.
-    """
+    """Cria a tabela 'clientes' se não existir."""
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(
             """
@@ -151,13 +146,11 @@ def enviar():
                 pass
 
 # ------------------------------------------------------------------------------
-# Debug Helpers (opcionais)
+# Debug opcional
 # ------------------------------------------------------------------------------
 @app.get("/debug/pg")
 def debug_pg():
-    """
-    Conecta e retorna NOW() para validar a conexão com Postgres.
-    """
+    """Conecta e retorna NOW() para validar a conexão com Postgres."""
     try:
         with get_conn() as conn, conn.cursor() as cur:
             cur.execute("SELECT NOW() AS agora;")

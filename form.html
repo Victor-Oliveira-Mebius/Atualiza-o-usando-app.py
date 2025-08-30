@@ -54,163 +54,117 @@
         </div>
 
         <div class="md:col-span-2 flex justify-center">
-          <button type="submit"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-lg font-medium transition">Enviar
-            Mensagem</button>
+          <button id="btn-enviar" type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-lg font-medium transition">
+            Enviar Mensagem
+          </button>
         </div>
       </form>
 
       <div class="text-center mt-4">
-        <a href="./Clientes.html" class="text-blue-500 hover:underline"><i class="fas fa-arrow-left"></i> Ver Mensagens Recebidas</a>
+        <a href="{{ url_for('clientes') }}" class="text-blue-500 hover:underline">
+          <i class="fas fa-arrow-left"></i> Ver Mensagens Recebidas
+        </a>
       </div>
     </div>
   </section>
 
   <script>
+    // ===== WhatsApp helper =====
+    function abrirWhatsAppComDados(d) {
+      const numero = '5566999624725'; // (66) 99962-4725
+      const texto = [
+        'Olá! Quero ajuda para escolher o sistema.',
+        '',
+        `*Nome:* ${d.nome}`,
+        `*E-mail:* ${d.email}`,
+        `*Telefone:* ${d.telefone}`,
+        `*Empresa:* ${d.empresa || '-'}`,
+        `*Sistema:* ${d.sistema || '-'}`,
+        '',
+        `*Mensagem:*`,
+        d.mensagem
+      ].join('\n');
 
-  function abrirWhatsAppComDados(d) {
-    const numero = '5566999624725'; // (66) 99962-4725
-    const texto = [
-      'Olá! Quero ajuda para escolher o sistema.',
-      '',
-      `*Nome:* ${d.nome}`,
-      `*E-mail:* ${d.email}`,
-      `*Telefone:* ${d.telefone}`,
-      `*Empresa:* ${d.empresa || '-'}`,
-      `*Sistema:* ${d.sistema || '-'}`,
-      '',
-      `*Mensagem:*`,
-      d.mensagem
-    ].join('\n');
-
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
-    // Tente nova aba; se bloquear, use location.href
-    const win = window.open(url, '_blank');
-    if (!win) location.href = url;
-  }
-
-  document.getElementById('formulario').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const nome     = document.querySelector('#name').value || '';
-    const email    = document.querySelector('#email').value || '';
-    const telefone = document.querySelector('#phone').value || '';
-    const empresa  = document.querySelector('#company').value || '';
-    const sistema  = document.querySelector('#sistema').value || '';
-    const mensagem = document.querySelector('#message').value || '';
-
-    if (!nome || !email || !telefone || !mensagem) {
-      alert('Por favor, preencha os campos obrigatórios.');
-      return;
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+      const win = window.open(url, '_blank');
+      if (!win) location.href = url;
     }
 
-    const dados = { nome, email, telefone, empresa, sistema, mensagem };
+    // ===== Submit com proteção anti-duplo-clique =====
+    let enviando = false;
+    document.getElementById('formulario').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (enviando) return;
+      enviando = true;
+      const btn = document.getElementById('btn-enviar');
+      const txtOrig = btn.textContent;
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
 
-    fetch('/api/enviar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dados)
-    })
-    .then(r => r.json())
-    .then(r => {
-      if (r.status === 'sucesso') {
-        abrirWhatsAppComDados(dados);   // <<---- AGORA CHAMA
-        alert(`Obrigado pela mensagem, ${nome}!`);
-        document.getElementById('formulario').reset();
-      } else {
-        alert('Erro ao enviar. Tente novamente.');
-        console.log('Erro:', r);
+      const nome     = document.querySelector('#name').value.trim();
+      const email    = document.querySelector('#email').value.trim();
+      const telefone = document.querySelector('#phone').value.trim();
+      const empresa  = document.querySelector('#company').value.trim();
+      const sistema  = document.querySelector('#sistema').value.trim();
+      const mensagem = document.querySelector('#message').value.trim();
+
+      if (!nome || !email || !telefone || !mensagem) {
+        alert('Por favor, preencha os campos obrigatórios.');
+        btn.textContent = txtOrig; btn.disabled = false; enviando = false;
+        return;
       }
-    })
-    .catch(err => {
-      console.error('Erro:', err);
-      alert('Erro de conexão. Tente mais tarde.');
-    });
-  });
- 
 
+      const dados = { nome, email, telefone, empresa, sistema, mensagem };
 
-  document.getElementById('formulario').addEventListener('submit', function (e) {
-    e.preventDefault();
+      try {
+        const r = await fetch('/api/enviar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dados)
+        });
+        const j = await r.json();
 
-    // Captura os dados diretamente dos elementos
-    const nome = document.querySelector('#name').value || document.querySelector('#name').defaultValue || '';
-    const email = document.querySelector('#email').value || document.querySelector('#email').defaultValue || '';
-    const telefone = document.querySelector('#phone').value || document.querySelector('#phone').defaultValue || '';
-    const empresa = document.querySelector('#company').value || document.querySelector('#company').defaultValue || '';
-    const sistema = document.querySelector('#sistema').value || document.querySelector('#sistema').defaultValue || '';
-    const mensagem = document.querySelector('#message').value || document.querySelector('#message').defaultValue || '';
-
-    if (!nome || !email || !telefone || !mensagem) {
-      alert('Por favor, preencha os campos obrigatórios.');
-      return;
-    }
-
-    const dados = { nome, email, telefone, empresa, sistema, mensagem };
-
-    fetch('/api/enviar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dados)
-    })
-    .then(res => res.json())
-    .then(res => {
-      if (res.status === 'sucesso') {
-        alert(`Obrigado pela mensagem, ${nome}!`);
-        document.getElementById('formulario').reset();
-      } else {
-        alert('Erro ao enviar. Tente novamente.');
-        console.log('Erro:', res);
+        if (j.status === 'sucesso') {
+          abrirWhatsAppComDados(dados);
+          alert(`Obrigado pela mensagem, ${nome}!`);
+          document.getElementById('formulario').reset();
+        } else {
+          alert('Erro ao enviar. Tente novamente.');
+          console.log('Erro:', j);
+        }
+      } catch (err) {
+        console.error('Erro:', err);
+        alert('Erro de conexão. Tente mais tarde.');
+      } finally {
+        btn.textContent = txtOrig;
+        btn.disabled = false;
+        enviando = false;
       }
-    })
-    .catch(err => {
-      console.error('Erro:', err);
-      alert('Erro de conexão. Tente mais tarde.');
     });
-  });
-  // Preencher mensagem automática (caso venha pela URL)
+
+    // ===== Preenchimento automático por querystring =====
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const mensagem = urlParams.get('msg');
-      if (mensagem) {
+
+      const sistema = urlParams.get('sistema');
+      const msg     = urlParams.get('msg');
+
+      if (sistema) {
+        const campoSistema = document.getElementById('sistema');
+        campoSistema.value = decodeURIComponent(sistema);
+        campoSistema.readOnly = true;
+        campoSistema.style.backgroundColor = '#f3f4f6';
+      }
+
+      if (msg) {
         const campoMensagem = document.getElementById('message');
-        campoMensagem.value = decodeURIComponent(mensagem);
+        campoMensagem.value = decodeURIComponent(msg);
         campoMensagem.readOnly = true;
         campoMensagem.style.backgroundColor = '#f3f4f6';
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
       }
     });
-
-    // Função para pegar parâmetros da URL
-function getParametroURL(nome) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(nome);
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-
-  const sistema = urlParams.get('sistema');
-  const msg = urlParams.get('msg');
-
-  // Preencher e travar o campo "sistema", se vier pela URL
-  if (sistema) {
-    const campoSistema = document.getElementById('sistema');
-    campoSistema.value = decodeURIComponent(sistema);
-    campoSistema.readOnly = true;
-    campoSistema.style.backgroundColor = '#f3f4f6'; // cinza claro para indicar que está bloqueado
-  }
-
-  // Preencher e travar o campo "mensagem", se vier pela URL
-  if (msg) {
-    const campoMensagem = document.getElementById('message');
-    campoMensagem.value = decodeURIComponent(msg);
-    campoMensagem.readOnly = true;
-    campoMensagem.style.backgroundColor = '#f3f4f6';
-    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-  }
-});
-</script>
-
+  </script>
 </body>
 </html>
