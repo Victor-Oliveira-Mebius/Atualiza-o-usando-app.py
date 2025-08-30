@@ -1,10 +1,19 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import (
+    Flask,
+    render_template,
+    request,
+    jsonify,
+    redirect,
+    url_for,
+    make_response,
+)
 
 # PostgreSQL (psycopg 3)
 import psycopg
 from psycopg.rows import dict_row
+
 
 # ------------------------------------------------------------------------------
 # Flask
@@ -13,6 +22,7 @@ from psycopg.rows import dict_row
 app = Flask(__name__, static_folder="static", template_folder=".")
 
 DEBUG = os.getenv("FLASK_DEBUG", "0") == "1"
+
 
 # ------------------------------------------------------------------------------
 # Banco de dados (Postgres via DATABASE_URL do Render)
@@ -28,6 +38,7 @@ def get_conn():
             "DATABASE_URL não configurado. Defina no Render (Settings -> Environment)."
         )
     return psycopg.connect(dsn, autocommit=False, row_factory=dict_row)
+
 
 def init_db():
     """Cria a tabela 'clientes' se não existir."""
@@ -48,11 +59,106 @@ def init_db():
         )
         conn.commit()
 
+
 # cria a tabela na subida do app (não quebra se falhar)
 try:
     init_db()
 except Exception as e:
     print("[init_db] erro:", e)
+
+
+# ------------------------------------------------------------------------------
+# Proteção com TOKEN (cookie)
+# ------------------------------------------------------------------------------
+CLIENTES_TOKEN = os.getenv("CLIENTES_TOKEN", "").strip()
+
+
+def _tem_acesso():
+    """Confere token por cookie, querystring ?t= e header X-Access-Token."""
+    if not CLIENTES_TOKEN:
+        # Se não configurar a var no Render, não bloqueia nada
+        return True
+
+    # 1) cookie
+    if request.cookies.get("ctok") == CLIENTES_TOKEN:
+        return True
+    # 2) querystring ?t=SEU_TOKEN
+    if request.args.get("t") == CLIENTES_TOKEN:
+        return True
+    # 3) Header opcional
+    if request.headers.get("X-Access-Token") == CLIENTES_TOKEN:
+        return True
+
+    return False
+
+
+@app.before_request
+def _protege_rotas():
+    """
+    Protege /clientes e /api/mensagens (e o caminho /Clientes.html, se alguém
+    tentar acessar diretamente). Ajuste a lista se quiser proteger mais rotas.
+    """
+    rotas_protegidas = {"/clientes", "/api/mensagens"}
+    if request.path in rotas_protegidas or request.path.lower() == "/clientes.html":
+        if not _tem_acesso():
+            prox = request.path
+            if request.query_string:
+                prox += "?" + request.query_string.decode("utf-8")
+            return redirect(url_for("acesso", next=prox))
+
+
+@app.get("/acesso")
+def acesso():
+    """Tela simples para digitar o token (se CLIENTES_TOKEN estiver setado)."""
+    if not CLIENTES_TOKEN:
+        return "<p>CLIENTES_TOKEN não está configurado; acesso liberado.</p>", 200
+
+    proximo = request.args.get("next") or url_for("clientes")
+    return f"""
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Acesso restrito</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.14/dist/tailwind.min.css">
+</head><body class="bg-gray-50 flex items-center justify-center min-h-screen">
+  <form action="{url_for('acesso_post')}" method="post" class="bg-white p-6 rounded shadow w-full max-w-sm">
+    <h1 class="text-lg font-semibold mb-4">Área restrita</h1>
+    <input type="hidden" name="next" value="{proximo}"/>
+    <label class="block text-sm text-gray-700 mb-2">Token de acesso</label>
+    <input name="token" type="password" class="w-full border rounded px-3 py-2 mb-4" autofocus required />
+    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">Entrar</button>
+    <p class="text-xs text-gray-500 mt-3">Dica: você também pode acessar com <code>?t=SEU_TOKEN</code>.</p>
+  </form>
+</body></html>
+"""
+
+
+@app.post("/acesso")
+def acesso_post():
+    """Valida o token e grava um cookie para liberar as rotas protegidas."""
+    if not CLIENTES_TOKEN:
+        destino = request.form.get("next") or url_for("clientes")
+        return redirect(destino)
+
+    token = (request.form.get("token") or "").strip()
+    destino = request.form.get("next") or url_for("clientes")
+
+    if token != CLIENTES_TOKEN:
+        return redirect(url_for("acesso", next=destino))
+
+    resp = make_response(redirect(destino))
+    # cookie “ctok” com validade de 30 dias
+    resp.set_cookie(
+        "ctok",
+        CLIENTES_TOKEN,
+        max_age=30 * 24 * 3600,
+        secure=True,      # somente HTTPS
+        httponly=True,    # JS não lê, mas o navegador envia ao servidor
+        samesite="Lax",
+        path="/",
+    )
+    return resp
+
 
 # ------------------------------------------------------------------------------
 # Rotas de páginas (nomes dos arquivos mantidos)
@@ -61,28 +167,34 @@ except Exception as e:
 def index():
     return render_template("index.html")
 
+
 @app.route("/quem-somos")
 def quem_somos():
     return render_template("quem-somos.html")
+
 
 @app.route("/solucoes")
 def solucoes():
     # nome real do arquivo tem acento
     return render_template("soluções.html")
 
+
 @app.route("/clientes")
 def clientes():
     # nome real do arquivo tem C maiúsculo
     return render_template("Clientes.html")
 
+
 @app.route("/form")
 def form():
     return render_template("form.html")
+
 
 # Health-check utilizado pelo Render
 @app.get("/health")
 def health():
     return {"status": "ok"}, 200
+
 
 # ------------------------------------------------------------------------------
 # API
@@ -98,23 +210,30 @@ def listar_mensagens():
         print("[/api/mensagens] erro:", e)
         return jsonify({"status": "erro", "mensagem": str(e)}), 500
 
+
 @app.post("/api/enviar")
 def enviar():
     conn = None
     try:
         dados = request.get_json(force=True) or {}
-        nome     = (dados.get("nome") or "").strip()
-        email    = (dados.get("email") or "").strip()
+        nome = (dados.get("nome") or "").strip()
+        email = (dados.get("email") or "").strip()
         telefone = (dados.get("telefone") or "").strip()
-        empresa  = (dados.get("empresa") or "").strip()
-        sistema  = (dados.get("sistema") or "").strip()
+        empresa = (dados.get("empresa") or "").strip()
+        sistema = (dados.get("sistema") or "").strip()
         mensagem = (dados.get("mensagem") or "").strip()
         data_hora = datetime.now()
 
         if not nome or not email:
-            return jsonify({"status": "erro", "mensagem": "Nome e e-mail são obrigatórios."}), 400
+            return (
+                jsonify({"status": "erro", "mensagem": "Nome e e-mail são obrigatórios."}),
+                400,
+            )
         if not telefone or not mensagem:
-            return jsonify({"status": "erro", "mensagem": "Telefone e mensagem são obrigatórios."}), 400
+            return (
+                jsonify({"status": "erro", "mensagem": "Telefone e mensagem são obrigatórios."}),
+                400,
+            )
 
         conn = get_conn()
         with conn.cursor() as cur:
@@ -145,6 +264,7 @@ def enviar():
             except Exception:
                 pass
 
+
 # ------------------------------------------------------------------------------
 # Debug opcional
 # ------------------------------------------------------------------------------
@@ -158,6 +278,7 @@ def debug_pg():
         return jsonify({"ok": True, "now": str(row["agora"])}), 200
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 500
+
 
 # ------------------------------------------------------------------------------
 # Dev server local (em produção o Render usa Gunicorn)
