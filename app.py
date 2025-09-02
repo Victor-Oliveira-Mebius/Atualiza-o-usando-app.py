@@ -68,12 +68,9 @@ except Exception as e:
 
 
 # ------------------------------------------------------------------------------
-# Proteção com TOKEN (cookie/query/header) + variável global no Jinja
+# Proteção com TOKEN (cookie)
 # ------------------------------------------------------------------------------
 CLIENTES_TOKEN = os.getenv("CLIENTES_TOKEN", "").strip()
-
-# disponibiliza {{ CLIENTES_TOKEN }} nos templates (Jinja)
-app.jinja_env.globals.update(CLIENTES_TOKEN=CLIENTES_TOKEN)
 
 
 def _tem_acesso():
@@ -156,7 +153,7 @@ def acesso_post():
         CLIENTES_TOKEN,
         max_age=30 * 24 * 3600,
         secure=True,      # somente HTTPS
-        httponly=True,    # JS não lê
+        httponly=True,    # JS não lê, mas o navegador envia ao servidor
         samesite="Lax",
         path="/",
     )
@@ -232,7 +229,7 @@ def enviar():
                 jsonify({"status": "erro", "mensagem": "Nome e e-mail são obrigatórios."}),
                 400,
             )
-        if not telefone ou not mensagem:
+        if not telefone or not mensagem:
             return (
                 jsonify({"status": "erro", "mensagem": "Telefone e mensagem são obrigatórios."}),
                 400,

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -62,13 +63,12 @@
       </form>
 
       <div class="text-center mt-4">
-  <!-- Botão flutuante discreto no canto inferior esquerdo -->
-<a href="{{ url_for('clientes') }}?t={{ CLIENTES_TOKEN }}"
-   class="fixed left-3 bottom-3 w-3 h-3 rounded-full bg-gray-300 opacity-30 hover:opacity-60"
-   title=" ">
-</a>
+        <!-- Botão flutuante discreto no canto inferior esquerdo -->
+        <div class="text-center mt-4"> <a href="{{ url_for('clientes') }}" class="text-blue-500 hover:underline"> <i
+              class="fas fa-envelope"></i></a> </div>
       </div>
-    </div>
+  </section>
+  </div>
   </section>
 
   <script>
@@ -104,11 +104,11 @@
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      const nome     = document.querySelector('#name').value.trim();
-      const email    = document.querySelector('#email').value.trim();
+      const nome = document.querySelector('#name').value.trim();
+      const email = document.querySelector('#email').value.trim();
       const telefone = document.querySelector('#phone').value.trim();
-      const empresa  = document.querySelector('#company').value.trim();
-      const sistema  = document.querySelector('#sistema').value.trim();
+      const empresa = document.querySelector('#company').value.trim();
+      const sistema = document.querySelector('#sistema').value.trim();
       const mensagem = document.querySelector('#message').value.trim();
 
       if (!nome || !email || !telefone || !mensagem) {
@@ -150,7 +150,7 @@
       const urlParams = new URLSearchParams(window.location.search);
 
       const sistema = urlParams.get('sistema');
-      const msg     = urlParams.get('msg');
+      const msg = urlParams.get('msg');
 
       if (sistema) {
         const campoSistema = document.getElementById('sistema');
@@ -169,4 +169,5 @@
     });
   </script>
 </body>
+
 </html>
