@@ -62,9 +62,12 @@
       </form>
 
       <div class="text-center mt-4">
-        <a href="{{ url_for('clientes') }}" class="text-blue-500 hover:underline">
-          <i class="fas fa-arrow-left"></i> Ver Mensagens Recebidas
-        </a>
+  <!-- Botão flutuante discreto no canto inferior esquerdo -->
+<a href="{{ url_for('clientes') }}?t={{ os.getenv('CLIENTES_TOKEN') }}"
+   class="fixed bottom-4 left-4 w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-400 hover:text-gray-600 flex items-center justify-center shadow-sm transition"
+   title="Área restrita">
+  <i class="fas fa-circle text-xs"></i>
+</a>
       </div>
     </div>
   </section>
