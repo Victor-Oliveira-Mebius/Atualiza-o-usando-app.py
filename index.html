@@ -954,7 +954,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+document.addEventListener('DOMContentLoaded', function () {
 
   // =========================
   // Botões flutuantes: "apagão" após inatividade
@@ -1004,6 +1004,54 @@ document.addEventListener('DOMContentLoaded', function () {
   const anoEl = document.getElementById('ano');
   if (anoEl) anoEl.textContent = new Date().getFullYear();
 });
+
+ // ======= MENU MOBILE =======
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  const menuEl  = document.getElementById('mobileMenu');
+
+  function setMenuOpen(isOpen) {
+    if (!menuEl) return;
+    menuEl.classList.toggle('hidden', !isOpen);
+    // trava/destrava o scroll do body quando o menu está aberto
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  // abre/fecha ao tocar no botão
+  if (menuBtn && menuEl) {
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = menuEl.classList.contains('hidden');
+      setMenuOpen(isHidden);
+    });
+
+    // fecha ao clicar em qualquer link do menu
+    menuEl.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    // fecha ao tocar fora do menu
+    document.addEventListener('click', (e) => {
+      if (menuEl.classList.contains('hidden')) return;
+      const clickedInsideMenu = menuEl.contains(e.target);
+      const clickedBtn = menuBtn.contains(e.target);
+      if (!clickedInsideMenu && !clickedBtn) setMenuOpen(false);
+    }, { passive: true });
+
+    // fecha com ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    });
+
+    // garante que ao voltar para ≥ md o menu fique escondido (e libere o scroll)
+    window.addEventListener('resize', () => {
+      // Tailwind md ≈ 768px
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    });
+  }
+});
+
 </script>
 
 
