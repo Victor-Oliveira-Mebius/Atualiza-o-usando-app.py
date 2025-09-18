@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Parcerias | Universo Sistemas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="./static/img-sistema/imagem-chat2.png" alt="Logo" class="h-10"/>
+        <span class="font-bold text-lg text-sky-700">Universo Sistemas</span>
+      </a>
+      <nav class="hidden md:flex gap-4 items-center text-sm">
+        <a href="/" class="text-sky-700 hover:underline">Início</a>
+        <a href="/solucoes" class="hover:underline">Soluções</a>
+        <a href="/form" class="hover:underline">Contato</a>
+        <a href="/clientes" class="hover:underline">Mensagens</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-sky-700 mb-2">Parcerias</h1>
+    <p class="text-gray-600 mb-6">
+      Quer ser nosso parceiro? Preencha o formulário abaixo e nos diga se deseja:
+      <strong>revenda</strong>, <strong>parceria técnica</strong> ou atuar como
+      <strong>escritório de contabilidade</strong>. Entraremos em contato rapidamente.
+    </p>
+
+    <section class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">Formulário de Parcerias</h2>
+
+      <form id="parceriaForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="nome" class="block text-sm font-medium text-gray-700">Nome completo</label>
+          <input id="nome" name="nome" required type="text"
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500">
+        </div>
+
+        <div>
+          <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa</label>
+          <input id="empresa" name="empresa" type="text"
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500">
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+          <input id="email" name="email" required type="email"
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500">
+        </div>
+
+        <div>
+          <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone</label>
+          <input id="telefone" name="telefone" required type="tel"
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500">
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="tipo" class="block text-sm font-medium text-gray-700">Tipo de parceria</label>
+          <select id="tipo" name="tipo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="Revenda">Revenda (vender nossos sistemas)</option>
+            <option value="Parceria Técnica">Parceria técnica / integração</option>
+            <option value="Contabilidade">Escritório de contabilidade</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="mensagem" class="block text-sm font-medium text-gray-700">Mensagem / detalhes</label>
+          <textarea id="mensagem" name="mensagem" rows="5" required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-sky-500 focus:border-sky-500"></textarea>
+        </div>
+
+        <div class="md:col-span-2">
+          <p class="text-sm text-gray-600 mb-2">Se quiser enviar a logomarca para usarmos no site, envie em PNG para:</p>
+          <ul class="text-sm text-gray-700 list-disc ml-5 mb-4">
+            <li>envio por e-mail: <a href="mailto:contato@seudominio.com" class="text-sky-700 hover:underline">contato@seudominio.com</a></li>
+            <li>ou envie por WhatsApp após o contato: <strong>(66) 99962-4725</strong></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-2 flex gap-3 items-center">
+          <button id="submitBtn" type="submit"
+                  class="bg-sky-600 hover:bg-sky-700 text-white px-5 py-2 rounded shadow">
+            Enviar pedido de parceria
+          </button>
+
+          <button id="whatsBtn" type="button"
+                  class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp"></i>
+            Contatar via WhatsApp
+          </button>
+
+          <div id="status" class="text-sm text-gray-600"></div>
+        </div>
+      </form>
+    </section>
+
+    <section class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold mb-2">O que procuramos em parceiros</h3>
+      <ul class="list-disc ml-5 text-gray-700">
+        <li>Empresas interessadas em revender soluções para PMEs.</li>
+        <li>Desenvolvedores/consultorias que desejam integrar nossos sistemas.</li>
+        <li>Escritórios de contabilidade que queiram oferecer serviços com integração ao nosso ERP.</li>
+      </ul>
+      <p class="mt-4 text-sm text-gray-600">
+        Após recebermos seu pedido entraremos em contato para agendar uma reunião e compartilhar materiais (preços, contratos e requisitos técnicos).
+      </p>
+    </section>
+  </main>
+
+  <footer class="mt-10 py-6 bg-white border-t">
+    <div class="max-w-6xl mx-auto px-4 text-sm text-gray-500">
+      © <span id="ano"></span> Universo Sistemas — Todos os direitos reservados.
+    </div>
+  </footer>
+
+<script>
+  // número de WhatsApp (sem símbolos, com DDI 55)
+  const WHATS_NUMBER = '5566999624725';
+
+  document.getElementById('ano').textContent = new Date().getFullYear();
+
+  const form = document.getElementById('parceriaForm');
+  const statusEl = document.getElementById('status');
+  const submitBtn = document.getElementById('submitBtn');
+  const whatsBtn = document.getElementById('whatsBtn');
+
+  // Monta texto para WhatsApp a partir dos dados
+  function montarTextoWhats(dados) {
+    return [
+      'Olá! Tenho interesse em parceria.',
+      '',
+      `Nome: ${dados.nome}`,
+      `Empresa: ${dados.empresa || '-'}`,
+      `E-mail: ${dados.email}`,
+      `Telefone: ${dados.telefone}`,
+      `Tipo de parceria: ${dados.tipo}`,
+      '',
+      'Mensagem:',
+      dados.mensagem
+    ].join('\n');
+  }
+
+  // Abre WhatsApp com mensagem pré-preenchida
+  function abrirWhatsApp(dados) {
+    const texto = montarTextoWhats(dados);
+    const url = `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(texto)}`;
+    const win = window.open(url, '_blank');
+    if (!win) location.href = url;
+  }
+
+  // Envio ao servidor (POST /api/enviar) e abre Whats
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    statusEl.textContent = '';
+    submitBtn.disabled = true;
+
+    const dados = {
+      nome: document.getElementById('nome').value.trim(),
+      empresa: document.getElementById('empresa').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      telefone: document.getElementById('telefone').value.trim(),
+      tipo: document.getElementById('tipo').value,
+      mensagem: document.getElementById('mensagem').value.trim(),
+    };
+
+    // Validações simples
+    if (!dados.nome || !dados.email || !dados.telefone || !dados.mensagem) {
+      statusEl.textContent = 'Por favor preencha os campos obrigatórios.';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    // Tenta enviar ao endpoint do backend
+    fetch('/api/enviar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: dados.nome,
+        email: dados.email,
+        telefone: dados.telefone,
+        empresa: dados.empresa,
+        sistema: `Parceria: ${dados.tipo}`, // salva o tipo no campo 'sistema' para facilitar
+        mensagem: `Pedido de parceria:\n${dados.mensagem}`
+      })
+    })
+    .then(r => r.json().catch(()=>({})))
+    .then(res => {
+      // Se o backend respondeu 'sucesso' (ou se não houver backend, abrimos direto o WhatsApp)
+      if (res && res.status === 'sucesso') {
+        statusEl.textContent = 'Pedido enviado. Abrindo WhatsApp para confirmação...';
+        abrirWhatsApp(dados);
+        form.reset();
+      } else {
+        // backend pode ter retornado erro; ainda assim abrir WhatsApp para facilitar contato
+        statusEl.textContent = 'Não foi possível salvar no site — abrindo WhatsApp para você enviar a solicitação.';
+        abrirWhatsApp(dados);
+      }
+    })
+    .catch(err => {
+      console.error('Erro ao enviar:', err);
+      statusEl.textContent = 'Erro de conexão — abrindo WhatsApp para você enviar a solicitação.';
+      abrirWhatsApp(dados);
+    })
+    .finally(() => { submitBtn.disabled = false; });
+  });
+
+  // botão direto para WhatsApp sem enviar ao backend
+  whatsBtn.addEventListener('click', () => {
+    const dados = {
+      nome: document.getElementById('nome').value.trim() || 'Nome não fornecido',
+      empresa: document.getElementById('empresa').value.trim() || '-',
+      email: document.getElementById('email').value.trim() || '-',
+      telefone: document.getElementById('telefone').value.trim() || '-',
+      tipo: document.getElementById('tipo').value,
+      mensagem: document.getElementById('mensagem').value.trim() || 'Solicito contato sobre parceria'
+    };
+    abrirWhatsApp(dados);
+  });
+</script>
+
+</body>
+</html>
