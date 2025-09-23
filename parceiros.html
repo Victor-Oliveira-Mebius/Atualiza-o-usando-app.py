@@ -27,6 +27,7 @@
           <!-- CORREÇÃO: Links para as rotas do Flask -->
           <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
           <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
+          <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Início</a>
         </div>
       </nav>
 
@@ -50,6 +51,7 @@
     <!-- CORREÇÃO: Links para as rotas do Flask -->
     <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
     <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
+    <a href="{{ url_for('index_html') }}" class="block px-4 py-3 border-b border-gray-200">Início</a>
   </div>
 
 
@@ -337,6 +339,7 @@
       }
     });
   }
+
 
 
 </script>
