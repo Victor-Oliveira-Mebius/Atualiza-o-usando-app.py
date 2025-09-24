@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Sistemas ERP para Mercados | Soluções em Gestão e Automação</title>
- 
+  <title>Sistemas ERP para Mercados | Soluções em Gestão e Automação</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,1028 +22,425 @@
   <meta name="author" content="Universo Sistemas">
 
   <!-- Open Graph -->
-  <meta property="og:title" content=" Sistemas ERP para Mercados | Universo Sistemas">
+  <meta property="og:title" content="Sistemas ERP para Mercados | Universo Sistemas">
   <meta property="og:description" content="Soluções completas e inteligentes em sistemas ERP para o seu mercado. Veja por que somos referência em tecnologia para o varejo.">
-  <meta property="og:image" content="https://seudominio.com/imagens/banner-sistema-erp.jpg">
-  <meta property="og:url" content="https://seudominio.com/">
+  <meta property="og:image" content="https://siteuniversosistemas.com/static/img-sistema/banner-sistema-erp.jpg">
+  <meta property="og:url" content="https://siteuniversosistemas.com/">
   <meta property="og:type" content="website">
 
-  <link rel="canonical" href="https://universosistemas.hifen.br/">
+  <link rel="canonical" href="https://siteuniversosistemas.com/">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
- 
+
   <!-- Estilos personalizados -->
-    <style>
-   
-    html {
-      font-size: 16px;
-      font-family: "Roboto", sans-serif;
-    }
+  <style>
+    html { font-size: 16px; font-family: "Roboto", sans-serif; }
 
-    .product-image-left {
-      /* CORREÇÃO: Caminho da imagem de fundo no CSS */
-      background: url("{{ url_for('static', filename='img-sistema/boneco+logo.png') }}") center/cover no-repeat;
+    .product-image-left{
+      /* Caminho estático da imagem de fundo */
+      background: url("/static/img-sistema/boneco+logo.png") center/cover no-repeat;
       min-height: 480px;
-      transition: transform 0.3s ease;
+      transition: transform .3s ease;
     }
+    .product-image-left:hover { transform: scale(1.02); }
 
-    .product-image-left:hover {
-      transform: scale(1.02);
-    }
+    .feature-icon { transition: all .3s ease; }
+    .feature-card:hover .feature-icon { transform: rotate(10deg) scale(1.1); color:#3b82f6; }
 
-    .feature-icon {
-      transition: all 0.3s ease;
-    }
+    .hero-image{ width:100%; min-height:60vh; height:auto; background-size:cover; background-position:center; background-repeat:no-repeat; }
+    @media (min-width:768px){ .hero-image{ min-height:80vh; } }
 
-    .feature-card:hover .feature-icon {
-      transform: rotate(10deg) scale(1.1);
-      color: #3b82f6;
-    }
+    .stat-card{ transition:all .3s ease; padding:1.5rem; }
+    .stat-card:hover{ transform:translateY(-5px); box-shadow:0 12px 18px -6px rgba(0,0,0,.1); }
 
-.hero-image {
-  width: 100%;             /* evita scroll lateral */
-  min-height: 60vh;        /* altura responsiva */
-  height: auto;            /* deixa crescer conforme conteúdo */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-@media (min-width: 768px) {
-  .hero-image { min-height: 80vh; }
-}
+    .counter{ font-family:Arial, sans-serif; font-weight:bold; font-size:2rem; }
 
-    .stat-card {
-      transition: all 0.3s ease;
-      padding: 1.5rem;
-    }
+    .fade-in-up{ opacity:0; transform:translateY(30px); transition:all .6s ease-in-out; }
+    .fade-in-up.visible{ opacity:1; transform:translateY(0); }
 
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 18px -6px rgba(0, 0, 0, 0.1);
-    }
+    #hero.opacity-0{ opacity:0; }
+    #hero{ opacity:1; transition:opacity .7s; }
 
-    .counter {
-      font-family: 'Arial', sans-serif;
-      font-weight: bold;
-      font-size: 2rem;
-    }
+    .segment-card{ box-shadow:rgba(0,0,0,.16) 0 1px 4px, rgb(51,51,51) 0 0 0 3px; }
+    .feature-card{ background:#fff; padding:1rem; border-radius:.5rem; box-shadow:0 2px 4px rgba(0,0,0,.1); transition:all .3s ease; }
+    .feature-card:hover{ box-shadow:0 5px 15px rgba(0,0,0,.2); transform:translateY(-3px); }
 
-    .fade-in-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease-in-out;
-    }
+    .card-hover{ transition:all .3s ease; }
+    .card-hover:hover{ transform:translateY(-5px); box-shadow:0 15px 25px -10px rgba(0,0,0,.15); }
 
-    .fade-in-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .slider-track{ display:flex; white-space:nowrap; animation:scroll 20s linear infinite; }
+    @keyframes scroll{ 0%{ transform:translateX(0);} 100%{ transform:translateX(-50%);} }
   </style>
 </head>
-<body> <!-- Adicionei a tag body que estava faltando -->
+<body class="bg-white text-gray-800">
+
   <!-- Header Desktop -->
-  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300" style="background-color: #ffffff;">
+  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
-      
-      <!-- Logo -->
       <div class="flex items-center">
-        <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-        <a href="{{ url_for('index') }}" class="transition transform hover:scale-105 duration-300">
-          <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
+        <a href="/index.html" class="transition transform hover:scale-105 duration-300">
+          <img src="/static/img-sistema/imagem-chat2.png" alt="Logo Universo Sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
         </a>
       </div>
-      
-      <!-- Navegação Desktop -->
       <nav>
         <div class="flex items-center space-x-6">
-          <!-- CORREÇÃO: Links para as rotas do Flask -->
-          <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
-          <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
+          <a href="/quem-somos.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
+          <a href="/solucoes.html"   class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
         </div>
       </nav>
-
     </div>
   </header>
 
   <!-- Header Mobile -->
   <header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
-    <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-    <a href="{{ url_for('index') }}">
-      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/> 
+    <a href="/index.html">
+      <img src="/static/img-sistema/imagem-chat2.png" alt="Logo Universo Sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
     </a>
-    <button id="mobileMenuBtn" class="text-3xl focus:outline-none">
-      ☰
-    </button>
-  </header> 
+    <button id="mobileMenuBtn" class="text-3xl focus:outline-none">☰</button>
+  </header>
 
- <section
-  id="hero"
-  class="hero-image text-white flex items-center justify-start px-4 md:px-8 min-h-[60vh] md:min-h-[80vh] lg:min-h-[700px] relative touchzone">
+  <!-- Hero -->
+  <section id="hero" class="hero-image text-white flex items-center justify-start px-4 md:px-8 min-h-[60vh] md:min-h-[80vh] lg:min-h-[700px] relative">
+    <img id="hero-bg"
+         src="/static/img-sistema/parte-interna.png"
+         alt="Imagem de Apresentação do Mercado"
+         class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
+    <div id="hero-overlay" class="absolute inset-0 pointer-events-none z-10" style="background:none;"></div>
 
-  <img id="hero-bg"
-       src="{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
-       alt="Imagem de Apresentação do Mercado"
-       class="absolute inset-0 w-full h-full object-cover object-top md:object-[center_20%] z-0" />
-
-  <!-- Overlay (fica acima do bg) -->
-  <div id="hero-overlay"
-       class="absolute inset-0 pointer-events-none z-10"
-       style="background: none;"></div>
-
-
-<!-- Botão flutuante: WhatsApp -->
-<div id="whatsapp-flutuante"
-     class="fixed right-6 bottom-24 z-50 transition-opacity duration-500 opacity-100">
-<a href="https://wa.me/5566999624725?text=Olá!%20Quero%20ajuda%20para%20escolher%20o%20sistema." 
-   target="_blank" 
-   rel="noopener" 
-   aria-label="Falar no WhatsApp">
-    <div
-      class="w-12 h-12 sm:w-14 sm:h-14 rounded-full
-             bg-green-500 hover:bg-green-600
-             shadow-lg hover:shadow-xl
-             flex items-center justify-center
-             transition-all duration-300 transform hover:scale-105
-             focus:outline-none focus:ring-4 focus:ring-green-300">
-      <!-- Ícone WhatsApp (SVG) -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-           class="w-6 h-6 sm:w-7 sm:h-7 text-white">
-        <path fill="currentColor"
-          d="M380.9 97.1C339 55.2 283.2 32 224.5 32 100.7 32 0 132.7 0 256.5c0 43.1 11.3 85.1 32.9 122.2L0 480l104.6-30.4c35.7 19.6 75.8 29.9 116.8 29.9h.1c123.7 0 224.5-100.7 224.5-224.5 0-58.7-23.2-114.5-65.1-156.4zM224.5 438.7h-.1c-37.3 0-73.8-10-105.7-28.9l-7.6-4.5-62.1 18.1 18.5-60.5-4.9-7.8C43.4 320.7 32 289.1 32 256.5 32 149.3 117.3 64 224.5 64c58.9 0 114.3 22.9 155.9 64.6 41.6 41.7 64.6 97 64.6 155.9 0 107.2-85.3 192.2-190.5 192.2zM334 298.3c-5.3-2.6-31.5-15.5-36.4-17.3-4.9-1.9-8.5-2.6-12.1 2.6-3.6 5.3-13.9 17.3-17 20.9-3.1 3.6-6.3 4-11.6 1.3-5.3-2.6-22.2-8.2-42.3-26.2-15.6-13.9-26.2-31-29.3-36.3-3.1-5.3-.3-8.2 2.3-10.7 2.4-2.4 5.3-6.3 7.9-9.4 2.6-3.1 3.4-5.3 5.3-8.9 1.8-3.6.9-6.7-.4-9.3-1.3-2.6-12.1-29.2-16.6-40-4.4-10.6-8.9-9.2-12.1-9.4-3.1-.2-6.7-.2-10.3-.2s-9.4 1.3-14.3 6.7c-4.9 5.3-18.8 18.4-18.8 44.9 0 26.5 19.3 52.1 22 55.7 2.6 3.6 38 58 91.9 81.3 12.8 5.5 22.8 8.8 30.6 11.2 12.9 4.1 24.7 3.5 34 2.1 10.4-1.6 31.5-12.9 36-25.4 4.5-12.5 4.5-23.2 3.1-25.4-1.5-2.1-4.9-3.4-10.2-6z"/>
-      </svg>
+    <!-- Botão flutuante: WhatsApp -->
+    <div id="whatsapp-flutuante" class="fixed right-6 bottom-24 z-50 transition-opacity duration-500 opacity-100">
+      <a href="https://wa.me/5566999624725?text=Ol%C3%A1!%20Quero%20ajuda%20para%20escolher%20o%20sistema." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-500 hover:bg-green-600 shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+          <i class="fa-brands fa-whatsapp text-white text-xl"></i>
+        </div>
+      </a>
     </div>
-  </a>
-</div>
-<!-- Botão flutuante (direto para WhatsApp) -->
-<div id="botao-flutuante"
-     class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
 
-  <a href="https://wa.me/5566999624725?text=Olá!%20Quero%20ajuda%20para%20escolher%20o%20sistema."
-     target="_blank"
-     rel="noopener"
-     aria-label="Falar no WhatsApp">
+    <!-- Botão flutuante (direto para WhatsApp) -->
+    <div id="botao-flutuante" class="fixed right-6 bottom-6 z-50 transition-opacity duration-500 opacity-100">
+      <a href="https://wa.me/5566999624725?text=Ol%C3%A1!%20Quero%20ajuda%20para%20escolher%20o%20sistema." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <button class="bg-cyan-600 hover:bg-cyan-800 text-white font-semibold py-2 px-4 text-sm sm:py-3 sm:px-6 sm:text-base rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-300 flex items-center gap-2">
+          <i class="fa-brands fa-whatsapp text-white text-lg"></i> Fale conosco
+        </button>
+      </a>
+    </div>
+  </section>
 
-    <button
-      class="bg-cyan-600 hover:bg-cyan-800 text-white font-semibold 
-             py-2 px-4 text-sm              
-             sm:py-3 sm:px-6 sm:text-base    
-             rounded-full shadow-lg hover:shadow-xl 
-             transition-all duration-300 transform hover:scale-105 
-             focus:outline-none focus:ring-4 focus:ring-cyan-300 flex items-center gap-2">
-      <!-- Ícone WhatsApp branco -->
-      <i class="fa-brands fa-whatsapp text-white text-lg"></i>
-      Fale conosco
-    </button>
-  </a>
-</div>
-
-
-</section>
-
-
-<style>
-  #hero.opacity-0 {
-    opacity: 0;
-  }
-  #hero {
-    opacity: 1;
-    transition: opacity 0.7s;
-  }
-</style>
   <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
-    <!-- CORREÇÃO: Links para as rotas do Flask -->
-    <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
-    <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
+    <a href="/solucoes.html"   class="block px-4 py-3 border-b border-gray-200">Soluções</a>
+    <a href="/quem-somos.html" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
   </div>
 
-<main class="container mx-auto px-4 py-12">
-  <section id="solutions" class="mb-20">
-    <div class="flex flex-col lg:flex-row items-center gap-12">
-      <!-- Imagem lateral -->
-      <div class="product-image-left w-full lg:w-1/2 rounded-xl shadow-xl"></div>
-      <!-- Texto e cards -->
-      <div class="w-full lg:w-2/2">
-        <h2 class="text-2xl font-bold text-gray-800 mb-2">
-          Sistema Completo para sua Empresa
-        </h2>
-        <p class="text-gray-600 mb-6 font-playfair text-xl">
-          Você já imaginou controlar vendas, estoque e clientes em tempo real sem perder horas com planilhas?
-        </p>
-        <!-- Grid com os cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- CARD 1 -->
-          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <i class="fas fa-shield-alt text-3xl text-blue-500 mb-4"></i>
-            <h3 class="text-lg font-playfair font-bold mb-2">Anos no mercado</h3>
-            <p class="text-gray-600">A Universo Sistemas está no mercado há mais de 20 anos, oferecendo soluções de alta qualidade.</p>
+  <main class="container mx-auto px-4 py-12">
+    <section id="solutions" class="mb-20">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="product-image-left w-full lg:w-1/2 rounded-xl shadow-xl"></div>
+        <div class="w-full lg:w-2/2">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Sistema Completo para sua Empresa</h2>
+          <p class="text-gray-600 mb-6 font-playfair text-xl">Você já imaginou controlar vendas, estoque e clientes em tempo real sem perder horas com planilhas?</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+              <i class="fas fa-shield-alt text-3xl text-blue-500 mb-4"></i>
+              <h3 class="text-lg font-playfair font-bold mb-2">Anos no mercado</h3>
+              <p class="text-gray-600">A Universo Sistemas está no mercado há mais de 20 anos, oferecendo soluções de alta qualidade.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+              <i class="fas fa-user-friends text-3xl text-blue-500 mb-4"></i>
+              <h3 class="text-lg font-playfair font-bold mb-2">Apoio Personalizado</h3>
+              <p class="text-gray-600">Atendimento próximo e ajustado às necessidades de cada cliente.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+              <i class="fas fa-laptop-code text-3xl text-blue-500 mb-4"></i>
+              <h3 class="text-lg font-playfair font-bold mb-2">Atualizações Constantes</h3>
+              <p class="text-gray-600">Sistema sempre atualizado com novas funções e melhorias.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+              <i class="fas fa-rocket text-3xl text-blue-500 mb-4"></i>
+              <h3 class="text-lg font-playfair font-bold mb-2">Performance e Velocidade</h3>
+              <p class="text-gray-600">Navegação rápida com foco em eficiência e produtividade.</p>
+            </div>
           </div>
-          <!-- CARD 2 -->
-          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <i class="fas fa-user-friends text-3xl text-blue-500 mb-4"></i>
-            <h3 class="text-lg font-playfair font-bold mb-2">Apoio Personalizado</h3>
-            <p class="text-gray-600">Atendimento próximo e ajustado às necessidades de cada cliente.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Segmentos -->
+  <section class="py-6 bg-gray-50">
+    <div class="container mx-auto flex flex-col lg:flex-row items-center gap-6 px-4 sm:px-6 lg:px-8">
+      <div class="w-full lg:w-1/2 flex justify-center lg:justify-start px-4">
+        <img src="/static/img-sistema/imagem-super.jpg" alt="Imagem PDV compras" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md" />
+      </div>
+
+      <div class="w-full lg:w-1/2">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Segmentos que atendemos</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+          <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+            <img src="/static/img-sistema/market_16684068.png" alt="Supermercado" class="mx-auto h-20 mb-3">
+            <h3 class="text-base font-semibold text-gray-800 mb-2">SUPERMERCADOS</h3>
+            <a href="/solucoes.html">
+              <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">SAIBA MAIS</button>
+            </a>
           </div>
-          <!-- CARD 3 -->
-          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <i class="fas fa-laptop-code text-3xl text-blue-500 mb-4"></i>
-            <h3 class="text-lg font-playfair font-bold mb-2">Atualizações Constantes</h3>
-            <p class="text-gray-600">Sistema sempre atualizado com novas funções e melhorias.</p>
+
+          <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+            <img src="/static/img-sistema/grocery_15170859.png" alt="Mercado" class="mx-auto h-20 mb-3">
+            <h3 class="text-base font-semibold text-gray-800 mb-2">MERCADO</h3>
+            <a href="/solucoes.html">
+              <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">SAIBA MAIS</button>
+            </a>
           </div>
-          <!-- CARD 4 -->
-          <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-            <i class="fas fa-rocket text-3xl text-blue-500 mb-4"></i>
-            <h3 class="text-lg font-playfair font-bold mb-2">Performance e Velocidade</h3>
-            <p class="text-gray-600">Navegação rápida com foco em eficiência e produtividade.</p>
+
+          <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+            <img src="/static/img-sistema/mannequin_15265532.png" alt="Lojas" class="mx-auto h-20 mb-3">
+            <h3 class="text-base font-semibold text-gray-800 mb-2">LOJAS</h3>
+            <a href="/solucoes.html">
+              <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">SAIBA MAIS</button>
+            </a>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
+            <img src="/static/img-sistema/restaurant_497823.png" alt="Restaurante" class="mx-auto h-20 mb-3">
+            <h3 class="text-base font-semibold text-gray-800 mb-2">RESTAURANTES</h3>
+            <a href="/solucoes.html">
+              <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">SAIBA MAIS</button>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
-</main>
 
-<style>
-  /* Cartão de estatística com hover elegante */
-  .stat-card {
-    padding: 1.5rem; /* Equivalente a Tailwind p-6 */
-    transition: all 0.3s ease;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 18px -6px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Estilo do contador numérico */
-  .counter {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    font-size: 2rem; /* Tamanho ajustado para boa leitura */
-  }
-
-  /* Animação de entrada suave de baixo para cima */
-  .fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease-in-out;
-  }
-
-  .fade-in-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
-
-
-
- 
-
-
-
-<style>
-  .segment-card {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
-  }
-
-  .feature-card {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-
-  .feature-card:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transform: translateY(-3px);
-  }
-</style>
-
-<section class="py-6 bg-gray-50">
-  <div class="container mx-auto flex flex-col lg:flex-row items-center gap-6 px-4 sm:px-6 lg:px-8">
-    <div class="w-full lg:w-1/2 flex justify-center lg:justify-start px-4">
-      <!-- CORREÇÃO: Imagem com url_for -->
-      <img src="{{ url_for('static', filename='img-sistema/imagem-super.jpg') }}" alt="Imagem pdv caixa copras" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md" />
-    </div>
-
-    <div class="w-full lg:w-1/2">
-      <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
-        Segmentos que atendemos
-      </h2>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
-          <!-- CORREÇÃO: Imagem com url_for -->
-          <img src="{{ url_for('static', filename='img-sistema/market_16684068.png') }}" alt="Supermercado" class="mx-auto h-20 mb-3">
-          <h3 class="text-base font-semibold text-gray-800 mb-2">
-            SUPERMERCADOS
-          </h3>
-          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
-          <a href="{{ url_for('solucoes') }}">
-            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
-              SAIBA MAIS
-            </button>
-          </a>
-        </div>
-
-        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
-          <!-- CORREÇÃO: Imagem com url_for -->
-          <img src="{{ url_for('static', filename='img-sistema/grocery_15170859.png') }}" alt="Mercado" class="mx-auto h-20 mb-3">
-          <h3 class="text-base font-semibold text-gray-800 mb-2">
-            MERCADO
-          </h3>
-          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
-          <a href="{{ url_for('solucoes') }}">
-            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
-              SAIBA MAIS
-            </button>
-          </a>
-        </div>
-
-        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
-          <!-- CORREÇÃO: Imagem com url_for -->
-          <img src="{{ url_for('static', filename='img-sistema/mannequin_15265532.png') }}" alt="Lojas" class="mx-auto h-20 mb-3">
-          <h3 class="text-base font-semibold text-gray-800 mb-2">
-            LOJAS
-          </h3>
-          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
-          <a href="{{ url_for('solucoes') }}">
-            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
-              SAIBA MAIS
-            </button>
-          </a>
-        </div>
-
-        <div class="bg-white p-4 rounded-xl text-center shadow segment-card">
-          <!-- CORREÇÃO: Imagem com url_for -->
-          <img src="{{ url_for('static', filename='img-sistema/restaurant_497823.png') }}" alt="Restaurante" class="mx-auto h-20 mb-3">
-          <h3 class="text-base font-semibold text-gray-800 mb-2">
-            RESTAURANTES
-          </h3>
-          <!-- CORREÇÃO: Link para a rota 'solucoes' -->
-          <a href="{{ url_for('solucoes') }}">
-            <button class="bg-blue-200 text-black px-4 py-1 rounded-md hover:bg-blue-300 transition text-sm">
-              SAIBA MAIS
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- Seção de Vendas Impactante -->
-<section class="bg-gradient-to-r from-blue-50 to-gray-50 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-    
-    <!-- Coluna de Texto -->
-    <div>
-      <div class="inline-block bg-red-100 border-l-4 border-red-600 mb-8 p-4 text-left w-full">
-        <div class="flex items-center">
-          <svg class="h-6 w-6 text-red-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-          </svg>
-          <span class="font-bold text-red-800">ATENÇÃO DONOS DE MERCADO EM MATO GROSSO</span>
-        </div>
-      </div>
-      
-      <!-- Título Principal -->
-      <div class="mb-6">
-        <h2 class="text-2xl md:text-3xl font-extrabold text-gray-600 mb-4">
-          ❌ Sistema lento e confuso? 
-        </h2>
-      </div>
-
-      <div class="text-gray-800 mb-6 p-4 rounded-lg shadow-md bg-gray-50">
-        <p class="text-lg md:text-xl font-medium">
-          ✅ Tenha controle total das vendas e estoque, com relatórios automáticos e suporte ágil.
-        </p>
-        <p class="text-gray-600 mt-2">
-          Não fique para trás. <span class="font-semibold text-yellow-600">A concorrência já está usando automação para vender mais!!</span> 
-        </p>
-      </div>
-
-      <!-- Lista de Benefícios -->
-      <ul class="grid grid-cols-1 gap-4 mb-10 text-left">
-        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-          <span class="text-gray-800 font-medium">Controle de estoque em tempo real - nunca mais perca vendas por falta de produtos</span>
-        </li>
-        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-          <span class="text-gray-800 font-medium">Relatórios automáticos que mostram EXATAMENTE onde está seu lucro</span>
-        </li>
-        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-          <span class="text-gray-800 font-medium">Suporte que resolve seus problemas na hora</span>
-        </li>
-        <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <svg class="h-6 w-6 text-green-500 flex-shrink-0 mt-1 mr-3" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-          <span class="text-gray-800 font-medium">Sistema rápido que não trava mesmo no horário de pico</span>
-        </li>
-      </ul>
-
-      <!-- Oferta Especial -->
-      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-md">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="text-left">
-            <h3 class="text-lg font-bold text-yellow-800">SOLICITE AGORA</h3>
-            <p class="text-yellow-700"><span class="font-bold">uma demonstração gratuita</span></p>
+  <!-- Seção de vendas -->
+  <section class="bg-gradient-to-r from-blue-50 to-gray-50 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="inline-block bg-red-100 border-l-4 border-red-600 mb-8 p-4 text-left w-full">
+          <div class="flex items-center">
+            <svg class="h-6 w-6 text-red-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span class="font-bold text-red-800">ATENÇÃO DONOS DE MERCADO EM MATO GROSSO</span>
           </div>
-          <a href="{{ url_for('solucoes') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 whitespace-nowrap">
-            Escolha seu sistema!
-          </a>
         </div>
-      </div>
-    </div>
 
-    <!-- Coluna da Imagem -->
-    <div class="flex justify-center lg:justify-end">
-      <img src="{{ url_for('static', filename='img-sistema/grafico-universo-sistemas.png') }}"
-           alt="Imagem pdv caixa compras"
-           class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
-    </div>
+        <div class="mb-6">
+          <h2 class="text-2xl md:text-3xl font-extrabold text-gray-600 mb-4">❌ Sistema lento e confuso?</h2>
+        </div>
 
-  </div>
-</section>
+        <div class="text-gray-800 mb-6 p-4 rounded-lg shadow-md bg-gray-50">
+          <p class="text-lg md:text-xl font-medium">✅ Tenha controle total das vendas e estoque, com relatórios automáticos e suporte ágil.</p>
+          <p class="text-gray-600 mt-2">Não fique para trás. <span class="font-semibold text-yellow-600">A concorrência já está usando automação para vender mais!!</span></p>
+        </div>
 
+        <ul class="grid grid-cols-1 gap-4 mb-10 text-left">
+          <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100"><i class="h-6 w-6 text-green-500 fa-solid fa-check mt-1 mr-3"></i><span class="text-gray-800 font-medium">Controle de estoque em tempo real - nunca mais perca vendas por falta de produtos</span></li>
+          <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100"><i class="h-6 w-6 text-green-500 fa-solid fa-check mt-1 mr-3"></i><span class="text-gray-800 font-medium">Relatórios automáticos que mostram EXATAMENTE onde está seu lucro</span></li>
+          <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100"><i class="h-6 w-6 text-green-500 fa-solid fa-check mt-1 mr-3"></i><span class="text-gray-800 font-medium">Suporte que resolve seus problemas na hora</span></li>
+          <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-100"><i class="h-6 w-6 text-green-500 fa-solid fa-check mt-1 mr-3"></i><span class="text-gray-800 font-medium">Sistema rápido que não trava mesmo no horário de pico</span></li>
+        </ul>
 
-
-<section id="about" class="mb-20">
-  <div class="text-center mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-2">
-      Sobre a Nossa Empresa
-    </h2>
-    <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
-  </div>
-
-  <div class="flex flex-col lg:flex-row gap-12">
-    <div class="w-full lg:w-1/2 px-4 sm:px-6">
-      <h3 class="text-2xl font-bold text-gray-800 mb-2">
-        Expertise em Sistemas Comerciais
-      </h3>
-      <p class="text-gray-600 mb-6 leading-relaxed">
-        Há mais de 20 anos, somos referência em soluções tecnológicas para o comércio de mercadorias,
-        ajudando empresas a automatizar processos, reduzir custos e aumentar resultados.
-
-        Com atendimento ágil, suporte especializado e foco em inovação, estamos prontos para levar sua
-        empresa ao próximo nível. Conte conosco para transformar desafios em oportunidades reais.
-      </p>
-      <p class="text-gray-600 mb-6 leading-relaxed">
-        Nossa equipe multidisciplinar alia conhecimento técnico aprofundado e experiência prática no
-        varejo e atacado, oferecendo muito mais do que softwares: entregamos parcerias estratégicas que
-        impulsionam o crescimento do seu negócio.
-      </p>
-
-      <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
-        <p class="text-gray-700 italic">
-          Com atendimento ágil, suporte especializado e foco em inovação, estamos prontos para levar sua
-          empresa ao próximo nível. Conte conosco para transformar desafios em oportunidades reais.
-        </p>
-      </div>
-    </div>
-
-    <div class="w-full lg:w-1/2">
-      <!-- CORREÇÃO: Imagem com url_for -->
-      <img src="{{ url_for('static', filename='img-sistema/telas-de-graficos.png') }}" class="rounded-xl shadow-lg w-full max-w-full h-auto object-contain">
-    </div>
-  </div>
-</section>
-
-
-
-<!-- CTA FINAL -->
-<section class="bg-blue-800 text-white py-12 px-4">
-  <div class="max-w-4xl mx-auto text-center">
-
-    <!-- Ícone em destaque -->
-    <div class="text-5xl mb-4 text-white">
-      <i class="fa-solid fa-clipboard-check"></i>
-    </div>
-
-    <h2 class="text-2xl md:text-3xl font-bold">
-      Qual sistema é o melhor para você?
-    </h2>
-    <p class="mt-3 text-blue-100">
-      Fale com nosso time e receba uma recomendação gratuita.
-    </p>
-
-    <!-- Botão ajustado para WhatsApp -->
-    <a href="https://wa.me/5566999624725?text=Olá!%20Quero%20ajuda%20para%20escolher%20o%20sistema."
-       target="_blank"
-       rel="noopener"
-       aria-label="Falar no WhatsApp"
-       class="inline-flex items-center gap-2 mt-6 bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg shadow">
-      <i class="fa-brands fa-whatsapp"></i> Fale Conosco
-    </a>
-  </div>
-</section>
-
-
-
-<section class="mb-10 bg-gray-50 rounded-xl px-4 py-10">
-  <div class="text-center mb-8">
-    <h2 class="text-2xl font-bold text-gray-800">
-      Nossos sistemas oferece também
-    </h2>
-    <p class="text-gray-600 mt-2 max-w-xl mx-auto text-sm">
-      Recursos adicionais para gestão eficiente, moderna e integrada.
-    </p>
-  </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6">
-    <div class="feature-card">
-      <i class="fas fa-boxes feature-icon text-2xl text-blue-500 mb-2"></i>
-      <h3 class="text-base font-bold mb-1">Controle de Estoque</h3>
-      <p class="text-gray-600">
-        Gestão precisa de entrada e saída de produtos com alertas automáticos.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <i class="fas fa-chart-line feature-icon text-2xl text-blue-500 mb-2"></i>
-      <h3 class="text-base font-bold mb-1">Análise de Lucratividade</h3>
-      <p class="text-gray-600">
-        Cálculo automático de margens e rentabilidade por produto e cliente.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <i class="fas fa-truck feature-icon text-2xl text-blue-500 mb-2"></i>
-      <h3 class="text-base font-bold mb-1">Gestão de Fornecedores</h3>
-      <p class="text-gray-600">
-        Cadastro completo e histórico de compras por fornecedor.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <i class="fas fa-file-invoice-dollar feature-icon text-2xl text-blue-500 mb-2"></i>
-      <h3 class="text-base font-bold mb-1">Emissão de Notas</h3>
-      <p class="text-gray-600">
-        Integração com sistemas fiscais para emissão de documentos.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="support" class="mb-10 bg-gray-100 rounded-xl p-6">
-    <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold text-gray-800">
-            Suporte Técnico Especializado
-        </h2>
-        <p class="text-gray-600 max-w-xl mx-auto text-sm">
-            Nosso compromisso vai além da implementação. Oferecemos suporte contínuo para seu negócio.
-        </p>
-        <div class="w-16 h-1 bg-blue-600 mx-auto mt-2"></div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Bloco 1 -->
-        <div class="bg-white p-4 rounded-lg shadow-sm text-center hover:shadow-md transition text-sm">
-            <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
-                <i class="fas fa-headset text-blue-600 text-xl"></i>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-md">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-left">
+              <h3 class="text-lg font-bold text-yellow-800">SOLICITE AGORA</h3>
+              <p class="text-yellow-700"><span class="font-bold">uma demonstração gratuita</span></p>
             </div>
-            <h3 class="font-bold text-base mb-2">Suporte</h3>
-            <p class="text-gray-600">Atendimento umanizado via chat, telefone, acesso remoto e presencial   
-<strong>+55 (66)
-                    99631-0123</strong></p>
+            <a href="/solucoes.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105 whitespace-nowrap">Escolha seu sistema!</a>
+          </div>
         </div>
+      </div>
 
-        <!-- Bloco 2 -->
-        <div class="bg-white p-4 rounded-lg shadow-sm text-center hover:shadow-md transition text-sm">
-            <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
-                <i class="fas fa-graduation-cap text-blue-600 text-xl"></i>
-            </div>
-            <h3 class="font-bold text-base mb-2">Treinamentos</h3>
-            <p class="text-gray-600">Capacitação contínua da equipe com materiais didáticos exclusivos.</p>
-        </div>
-
-        <!-- Bloco 3 -->
-        <div class="bg-white p-4 rounded-lg shadow-sm text-center hover:shadow-md transition text-sm">
-            <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4">
-                <i class="fas fa-sync-alt text-blue-600 text-xl"></i>
-            </div>
-            <h3 class="font-bold text-base mb-2">Atualizações</h3>
-            <p class="text-gray-600">Melhorias e funcionalidades novas entregues com frequência.</p>
-        </div>
+      <div class="flex justify-center lg:justify-end">
+        <img src="/static/img-sistema/grafico-universo-sistemas.png" alt="Imagem pdv caixa compras" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
+      </div>
     </div>
-</section>
-<style>
+  </section>
 
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap' );
+  <!-- Sobre -->
+  <section id="about" class="mb-20">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Sobre a Nossa Empresa</h2>
+      <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+    </div>
 
-  .slider-track {
-    display: flex;
-    white-space: nowrap; /* <- Impede quebra de linha */
-    animation: scroll 20s linear infinite;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-</style>
-<!-- Seção com sombra e espaçamento -->
-<div class="bg-white shadow-lg rounded-xl py-8 px-4 mx-auto max-w-7xl mb-16">
-  
-  <!-- Título centralizado -->
-  <div class="text-center mb-6">
-    <h2 class="text-xl md:text-2xl font-bold text-gray-800">
-      Empresas que confiam em nosso trabalho
-    </h2>
-  </div>
-
-  <!-- Slider de Logos -->
-  <div class="overflow-hidden relative">
-    <div class="slider-track">
-
-      <!-- Logos (cada logo ocupa 250px de largura, horizontalmente) -->
-      <!-- CORREÇÃO: Imagens com url_for -->
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 1 da Universo Sistemas" class="h-20 object-contain" />
-      </div>
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 2 da Universo Sistemas" class="h-20 object-contain" />
-      </div>
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 3 da Universo Sistemas" class="h-20 object-contain" />
-      </div>
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 4 da Universo Sistemas" class="h-20 object-contain" />
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="w-full lg:w-1/2 px-4 sm:px-6">
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Expertise em Sistemas Comerciais</h3>
+        <p class="text-gray-600 mb-6 leading-relaxed">Há mais de 20 anos, somos referência em soluções tecnológicas para o comércio de mercadorias, ajudando empresas a automatizar processos, reduzir custos e aumentar resultados.</p>
+        <p class="text-gray-600 mb-6 leading-relaxed">Nossa equipe multidisciplinar alia conhecimento técnico aprofundado e experiência prática no varejo e atacado, oferecendo muito mais do que softwares: entregamos parcerias estratégicas que impulsionam o crescimento do seu negócio.</p>
+        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
+          <p class="text-gray-700 italic">Com atendimento ágil, suporte especializado e foco em inovação, estamos prontos para levar sua empresa ao próximo nível. Conte conosco para transformar desafios em oportunidades reais.</p>
+        </div>
       </div>
 
-      <!-- Duplicação para rolagem contínua -->
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 1 da Universo Sistemas" class="h-20 object-contain" />
+      <div class="w-full lg:w-1/2">
+        <img src="/static/img-sistema/telas-de-graficos.png" class="rounded-xl shadow-lg w-full max-w-full h-auto object-contain" alt="Telas de gráficos">
       </div>
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 2 da Universo Sistemas" class="h-20 object-contain" />
-      </div>
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 3 da Universo Sistemas" class="h-20 object-contain" />
-      </div>
-      <div class="inline-flex items-center justify-center min-w-[250px] px-4">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo 4 da Universo Sistemas" class="h-20 object-contain" />
-      </div>
+    </div>
+  </section>
 
+  <!-- CTA final -->
+  <section class="bg-blue-800 text-white py-12 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="text-5xl mb-4 text-white"><i class="fa-solid fa-clipboard-check"></i></div>
+      <h2 class="text-2xl md:text-3xl font-bold">Qual sistema é o melhor para você?</h2>
+      <p class="mt-3 text-blue-100">Fale com nosso time e receba uma recomendação gratuita.</p>
+      <a href="https://wa.me/5566999624725?text=Ol%C3%A1!%20Quero%20ajuda%20para%20escolher%20o%20sistema." target="_blank" rel="noopener" aria-label="Falar no WhatsApp" class="inline-flex items-center gap-2 mt-6 bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg shadow">
+        <i class="fa-brands fa-whatsapp"></i> Fale Conosco
+      </a>
+    </div>
+  </section>
+
+  <!-- Logos (slider) -->
+  <div class="bg-white shadow-lg rounded-xl py-8 px-4 mx-auto max-w-7xl mb-16">
+    <div class="text-center mb-6">
+      <h2 class="text-xl md:text-2xl font-bold text-gray-800">Empresas que confiam em nosso trabalho</h2>
+    </div>
+
+    <div class="overflow-hidden relative">
+      <div class="slider-track">
+        <!-- Dobre os itens para rolagem contínua -->
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 1" class="h-20 object-contain" /></div>
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 2" class="h-20 object-contain" /></div>
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 3" class="h-20 object-contain" /></div>
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 4" class="h-20 object-contain" /></div>
+
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 1" class="h-20 object-contain" /></div>
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 2" class="h-20 object-contain" /></div>
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 3" class="h-20 object-contain" /></div>
+        <div class="inline-flex items-center justify-center min-w-[250px] px-4"><img src="/static/img-sistema/imagem-chat2.png" alt="Logo 4" class="h-20 object-contain" /></div>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Cards finais -->
+  <section class="mb-20">
+    <div class="flex flex-col lg:flex-row items-stretch gap-6 px-4 sm:px-6">
+      <div class="card-hover bg-gray-800 text-white rounded-xl p-5 lg:w-1/3 w-full" style="box-shadow:rgba(58,58,68,.25) 0 20px 40px -12px inset, rgba(95,85,85,.3) 0 12px 24px -18px inset;">
+        <h3 class="text-2xl font-bold mb-2">ERP Empresarial</h3>
+        <p class="text-gray-300 mb-4 text-sm">Solução integrada para controlar e automatizar os setores financeiro, fiscal, RH e operações da sua empresa, com dados centralizados e em tempo real.</p>
+        <ul class="space-y-2 mb-6 text-sm">
+          <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i><span><strong>Controle financeiro e contábil</strong> — fluxo de caixa, contas a pagar/receber e conciliações bancárias.</span></li>
+          <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i><span><strong>Emissão de documentos fiscais</strong> — NFe, NFCe, CT-e, integração com SEFAZ e contabilidade.</span></li>
+          <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i><span><strong>Contas a Pagar e Receber</strong> — automatize lançamentos e gere relatórios em tempo real.</span></li>
+        </ul>
+        <a href="/solucoes.html" class="text-blue-400 hover:text-blue-300 font-medium text-sm flex items-center">Saiba mais <i class="fas fa-arrow-right ml-2"></i></a>
+      </div>
 
-<section class="mb-20">
-    <style>
-        .card-hover {
-            transition: all 0.3s ease;
-        }
+      <div class="card-hover bg-blue-600 text-white rounded-xl p-5 lg:w-1/3" style="box-shadow:rgba(17,3,105,.25) 0 20px 40px -12px inset, rgba(248,248,248,.3) 0 12px 24px -18px inset;">
+        <h3 class="text-2xl font-bold mb-2">e-Commerce</h3>
+        <p class="text-blue-100 mb-4 text-sm">Plataforma completa de vendas online com automações inteligentes, integração a marketplaces e controle centralizado de pedidos, pagamentos e logística.</p>
+        <ul class="space-y-2 mb-6 text-sm">
+          <li class="flex items-start"><i class="fas fa-check-circle text-white mt-1 mr-2"></i><span><strong>Loja virtual personalizada</strong> — vitrines modernas com checkout rápido e seguro.</span></li>
+          <li class="flex items-start"><i class="fas fa-check-circle text-white mt-1 mr-2"></i><span><strong>Integração com TEF/SITEF</strong> — cartões, PIX e boleto.</span></li>
+          <li class="flex items-start"><i class="fas fa-check-circle text-white mt-1 mr-2"></i><span><strong>Relatórios de conversão</strong> — acompanhe métricas para aumentar vendas.</span></li>
+        </ul>
+        <a href="/solucoes.html" class="text-white hover:text-blue-100 font-medium text-sm flex items-center">Saiba mais <i class="fas fa-arrow-right ml-2"></i></a>
+      </div>
 
-        .card-hover:hover {
-            transform: scale(1.01);
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.4) 0px 18px 36px -18px inset;
-        }
-    </style>
+      <div class="card-hover bg-white rounded-xl p-5 lg:w-1/3 w-full" style="box-shadow:rgba(158,158,209,.25) 0 20px 40px -12px inset, rgba(150,147,147,.3) 0 12px 24px -18px inset;">
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Parceria</h3>
+        <p class="text-gray-600 mb-4 text-sm">Parceria com a <strong>Orgamec</strong> para oferecer mais segurança fiscal aos nossos clientes.</p>
+        <ul class="space-y-2 mb-6 text-sm">
+          <li class="flex items-start"><i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i><span><strong>Análise de rentabilidade por setor</strong> — descubra as áreas com mais retorno.</span></li>
+          <li class="flex items-start"><i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i><span><strong>Atendimento consultivo</strong> — apoio contábil próximo e humano.</span></li>
+          <li class="flex items-start"><i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i><span><strong>Integração direta</strong> — sincronização para evitar erros e retrabalho.</span></li>
+        </ul>
+        <a href="https://br.linkedin.com/company/orgamecassessoriacontabil" target="_blank" class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">Saiba mais <i class="fas fa-arrow-right ml-2"></i></a>
+      </div>
+    </div>
+  </section>
 
-    <style>
-        .card-hover {
-            transition: all 0.3s ease;
-        }
+  <!-- Rodapé -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
+            <img src="/static/img-sistema/imagem-chat2.png" class="h-14 md:h-48 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0" alt="Universo Sistemas">
+          </h3>
+        </div>
 
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
-        }
-    </style>
+        <div>
+          <h4 class="font-bold mb-4 text-lg">Produtos</h4>
+          <ul class="space-y-2">
+            <li><span class="text-gray-400">SysGestão</span></li>
+            <li><span class="text-gray-400">SysErp</span></li>
+            <li><span class="text-gray-400">SysVendas</span></li>
+            <li><span class="text-gray-400">SysNop</span></li>
+          </ul>
+        </div>
 
-<div class="flex flex-col lg:flex-row items-stretch gap-6 px-4 sm:px-6">
-        <!-- Card Preto -->
-        <!-- Card ERP Empresarial Reforçado -->
-        <div class="card-hover bg-gray-800 text-white rounded-xl p-5 lg:w-1/3 w-full" style="box-shadow: rgba(58, 58, 68, 0.25) 0px 20px 40px -12px inset,
-    rgba(95, 85, 85, 0.3) 0px 12px 24px -18px inset;">
+        <div>
+          <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
+          <ul class="space-y-2">
+            <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="text-gray-400 hover:text-white">Facebook</a></li>
+            <li><a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white">Instagram</a></li>
+          </ul>
+        </div>
 
-            <h3 class="text-2xl font-bold mb-2">
-                ERP Empresarial
-            </h3>
-
-            <p class="text-gray-300 mb-4 text-sm">
-                Solução integrada para controlar e automatizar os setores financeiro, fiscal, RH e operações da
-                sua empresa, com dados centralizados e em tempo real.
+        <div>
+          <h4 class="font-bold mb-4 text-lg">Contato</h4>
+          <address class="not-italic text-gray-400">
+            <p class="mb-2">
+              <a href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/" class="hover:text-white">
+                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização
+              </a>
             </p>
-
-            <ul class="space-y-2 mb-6 text-sm">
-                <li class="flex items-start">
-                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i>
-                    <span><strong>Controle financeiro e contábil</strong>  
-Fluxo de caixa, contas a
-                        pagar/receber e conciliações bancárias.</span>
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i>
-                    <span><strong>Emissão de documentos fiscais</strong>  
-NFe, NFCe, CT-e, integração com
-                        sistemas SEFAZ e contabilidade.</span>
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i>
-                    <span><strong>Contas a Pagar e Receber</strong>  
-Automatize lançamentos, controle
-                        vencimentos e gere relatórios financeiros em tempo real.</span>
-                </li>
-            </ul>
-
-            <!-- CORREÇÃO: Link para a rota 'solucoes' -->
-            <a href="{{ url_for('solucoes') }}"
-                class="text-blue-400 hover:text-blue-300 font-medium text-sm flex items-center">
-                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
-            </a>
+            <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 99631-0123</p>
+            <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>atendimento@universosistemas.inf.br</p>
+          </address>
+          <div class="flex space-x-4 mt-4">
+            <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/5566999624725" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+          </div>
         </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+        <p>&copy; <span id="ano"></span> Universo Sistemas</p>
+      </div>
+    </div>
+  </footer>
 
-        <div class="card-hover bg-blue-600 text-white rounded-xl p-5 lg:w-1/3" style="box-shadow: rgba(17, 3, 105, 0.25) 0px 20px 40px -12px inset,
-    rgba(248, 248, 248, 0.3) 0px 12px 24px -18px inset;">
+  <script>
+    // Overlay do hero
+    (function(){
+      const overlay = document.getElementById('hero-overlay');
+      if (overlay) overlay.style.background = 'rgba(0,0,0,0.3)'; // 30% escuro
+    })();
 
-            <h3 class="text-2xl font-bold mb-2">
-                e-Commerce
-            </h3>
+    // Inatividade: apaga botões flutuantes
+    (function(){
+      const flutuantes = [document.getElementById('botao-flutuante'), document.getElementById('whatsapp-flutuante')].filter(Boolean);
+      const INACTIVE_MS = 3000, ACTIVE_OP = 1, DIM_OP = 0.06;
+      let timer = null;
+      function setOpacityAll(v){ flutuantes.forEach(el => el.style.opacity = String(v)); }
+      function userActivity(){ setOpacityAll(ACTIVE_OP); if (timer) clearTimeout(timer); timer = setTimeout(()=>setOpacityAll(DIM_OP), INACTIVE_MS); }
+      ['scroll','mousemove','touchstart','keydown'].forEach(evt => window.addEventListener(evt, userActivity, {passive:true}));
+      userActivity();
+    })();
 
-            <p class="text-blue-100 mb-4 text-sm">
-                Plataforma completa de vendas online com automações inteligentes, integração a marketplaces e
-                controle centralizado de pedidos, pagamentos e logística.
-            </p>
-
-            <ul class="space-y-2 mb-6 text-sm">
-                <li class="flex items-start">
-                    <i class="fas fa-check-circle text-white mt-1 mr-2"></i>
-                    <span><strong>Loja virtual personalizada</strong>  
-Crie vitrines modernas com checkout
-                        rápido e seguro.</span>
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-check-circle text-white mt-1 mr-2"></i>
-                    <span><strong>Integração com TEF/SITEF</strong>  
-Conciliação automática de pagamentos via
-                        cartão, PIX e boleto.</span>
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-check-circle text-white mt-1 mr-2"></i>
-                    <span><strong>Relatórios de conversão e abandono</strong>  
-Acompanhe métricas essenciais
-                        para aumentar suas vendas.</span>
-                </li>
-
-            </ul>
-
-            <!-- CORREÇÃO: Link para a rota 'solucoes' -->
-            <a href="{{ url_for('solucoes') }}"
-                class="text-white hover:text-blue-100 font-medium text-sm flex items-center">
-                Saiba mais <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-        </div>
-
-
-                               <!-- Card Branco -->
-                <div class="card-hover bg-white rounded-xl p-5 lg:w-1/3 w-full" style="box-shadow: rgba(158, 158, 209, 0.25) 0px 20px 40px -12px inset,
-           rgba(150, 147, 147, 0.3) 0px 12px 24px -18px inset;">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">
-                        Parceria
-                    </h3>
-
-                    <p class="text-gray-600 mb-4 text-sm">
-                        Estabelecemos parceria com a &rarr;(Orgamec)&larr; empresa de contabilidade para oferecer
-                        mais segurança fiscal aos nossos clientes.
-                    </p>
-
-                    <ul class="space-y-2 mb-6 text-sm">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i>
-                            <span><strong>Análise de rentabilidade por setor</strong>  
-Descubra quais áreas da empresa
-                                geram mais retorno.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i>
-                            <span><strong>Atendimento consultivo</strong>  
-Apoio contábil próximo e humano, com foco
-                                em crescimento sustentável.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-blue-600 mt-1 mr-2"></i>
-                            <span><strong>Integração direta com nossos sistemas</strong>  
-Sincronização automática de
-                                dados para evitar erros e retrabalho.</span>
-                        </li>
-                    </ul>
-
-                    <a href="https://br.linkedin.com/company/orgamecassessoriacontabil"
-                        class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
-                        Saiba mais <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                  <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
-                       
-                      <!-- CORREÇÃO: Imagem com url_for -->
-                      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png' ) }}" class="h-14 md:h-48 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0">
-                       
-                    </h3>
-                   
-                </div>
-
-                <div>
-                    <h4 id="font-bold mb-4 text-lg">Produtos</h4>
-                    <ul class="space-y-2">
-                        <li><a class="text-gray-400 hover:text-white">SysGestão</a></li>
-                        <li><a class="text-gray-400 hover:text-white">SysErp</a></li>
-                        <li><a class="text-gray-400 hover:text-white">SysVendas</a></li>
-                        <li><a class="text-gray-400 hover:text-white">SysNop</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
-                    <ul class="space-y-2">
-                        <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
-                                class="text-gray-400 hover:text-white">Facebook</a></li>
-                        <li><a href="https://www.instagram.com/universo_sistemas/"
-                                class="text-gray-400 hover:text-white">Instagram</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Contato</h4>
-                    <address class="not-italic text-gray-400">
-                        <p class="mb-2"> <a
-                                href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/@-11.8715545,-55.5230777,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-11.8715545!4d-55.5205028?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D"><i
-                                    class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização</p></a>
-                        <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
-                        <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>atendimento@universosistemas.inf.br
-                        </p>
-                    </address>
-                    <div class="flex space-x-4 mt-4">
-                        <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
-                            class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://web.whatsapp.com/" class="text-gray-400 hover:text-white"><i
-                                class="fab fa-whatsapp"></i></a>
-
-
-                        <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i
-                                class="fab fa-instagram"></i></a>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
-                <p>&copy;Universo Sistemas</p>
-            </div>
-        </div>
-    </footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const imagens = [
-    "{{ url_for('static', filename='img-sistema/parte-interna.png') }}"
-  ];
-
-  // Aplica overlay escuro (50% preto)
-  const overlay = document.getElementById('hero-overlay');
-  if (overlay) {
-    overlay.style.background = 'rgba(0, 0, 0, 0.3)'; // 0.3 = 30% opacidade
-  }
-
-  // ======= Hover cards =======
-  document.querySelectorAll('.stat-card').forEach((card) => {
-    card.addEventListener('mouseenter', function () {
-      this.style.transform = 'translateY(-8px) scale(1.02)';
-      this.style.transition = 'transform .2s ease';
-    });
-    card.addEventListener('mouseleave', function () {
-      this.style.transform = 'translateY(0) scale(1)';
-    });
-  });
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  // =========================
-  // Botões flutuantes: "apagão" após inatividade
-  // =========================
-
-  // Pegue os elementos (mantém os mesmos IDs que você já usa)
-  const flutuantes = [
-    document.getElementById('botao-flutuante'),
-    document.getElementById('whatsapp-flutuante'),
-  ].filter(Boolean); // remove nulos se algum não existir
-
-  // Configurações
-  const INACTIVE_MS   = 3000;  // 3s sem interação
-  const ACTIVE_OP     = 1;     // opacidade quando ativo
-  const DIM_OP        = 0.06;  // opacidade “quase 0” quando inativo
-
-  let inactivityTimer = null;
-
-  // aplica opacidade a todos
-  function setOpacityAll(v) {
-    for (const el of flutuantes) el.style.opacity = String(v);
-  }
-
-  // chamada em qualquer interação do usuário
-  function userActivity() {
-    // volta a mostrar
-    setOpacityAll(ACTIVE_OP);
-
-    // reinicia timer
-    if (inactivityTimer) clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-      // apaga quase por completo
-      setOpacityAll(DIM_OP);
-    }, INACTIVE_MS);
-  }
-
-  // Eventos que consideramos como "atividade"
-  const activityEvents = ['scroll', 'mousemove', 'touchstart', 'keydown'];
-  activityEvents.forEach(evt =>
-    window.addEventListener(evt, userActivity, { passive: true })
-  );
-
-  // estado inicial (mostra e arma o timer)
-  userActivity();
-
-  // Ano dinâmico
-  const anoEl = document.getElementById('ano');
-  if (anoEl) anoEl.textContent = new Date().getFullYear();
-});
-
- // ======= MENU MOBILE =======
-  const menuBtn = document.getElementById('mobileMenuBtn');
-  const menuEl  = document.getElementById('mobileMenu');
-
-  function setMenuOpen(isOpen) {
-    if (!menuEl) return;
-    menuEl.classList.toggle('hidden', !isOpen);
-    // trava/destrava o scroll do body quando o menu está aberto
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  }
-
-  // abre/fecha ao tocar no botão
-  if (menuBtn && menuEl) {
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isHidden = menuEl.classList.contains('hidden');
-      setMenuOpen(isHidden);
-    });
-
-    // fecha ao clicar em qualquer link do menu
-    menuEl.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => setMenuOpen(false));
-    });
-
-    // fecha ao tocar fora do menu
-    document.addEventListener('click', (e) => {
-      if (menuEl.classList.contains('hidden')) return;
-      const clickedInsideMenu = menuEl.contains(e.target);
-      const clickedBtn = menuBtn.contains(e.target);
-      if (!clickedInsideMenu && !clickedBtn) setMenuOpen(false);
-    }, { passive: true });
-
-    // fecha com ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setMenuOpen(false);
-    });
-
-    // garante que ao voltar para ≥ md o menu fique escondido (e libere o scroll)
-    window.addEventListener('resize', () => {
-      // Tailwind md ≈ 768px
-      if (window.innerWidth >= 768) {
-        setMenuOpen(false);
+    // Menu mobile
+    (function(){
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const menuEl  = document.getElementById('mobileMenu');
+      function setMenuOpen(isOpen){ if(!menuEl) return; menuEl.classList.toggle('hidden', !isOpen); document.body.style.overflow = isOpen ? 'hidden' : ''; }
+      if (menuBtn && menuEl){
+        menuBtn.addEventListener('click', (e)=>{ e.stopPropagation(); setMenuOpen(menuEl.classList.contains('hidden')); });
+        menuEl.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=>setMenuOpen(false)));
+        document.addEventListener('click', (e)=>{ if(menuEl.classList.contains('hidden')) return; const inside=menuEl.contains(e.target); const btn=menuBtn.contains(e.target); if(!inside && !btn) setMenuOpen(false); }, {passive:true});
+        document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenuOpen(false); });
+        window.addEventListener('resize', ()=>{ if (window.innerWidth >= 768) setMenuOpen(false); });
       }
-    });
-  }
-});
+    })();
 
-</script>
-
-
+    // Ano dinâmico
+    (function(){
+      const ano = document.getElementById('ano');
+      if (ano) ano.textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>

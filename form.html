@@ -1,65 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulário</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 
-
-
-<body>
+<body class="bg-white text-gray-800">
 
   <!-- Header Desktop -->
-  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300" style="background-color: #ffffff;">
+  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow-md transition-shadow duration-300">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
-      
       <!-- Logo -->
       <div class="flex items-center">
-        <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-        <a href="{{ url_for('index') }}" class="transition transform hover:scale-105 duration-300">
-          <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
+        <a href="/index.html" class="transition transform hover:scale-105 duration-300">
+          <img src="/static/img-sistema/imagem-chat2.png"
+               alt="Logo Universo Sistemas"
+               class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
         </a>
       </div>
-      
       <!-- Navegação Desktop -->
       <nav>
         <div class="flex items-center space-x-6">
-          <!-- CORREÇÃO: Links para as rotas do Flask -->
-          <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
-          <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
-          <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-blue-500 transition duration-300">Início</a>
+          <a href="/quem-somos.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Quem somos</a>
+          <a href="/solucoes.html"   class="text-gray-700 hover:text-blue-500 transition duration-300">Soluções</a>
+          <a href="/index.html"      class="text-gray-700 hover:text-blue-500 transition duration-300">Início</a>
         </div>
       </nav>
-
     </div>
   </header>
 
-
-
-<!-- Header Mobile -->
+  <!-- Header Mobile -->
   <header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
-    <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-    <a href="{{ url_for('index') }}">
-      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas empresa de sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/> 
+    <a href="/index.html">
+      <img src="/static/img-sistema/imagem-chat2.png"
+           alt="Logo Universo Sistemas"
+           class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
     </a>
-    <button id="mobileMenuBtn" class="text-3xl focus:outline-none">
-      ☰
-    </button>
-  </header> 
-    <!-- Menu Mobile -->
+    <button id="mobileMenuBtn" class="text-3xl focus:outline-none" aria-label="Abrir menu">☰</button>
+  </header>
+
+  <!-- Menu Mobile -->
   <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
-    <!-- CORREÇÃO: Links para as rotas do Flask -->
-    <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
-    <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
-    <a href="{{ url_for('index') }}" class="block px-4 py-3 border-b border-gray-200">Início</a>
+    <a href="/solucoes.html"   class="block px-4 py-3 border-b border-gray-200">Soluções</a>
+    <a href="/quem-somos.html" class="block px-4 py-3 border-b border-gray-200">Quem somos</a>
+    <a href="/index.html"      class="block px-4 py-3 border-b border-gray-200">Início</a>
   </div>
 
-
-  <section id="contact" class="bg-gray-100 rounded-xl p-12">
+  <!-- Conteúdo -->
+  <section id="contact" class="bg-gray-100 rounded-xl p-12 mt-6">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Entre em Contato</h2>
       <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
@@ -70,54 +64,54 @@
         <div>
           <label for="name" class="block text-gray-700 mb-2">Nome Completo</label>
           <input type="text" id="name" name="nome" required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         </div>
 
         <div>
           <label for="email" class="block text-gray-700 mb-2">E-mail</label>
           <input type="email" id="email" name="email" required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         </div>
 
         <div>
           <label for="phone" class="block text-gray-700 mb-2">Telefone</label>
           <input type="tel" id="phone" name="telefone" required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         </div>
 
         <div>
           <label for="company" class="block text-gray-700 mb-2">Empresa</label>
           <input type="text" id="company" name="empresa"
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         </div>
 
         <div>
           <label for="sistema" class="block text-gray-700 mb-2">Sistema</label>
           <input type="text" id="sistema" name="sistema"
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
         </div>
 
         <div class="md:col-span-2">
           <label for="message" class="block text-gray-700 mb-2">Mensagem</label>
           <textarea id="message" name="mensagem" rows="5" required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
         </div>
 
         <div class="md:col-span-2 flex justify-center">
           <button id="btn-enviar" type="submit"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-lg font-medium transition">
+                  class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-lg font-medium transition">
             Enviar Mensagem
           </button>
         </div>
       </form>
 
-      <div class="text-center mt-4">
-        <!-- Botão flutuante discreto no canto inferior esquerdo -->
-        <div class="text-center mt-4"> <a href="{{ url_for('clientes') }}" class="text-blue-500 hover:underline"> <i
-              class="fas fa-envelope"></i></a> </div>
+      <div class="text-center mt-6">
+        <!-- Link para a lista de clientes/mensagens -->
+        <a href="/Clientes.html" class="text-blue-500 hover:underline" title="Ver mensagens recebidas">
+          <i class="fas fa-envelope"></i>
+        </a>
       </div>
-  </section>
-  </div>
+    </div>
   </section>
 
   <script>
@@ -148,16 +142,17 @@
       e.preventDefault();
       if (enviando) return;
       enviando = true;
+
       const btn = document.getElementById('btn-enviar');
       const txtOrig = btn.textContent;
       btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      const nome = document.querySelector('#name').value.trim();
-      const email = document.querySelector('#email').value.trim();
+      const nome     = document.querySelector('#name').value.trim();
+      const email    = document.querySelector('#email').value.trim();
       const telefone = document.querySelector('#phone').value.trim();
-      const empresa = document.querySelector('#company').value.trim();
-      const sistema = document.querySelector('#sistema').value.trim();
+      const empresa  = document.querySelector('#company').value.trim();
+      const sistema  = document.querySelector('#sistema').value.trim();
       const mensagem = document.querySelector('#message').value.trim();
 
       if (!nome || !email || !telefone || !mensagem) {
@@ -169,24 +164,28 @@
       const dados = { nome, email, telefone, empresa, sistema, mensagem };
 
       try {
-        const r = await fetch('/api/enviar', {
+        // >>>>>>>>> ALTERADO: endpoint PHP
+        const r = await fetch('/api.php?action=enviar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dados)
         });
-        const j = await r.json();
 
-        if (j.status === 'sucesso') {
+        const j = await r.json().catch(()=> ({}));
+
+        if (j && j.status === 'sucesso') {
           abrirWhatsAppComDados(dados);
           alert(`Obrigado pela mensagem, ${nome}!`);
           document.getElementById('formulario').reset();
         } else {
-          alert('Erro ao enviar. Tente novamente.');
-          console.log('Erro:', j);
+          // Mesmo se falhar gravar, abrimos o WhatsApp para não perder o contato
+          abrirWhatsAppComDados(dados);
+          alert('Não foi possível salvar no site. Enviamos você ao WhatsApp para concluir o contato.');
         }
       } catch (err) {
         console.error('Erro:', err);
-        alert('Erro de conexão. Tente mais tarde.');
+        abrirWhatsAppComDados(dados);
+        alert('Erro de conexão. Abrimos o WhatsApp para você enviar a solicitação.');
       } finally {
         btn.textContent = txtOrig;
         btn.disabled = false;
@@ -199,7 +198,7 @@
       const urlParams = new URLSearchParams(window.location.search);
 
       const sistema = urlParams.get('sistema');
-      const msg = urlParams.get('msg');
+      const msg     = urlParams.get('msg');
 
       if (sistema) {
         const campoSistema = document.getElementById('sistema');
@@ -216,55 +215,47 @@
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
       }
     });
- // ======= MENU MOBILE =======
-  const menuBtn = document.getElementById('mobileMenuBtn');
-  const menuEl  = document.getElementById('mobileMenu');
 
-  function setMenuOpen(isOpen) {
-    if (!menuEl) return;
-    menuEl.classList.toggle('hidden', !isOpen);
-    // trava/destrava o scroll do body quando o menu está aberto
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  }
+    // ======= MENU MOBILE =======
+    (function () {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const menuEl  = document.getElementById('mobileMenu');
 
-  // abre/fecha ao tocar no botão
-  if (menuBtn && menuEl) {
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isHidden = menuEl.classList.contains('hidden');
-      setMenuOpen(isHidden);
-    });
-
-    // fecha ao clicar em qualquer link do menu
-    menuEl.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => setMenuOpen(false));
-    });
-
-    // fecha ao tocar fora do menu
-    document.addEventListener('click', (e) => {
-      if (menuEl.classList.contains('hidden')) return;
-      const clickedInsideMenu = menuEl.contains(e.target);
-      const clickedBtn = menuBtn.contains(e.target);
-      if (!clickedInsideMenu && !clickedBtn) setMenuOpen(false);
-    }, { passive: true });
-
-    // fecha com ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setMenuOpen(false);
-    });
-
-    // garante que ao voltar para ≥ md o menu fique escondido (e libere o scroll)
-    window.addEventListener('resize', () => {
-      // Tailwind md ≈ 768px
-      if (window.innerWidth >= 768) {
-        setMenuOpen(false);
+      function setMenuOpen(isOpen) {
+        if (!menuEl) return;
+        menuEl.classList.toggle('hidden', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
       }
-    });
-  }
 
+      if (menuBtn && menuEl) {
+        menuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isHidden = menuEl.classList.contains('hidden');
+          setMenuOpen(isHidden);
+        });
 
+        menuEl.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', () => setMenuOpen(false));
+        });
 
+        document.addEventListener('click', (e) => {
+          if (menuEl.classList.contains('hidden')) return;
+          const clickedInsideMenu = menuEl.contains(e.target);
+          const clickedBtn = menuBtn.contains(e.target);
+          if (!clickedInsideMenu && !clickedBtn) setMenuOpen(false);
+        }, { passive: true });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') setMenuOpen(false);
+        });
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 768) {
+            setMenuOpen(false);
+          }
+        });
+      }
+    })();
   </script>
 </body>
-
 </html>

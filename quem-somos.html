@@ -1,73 +1,61 @@
-<!DOCTYPE html> <!-- Adicionei o DOCTYPE que estava faltando -->
-<html lang="pt-br"> <!-- Adicionei o lang que estava faltando -->
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"> <!-- Adicionei o charset que estava faltando -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Adicionei a viewport -->
-  <title>Quem Somos | Universo Sistemas</title> <!-- Adicionei um título -->
-  <script src="https://cdn.tailwindcss.com"></script> <!-- Adicionei o Tailwind -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Adicionei o Font Awesome -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem Somos | Universo Sistemas</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Fonte -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet">
 
-<style>
-    body {
-     font-family: "Roboto", sans-serif;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px );
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  <style>
+    body { font-family: "Roboto", sans-serif; }
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
-<body class="font-sans bg-gray-50"id="top">
+<body class="font-sans bg-gray-50" id="top">
 
-<header class="flex bg-white sticky top-0 z-50 h-20 hidden md:flex" style="background-color: #ffffff;">
-  <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
-    
-    <!-- LOGO -->
-    <div class="flex items-center space-x-4" >
-      <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-      <a href="{{ url_for('index') }}">
-        <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}"
-             alt="Logo Universo Sistemas"
-             class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
-      </a>
+  <!-- Header Desktop -->
+  <header class="bg-white sticky top-0 z-50 h-20 hidden md:flex shadow" style="background-color:#ffffff;">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center h-full">
+      <div class="flex items-center space-x-4">
+        <a href="/index.html">
+          <img src="/static/img-sistema/imagem-chat2.png" alt="Logo Universo Sistemas"
+               class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
+        </a>
+      </div>
+      <nav class="flex items-center space-x-6">
+        <a href="/quem-somos.html" class="text-gray-700 hover:text-blue-500">Quem somos</a>
+        <a href="/solucoes.html"   class="text-gray-700 hover:text-blue-500">Soluções</a>
+        <a href="/index.html"      class="text-gray-700 hover:text-blue-500">Início</a>
+      </nav>
     </div>
-    <div class="flex items-center space-x-6" >
-      <!-- CORREÇÃO: Links para as rotas do Flask -->
-      <a href="{{ url_for('quem_somos') }}" class="text-gray-700 hover:text-blue-500">Quem somos</a>
-      <a href="{{ url_for('solucoes') }}" class="text-gray-700 hover:text-blue-500">Soluções</a>
-      <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-blue-500">Início</a>
-    </div>
+  </header>
+
+  <!-- Header Mobile -->
+  <header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden shadow">
+    <a href="/index.html">
+      <img src="/static/img-sistema/imagem-chat2.png" alt="Logo Universo Sistemas"
+           class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]" />
+    </a>
+    <button id="mobileMenuBtn" class="text-3xl focus:outline-none md:hidden" aria-label="Abrir menu">☰</button>
+  </header>
+
+  <!-- Menu Mobile -->
+  <div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
+    <a href="/solucoes.html"   class="block px-4 py-3 border-b border-gray-200">Soluções</a>
+    <a href="/quem-somos.html" class="block px-4 py-3 border-b border-gray-200">Quem Somos</a>
+    <a href="/index.html"      class="block px-4 py-3 border-b border-gray-200">Início</a>
   </div>
-</header>
 
-<header class="bg-white sticky top-0 z-50 h-20 flex items-center justify-between px-4 md:hidden">
-  <!-- CORREÇÃO: Link para a rota 'index' e imagem com url_for -->
-  <a href="{{ url_for('index') }}">
-    <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png') }}" alt="Logo Universo Sistemas" class="h-auto max-h-48 w-auto max-w-[160px] sm:max-w-[200px] lg:max-w-[250px]"/>
-  </a>
-  <button id="mobileMenuBtn" class="text-3xl focus:outline-none md:hidden">
-    ☰
-  </button>
-</header>
-
-<div id="mobileMenu" class="bg-white fixed top-20 left-0 w-full hidden flex-col shadow-md z-50 md:hidden">
-  <!-- CORREÇÃO: Links para as rotas do Flask -->
-  <a href="{{ url_for('solucoes') }}" class="block px-4 py-3 border-b border-gray-200">Soluções</a>
-  <a href="{{ url_for('quem_somos') }}" class="block px-4 py-3 border-b border-gray-200">Quem Somos</a>
-  <a href="{{ url_for('index') }}" class="block px-4 py-3 border-b border-gray-200">Início</a>
-</div>
-   
-<main class="max-w-7xl mx-auto px-6 py-16">
+  <main class="max-w-7xl mx-auto px-6 py-16">
     <header class="text-center mb-12">
       <h1 class="text-4xl font-bold text-gray-800 drop-shadow-lg">Quem Somos</h1>
       <p class="text-lg text-gray-500 opacity-80 mt-2">Universo Sistemas - Transformando a gestão empresarial há mais de 18 anos</p>
@@ -98,11 +86,11 @@
         <h2 class="text-2xl font-bold text-blue-600 mb-4">Nossos Diferenciais</h2>
         <ul class="list-disc pl-6 space-y-2">
           <li><strong>Atendimento humanizado e especializado</strong> com suporte técnico eficiente e próximo do cliente</li>
-          <li><strong>Soluções completas e adequadas para Cada Segmento</strong>:Entendemos as necessidades específicas do seu negócio e oferecemos ferramentas personalizadas para cada setor.</li>
+          <li><strong>Soluções completas e adequadas para cada segmento</strong>: ferramentas personalizadas para cada setor</li>
           <li><strong>Equipe multidisciplinar</strong> com experiência prática no comércio e domínio técnico em TI</li>
           <li><strong>Atualizações constantes</strong> com foco em performance, usabilidade e legislação vigente</li>
-          <li><strong>Soluções Exclusivas para o Setor Fiscal</strong>, Ferramentas especializadas para otimizar as rotinas fiscais dos escritórios de contabilidade.</li>
-          <li><strong>Parceria Exclusiva para Escritórios</strong>, Programa especial para escritórios de contabilidade indicarem clientes, fortalecendo a gestão integrada.</li>
+          <li><strong>Soluções para o setor fiscal</strong> otimizando rotinas dos escritórios de contabilidade</li>
+          <li><strong>Programa de parceria para escritórios</strong> com indicação de clientes e gestão integrada</li>
         </ul>
       </div>
 
@@ -138,96 +126,85 @@
         </div>
       </div>
     </section>
-</main>
-     <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                  <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
-                       
-                      <!-- CORREÇÃO: Imagem com url_for -->
-                      <img src="{{ url_for('static', filename='img-sistema/imagem-chat2.png' ) }}" class="h-14 md:h-48 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0">
-                       
-                    </h3>
-                   
-                </div>
+  </main>
 
-            <div>
-                    <h4 id="font-bold mb-4 text-lg">Produtos</h4>
-                    <ul class="space-y-2">
-                        <li><a class="text-gray-400 hover:text-white">SysGestão</a></li>
-                        <li><a class="text-gray-400 hover:text-white">SysErp</a></li>
-                        <li><a class="text-gray-400 hover:text-white">SysVendas</a></li>
-                        <li><a class="text-gray-400 hover:text-white">SysNop</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
-                    <ul class="space-y-2">
-                        <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
-                                class="text-gray-400 hover:text-white">Facebock</a></li>
-                        <li><a href="https://www.instagram.com/universo_sistemas/"
-                                class="text-gray-400 hover:text-white">Instagram</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-lg">Contato</h4>
-                    <address class="not-italic text-gray-400">
-                        <p class="mb-2"> <a
-                                href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/@-11.8715545,-55.5230777,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-11.8715545!4d-55.5205028?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYwOS4xIKXMDSoASAFQAw%3D%3D"><i
-                                    class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização</p></a>
-                        <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
-                        <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>atendimento@universosistemas.inf.br
-                        </p>
-                    </address>
-                    <div class="flex space-x-4 mt-4">
-                        <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid"
-                            class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://web.whatsapp.com/" class="text-gray-400 hover:text-white"><i
-                                class="fab fa-whatsapp"></i></a>
-
-
-                        <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i
-                                class="fab fa-instagram"></i></a>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
-                <p>&copy;Universo Sistemas</p>
-            </div>
+  <!-- Rodapé -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center justify-center md:justify-start">
+            <img src="/static/img-sistema/imagem-chat2.png"
+                 class="h-14 md:h-48 w-auto object-contain transition hover:scale-110 duration-300 mx-auto md:mx-0"
+                 alt="Universo Sistemas">
+          </h3>
         </div>
-    </footer>
 
-<script>
-  // Adiciona a classe 'visible' aos elementos com 'fade-in' quando eles entram na tela
-  const faders = document.querySelectorAll('.fade-in' );
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
+        <div>
+          <h4 class="font-bold mb-4 text-lg">Produtos</h4>
+          <ul class="space-y-2">
+            <li><span class="text-gray-400">SysGestão</span></li>
+            <li><span class="text-gray-400">SysErp</span></li>
+            <li><span class="text-gray-400">SysVendas</span></li>
+            <li><span class="text-gray-400">SysNop</span></li>
+          </ul>
+        </div>
 
-  faders.forEach(fader => {
-    observer.observe(fader);
-  });
+        <div>
+          <h4 class="font-bold mb-4 text-lg">Links Úteis</h4>
+          <ul class="space-y-2">
+            <li><a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="text-gray-400 hover:text-white">Facebook</a></li>
+            <li><a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white">Instagram</a></li>
+          </ul>
+        </div>
 
-  // Lógica do menu mobile
-  document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('mobileMenuBtn');
-    const menu = document.getElementById('mobileMenu');
+        <div>
+          <h4 class="font-bold mb-4 text-lg">Contato</h4>
+          <address class="not-italic text-gray-400">
+            <p class="mb-2">
+              <a href="https://www.google.com/maps/place/11%C2%B052'17.6%22S+55%C2%B031'13.8%22W/" class="hover:text-white">
+                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>Localização
+              </a>
+            </p>
+            <p class="mb-2"><i class="fas fa-phone-alt text-blue-400 mr-2"></i>+55 66 996310123</p>
+            <p class="mb-2"><i class="fas fa-envelope text-blue-400 mr-2"></i>atendimento@universosistemas.inf.br</p>
+          </address>
+          <div class="flex space-x-4 mt-4">
+            <a href="https://www.facebook.com/people/Universo-Sistemas-Sinop-e-Regi%C3%A3o/100083637337710/?mibextid" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/5566999624725" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/universo_sistemas/" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
 
-    if (btn && menu) {
-      btn.addEventListener('click', function () {
-        menu.classList.toggle('hidden');
-      });
-    }
-  });
-</script>
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+        <p>&copy; <span id="ano"></span> Universo Sistemas</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fade-in ao entrar na viewport
+    (function () {
+      const faders = document.querySelectorAll('.fade-in');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      faders.forEach(fader => observer.observe(fader));
+    })();
+
+    // Menu mobile
+    (function () {
+      const btn = document.getElementById('mobileMenuBtn');
+      const menu = document.getElementById('mobileMenu');
+      if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    })();
+
+    // Ano dinâmico
+    (function () {
+      const el = document.getElementById('ano');
+      if (el) el.textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>
