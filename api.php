@@ -5,6 +5,26 @@ require __DIR__.'/config.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 
+<?php
+// config.php
+$DB_HOST = 'localhost';
+$DB_NAME = 'u316826972_universo';
+$DB_USER = 'u316826972_victor';
+$DB_PASS = '@4042Victor';
+
+$TOKEN_OPCIONAL = ''; // se quiser restringir acesso do Clientes.html via acesso.php
+try {
+  $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4",$DB_USER,$DB_PASS,[
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+  ]);
+} catch (Exception $e) {
+  http_response_code(500);
+  echo json_encode(['erro'=>'DB_FAIL']);
+  exit;
+}
+
+
 try {
   if ($method === 'POST' && $action === 'enviar') {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
